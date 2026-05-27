@@ -9,269 +9,360 @@
     <link rel="shortcut icon" type="image/png" href="/static/img/logos/mini_logo.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="/static/css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: #030305; 
-            color: #ffffff;
-            /* Aplicado directamente aquí también por precaución */
-            overflow-x: hidden;
+            color: white; 
+            overflow: hidden; /* Evita scroll durante la carga */
+            min-height: 100vh;
         }
+
+        /* 🚀 FONDO PARALLAX CINEMATOGRÁFICO */
+        .parallax-bg {
+            background-image: url('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            transform: scale(1.1);
+            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        body.loaded .parallax-bg { transform: scale(1); }
+
+        .parallax-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(3,3,5,0.9) 0%, rgba(3,3,5,0.7) 50%, rgba(3,3,5,0.95) 100%);
+            z-index: 1;
+        }
+
+        /* Glassmorphism de Alta Gama */
         .glass-panel {
-            background: rgba(10, 10, 15, 0.65);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-        }
-        .glass-input {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(10, 10, 15, 0.45);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s ease;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            transform: translateY(20px);
+            filter: blur(10px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        body.loaded .glass-panel {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        /* Inputs Premium Estilo OS */
+        .glass-input {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: white;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
         .glass-input:focus {
             border-color: #FFC300;
-            box-shadow: 0 0 0 1px rgba(255, 195, 0, 0.3);
-            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 15px rgba(255, 195, 0, 0.2);
+            background: rgba(0, 0, 0, 0.8);
             outline: none;
         }
-        #splash-screen { background: radial-gradient(circle at center, #11111a 0%, #030305 100%); }
-        .animate-premium-in { animation: premiumReveal 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-text-glow { animation: textGlow 2.5s ease-in-out infinite alternate; }
-        
-        @keyframes premiumReveal {
-            0% { opacity: 0; filter: blur(20px); transform: scale(0.9) translateY(20px); }
-            100% { opacity: 1; filter: blur(0); transform: scale(1) translateY(0); }
-        }
-        @keyframes textGlow {
-            0% { text-shadow: 0 0 10px rgba(255, 195, 0, 0.1); opacity: 0.7; }
-            100% { text-shadow: 0 0 20px rgba(255, 195, 0, 0.6); opacity: 1; }
-        }
-        .ambient-glow {
-            position: absolute;
-            width: 40vw;
-            height: 40vw;
-            background: radial-gradient(circle, rgba(255,195,0,0.05) 0%, rgba(0,0,0,0) 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
         .btn-gold {
             background: linear-gradient(135deg, #FFC300 0%, #eab308 100%);
             color: #000;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 900;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         .btn-gold:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(255, 195, 0, 0.4);
+            box-shadow: 0 15px 30px -5px rgba(255, 195, 0, 0.35);
         }
+
         .btn-gold:active { transform: translateY(0); }
+
+        /* 📱 KINETIC CORE ANIMATION (Arranque Premium) */
+        .kinetic-orb {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,195,0,0.15) 0%, transparent 70%);
+        }
+        
+        .kinetic-ring {
+            position: absolute;
+            inset: 0;
+            border: 2px solid transparent;
+            border-top-color: #FFC300;
+            border-radius: 50%;
+            animation: spinRing 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            filter: drop-shadow(0 0 8px #FFC300);
+        }
+
+        .kinetic-ring-inner {
+            position: absolute;
+            inset: 10px;
+            border: 1.5px solid transparent;
+            border-bottom-color: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: spinRingInverse 1.5s linear infinite;
+        }
+
+        @keyframes spinRing { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spinRingInverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+
+        /* Message Box superior flotante */
+        #message-box {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .animate-premium-in { animation: premiumReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes premiumReveal {
+            0% { opacity: 0; filter: blur(10px); transform: scale(0.97) translateY(15px); }
+            100% { opacity: 1; filter: blur(0); transform: scale(1) translateY(0); }
+        }
+
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #030305;
+            z-index: 10000;
+            transition: opacity 1s ease;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="selection:bg-[#FFC300] selection:text-black overflow-x-hidden">
+<body class="selection:bg-[#FFC300] selection:text-black overflow-x-hidden min-h-screen relative flex flex-col justify-between">
 
-    <div id="message-box" class="fixed top-6 left-1/2 transform -translate-x-1/2 px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold tracking-widest uppercase shadow-2xl z-[9999] opacity-0 transition-all duration-500 pointer-events-none text-center w-11/12 max-w-[350px]"></div>
+    <div id="preloader"></div>
 
-    <div id="splash-screen" class="fixed inset-0 z-[1000] flex flex-col items-center justify-center">
-        <div class="absolute inset-0 ambient-glow opacity-50"></div>
-        <div class="text-center z-10 animate-premium-in">
-            <img id="splash-logo" src="/static/img/logos/LOADING.png" alt="GYMENEZ" class="mx-auto w-48 md:w-72 drop-shadow-2xl">
-            </div>
+    <div id="splash-screen" class="fixed inset-0 z-[5000] bg-[#030305] flex flex-col items-center justify-center transition-all duration-1000">
+        <div class="kinetic-orb mb-10 flex items-center justify-center scale-110 md:scale-125">
+            <div class="kinetic-ring"></div>
+            <div class="kinetic-ring-inner"></div>
+            <div class="w-3 h-3 bg-[#FFC300] rounded-full shadow-[0_0_15px_#FFC300]"></div>
         </div>
+        <h2 id="splash-text" class="text-[10px] md:text-xs font-black text-gray-500 uppercase tracking-[0.5em] opacity-0 transition-all duration-1000 filter blur-[4px]">
+            Iniciando Core
+        </h2>
     </div>
 
-    <div id="login-screen" class="hidden min-h-screen w-full flex items-center justify-center p-4 md:p-6 relative">
-        <div class="absolute inset-0 bg-[url('/static/img/backgrounds/routines_background.png')] bg-cover bg-center opacity-10 grayscale mix-blend-overlay pointer-events-none"></div>
-        <div class="ambient-glow opacity-30"></div>
+    <div id="message-box"></div>
 
-        <div class="glass-panel p-6 md:p-12 w-full max-w-md mx-auto rounded-[24px] md:rounded-[32px] relative z-10">
+    <div class="parallax-bg"></div>
+    <div class="parallax-overlay"></div>
+
+    <nav class="relative w-full z-40 py-6 px-6 md:px-12 flex justify-between items-center bg-transparent transition-all duration-1000 delay-300 opacity-0 transform -translate-y-4" id="main-nav">
+        <div class="flex items-center cursor-pointer group" onclick="window.location.href='/index.html'">
+            <span class="text-[#FFC300] font-[900] text-2xl md:text-3xl italic tracking-tighter">GYM</span>
+            <span class="text-white font-[900] text-2xl md:text-3xl italic tracking-tighter">ENEZ</span>
+        </div>
+        
+        <div class="flex items-center gap-5 md:gap-6">
+            <a href="/index.html" class="text-[10px] font-black tracking-widest text-gray-400 hover:text-white transition uppercase whitespace-nowrap">
+                Regresar
+            </a>
+            <a href="register.html" class="border border-white/10 bg-white/5 text-white hover:bg-[#FFC300] hover:text-black hover:border-[#FFC300] px-5 py-2 rounded-full text-[10px] font-black tracking-widest transition-all uppercase whitespace-nowrap shadow-lg">
+                Registrarse
+            </a>
+        </div>
+    </nav>
+
+    <main id="login-screen" class="relative z-10 w-full flex-grow flex items-center justify-center p-4 md:p-6 hidden">
+        <div class="glass-panel p-6 md:p-12 w-full max-w-md mx-auto rounded-[24px] md:rounded-[36px] relative animate-premium-in">
+            
             <div class="text-center mb-8 md:mb-10">
-                <img id="login-logo-img" src="/static/img/logos/LOGIN_LOGO.png" alt="GYMENEZ" class="mx-auto w-40 md:w-48 mb-3">
-                <h2 class="text-gray-500 text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Autenticación Segura</h2>
+                <span class="text-[#FFC300] text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] mb-3 block drop-shadow-md">
+                    System Core
+                </span>
+                <h1 class="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase mb-3">
+                    Portal Atleta
+                </h1>
+                <div class="w-10 h-1 bg-[#FFC300] mx-auto mb-4 rounded-full shadow-[0_0_15px_rgba(255,195,0,0.6)]"></div>
+                <p class="text-gray-500 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.35em]">
+                    Acceso Encriptado
+                </p>
             </div>
 
             <form id="login-form" class="space-y-4 md:space-y-5">
                 <div>
-                    <label for="login-email" class="block text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1 ml-1">ID Atleta (Correo)</label>
-                    <input type="email" id="login-email" name="email" placeholder="atleta@gymenez.com" class="w-full glass-input px-4 md:px-5 py-3 md:py-4 rounded-xl md:rounded-2xl text-white text-sm" required>
+                    <label class="block text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Correo Electrónico</label>
+                    <input type="email" id="login-email" name="email" placeholder="atleta@gymenez.com" class="w-full glass-input px-4 md:px-5 py-3.5 md:py-4 rounded-xl text-white text-xs md:text-sm font-medium" required>
                 </div>
                 <div>
-                    <label for="login-password" class="block text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1 ml-1">Clave de Acceso</label>
-                     <input type="password" id="login-password" name="password" placeholder="••••••••" class="w-full glass-input px-4 md:px-5 py-3 md:py-4 rounded-xl md:rounded-2xl text-white text-sm" required>
+                    <label class="block text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Clave de Acceso</label>
+                    <input type="password" id="login-password" name="password" placeholder="••••••••" class="w-full glass-input px-4 md:px-5 py-3.5 md:py-4 rounded-xl text-white text-xs md:text-sm font-mono tracking-widest" required>
                 </div>
 
                 <div class="pt-3 md:pt-4">
-                    <button type="submit" id="login-btn" class="btn-gold w-full py-3 md:py-4 rounded-xl md:rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em]">
-                        Ingresar al Portal
+                    <button type="submit" id="login-btn" class="btn-gold w-full py-4 rounded-xl font-black text-[10px] md:text-xs uppercase tracking-[0.25em]">
+                        Ingresar al Sistema
                     </button>
                 </div>
             </form>
             
-            <div id="login-help-links" class="mt-6 md:mt-8 pt-5 md:pt-6 border-t border-white/5 flex flex-col gap-3 md:gap-4 text-center">
-                <button id="register-request-link" class="text-[10px] md:text-xs font-bold tracking-widest text-white hover:text-[#FFC300] transition uppercase">
-                    Solicitar Nueva Cuenta
+            <div id="login-help-links" class="mt-8 pt-5 border-t border-white/5 flex justify-between items-center px-1">
+                <button id="staff-access-link" type="button" class="text-[8px] md:text-[9px] font-bold text-gray-500 hover:text-white transition uppercase tracking-[0.15em]">
+                    Acceso Staff
                 </button>
-                <div class="flex justify-between items-center px-1 md:px-2 mt-1 md:mt-2">
-                    <button id="staff-access-link" class="text-[8px] md:text-[9px] font-bold text-gray-500 hover:text-white transition uppercase tracking-[0.1em] md:tracking-[0.2em]">
-                        Acceso Staff
-                    </button>
-                    <button id="forgot-password-link" class="text-[8px] md:text-[9px] font-bold text-gray-500 hover:text-white transition uppercase tracking-[0.1em] md:tracking-[0.2em]">
-                        Recuperar Credencial
-                    </button>
-                </div>
+                <button id="forgot-password-link" type="button" class="text-[8px] md:text-[9px] font-bold text-gray-500 hover:text-white transition uppercase tracking-[0.15em]">
+                    Recuperar Credencial
+                </button>
             </div>
         </div>
-    </div>
-    
-    <div id="area-selection-modal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-[1100] p-4 transition-opacity">
-        <div class="glass-panel p-6 md:p-10 w-full max-w-sm mx-auto rounded-[24px] md:rounded-[32px] text-center border-t border-[#FFC300]/30">
-            <h3 class="text-base md:text-lg font-black mb-6 md:mb-8 text-white uppercase tracking-[0.2em] md:tracking-[0.3em]">División Operativa</h3>
-            <button id="select-trainer-btn" onclick="window.location.href='/apps/staff/trainer.html'" class="w-full py-3 md:py-4 mb-3 md:mb-4 rounded-xl bg-white/5 border border-white/5 font-bold text-[10px] md:text-xs hover:border-[#FFC300] hover:text-[#FFC300] hover:bg-white/10 uppercase tracking-widest transition-all">Portal Coach</button>
-            <button id="select-admin-btn" onclick="window.location.href='/apps/admin/login.html'" class="w-full py-3 md:py-4 mb-6 md:mb-8 rounded-xl bg-white/5 border border-white/5 font-bold text-[10px] md:text-xs hover:border-red-500 hover:text-red-500 hover:bg-white/10 uppercase tracking-widest transition-all">Portal Admin</button>
-            <button id="modal-close-btn" class="w-full py-2 text-[9px] md:text-[10px] font-bold text-gray-500 hover:text-white uppercase tracking-widest transition">Cerrar</button>
-        </div>
-    </div>
+    </main>
 
     <div id="active-session-modal" class="hidden fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center z-[1000] p-4 transition-opacity">
-        <div class="glass-panel p-6 md:p-10 w-full max-w-md mx-auto rounded-[24px] md:rounded-[32px] border-t border-red-500/50 max-h-[95vh] overflow-y-auto">
-            <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 md:mb-6 bg-red-500/10 rounded-full flex items-center justify-center border border-red-500/20">
-                <svg class="w-6 h-6 md:w-8 md:h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        <div class="glass-panel p-6 md:p-10 w-full max-w-md mx-auto rounded-[24px] md:rounded-[32px] border-t border-red-500/50">
+            <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-4 bg-red-500/10 rounded-full flex items-center justify-center border border-red-500/20">
+                <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
             </div>
-            <h3 class="text-lg md:text-xl font-black mb-2 text-white text-center uppercase tracking-widest">Sesión en Uso</h3>
-            <p class="text-gray-400 text-[10px] md:text-xs text-center mb-6 md:mb-8 uppercase tracking-wider leading-relaxed">Las credenciales se encuentran activas en otro dispositivo de la red.</p>
-            <div id="modal-options">
-                <p class="text-[9px] md:text-[10px] font-bold text-gray-300 text-center mb-4 md:mb-6 uppercase tracking-[0.2em]">¿Desea forzar la desconexión remota?</p>
-                <div class="flex flex-col gap-2 md:gap-3">
-                    <button id="modal-confirm-btn" class="w-full py-3 md:py-4 rounded-xl bg-red-600/90 text-white font-black text-[10px] md:text-xs uppercase tracking-widest hover:bg-red-500 transition shadow-[0_0_15px_rgba(220,38,38,0.3)]">Ejecutar Desconexión Remota</button>
-                    <button id="modal-cancel-btn" class="w-full py-3 md:py-4 rounded-xl border border-white/10 text-gray-400 font-bold text-[10px] md:text-xs uppercase tracking-widest hover:text-white hover:bg-white/5 transition">Cancelar Operación</button>
+            <h3 class="text-lg font-black mb-2 text-white text-center uppercase tracking-widest">Sesión en Uso</h3>
+            <p class="text-gray-400 text-[10px] text-center mb-6 uppercase tracking-wider leading-relaxed">Tus credenciales se encuentran activas en otra terminal.</p>
+            
+            <div id="modal-options" class="space-y-4">
+                <div class="flex flex-col gap-2">
+                    <button id="modal-confirm-btn" class="w-full py-3.5 rounded-xl bg-red-600 text-white font-black text-[10px] uppercase tracking-widest hover:bg-red-500 transition">Solicitar Código SHIELD</button>
+                    <button id="modal-cancel-btn" class="w-full py-3 rounded-xl border border-white/10 text-gray-400 font-bold text-[10px] uppercase tracking-widest hover:text-white hover:bg-white/5 transition">Cancelar</button>
                 </div>
             </div>
-            <form id="force-logout-form" class="hidden mt-4 md:mt-6 pt-4 md:pt-6 border-t border-white/10 space-y-3 md:space-y-4">
-                <p class="text-[9px] md:text-[10px] font-black text-[#FFC300] text-center mb-3 md:mb-4 uppercase tracking-[0.2em] md:tracking-[0.3em]">Protocolo de Identidad</p>
-                <div id="force-logout-message" class="hidden p-2 md:p-3 rounded-lg text-[10px] md:text-xs font-bold text-center uppercase tracking-widest"></div>
-                <div><input type="email" id="force-email" name="email" readonly class="w-full glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-gray-500 text-[10px] md:text-xs cursor-not-allowed" placeholder="Email Bloqueado"></div>
-                <div class="grid grid-cols-2 gap-2 md:gap-3">
-                    <input type="text" id="force-name" name="name" class="w-full glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white text-[10px] md:text-xs uppercase" placeholder="1er Nombre" required>
-                    <input type="text" id="force-lastname" name="lastname" class="w-full glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white text-[10px] md:text-xs uppercase" placeholder="1er Apellido" required>
-                </div>
-                <div><input type="text" id="force-dob" name="dob" maxlength="10" class="w-full glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white text-[10px] md:text-xs" placeholder="Nacimiento (DD/MM/YYYY)" required></div>
-                
-                <div class="space-y-3 md:space-y-4">
-                    <div class="flex gap-2">
-                        <select id="force-phone-prefix" class="w-20 md:w-24 px-1 md:px-2 py-2.5 md:py-3 rounded-xl glass-input text-white font-bold text-center appearance-none text-[10px] md:text-xs">
-                            <option value="0414">0414</option><option value="0424">0424</option><option value="0412">0412</option><option value="0422">0422</option><option value="0416">0416</option><option value="0426">0426</option>
-                        </select>
-                        <input type="text" id="force-phone-num" class="flex-1 glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white text-[10px] md:text-xs" placeholder="Teléfono" maxlength="7" required>
-                    </div>
-                    <input type="text" id="force-ci" name="ci" class="w-full glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white text-[10px] md:text-xs" placeholder="Cédula" required>
-                </div>
 
-                <div class="pt-4 md:pt-6 mt-3 md:mt-4 border-t border-white/5">
-                    <button type="submit" id="force-logout-btn" class="w-full py-3 md:py-4 rounded-xl bg-red-600 text-white font-black text-[10px] md:text-xs uppercase tracking-widest hover:bg-red-500 transition shadow-[0_0_15px_rgba(220,38,38,0.3)]">Confirmar Identidad</button>
-                    <button type="button" id="force-logout-cancel" class="mt-3 md:mt-4 w-full text-center text-[9px] md:text-[10px] font-bold text-gray-500 hover:text-white uppercase tracking-widest transition">Abortar</button>
+            <form id="force-logout-form" class="hidden mt-4 pt-4 border-t border-white/10 space-y-5">
+                <p class="text-[9px] font-black text-[#FFC300] text-center uppercase tracking-[0.2em]">Protocolo SHIELD de Desconexión</p>
+                <input type="hidden" id="force-email" name="email">
+                <div id="force-logout-message" class="hidden p-2 rounded-lg text-[10px] font-bold text-center uppercase tracking-widest"></div>
+                <div>
+                    <input type="text" id="force-shield-code" maxlength="6" placeholder="······" class="w-full max-w-[260px] mx-auto block px-2 py-3 text-center text-3xl tracking-[0.4em] rounded-xl glass-input text-[#FFC300] font-mono focus:border-red-500" required>
+                </div>
+                <div class="pt-2 space-y-2">
+                    <button type="submit" id="force-logout-btn" class="w-full py-3.5 rounded-xl bg-red-600 text-white font-black text-[10px] uppercase tracking-widest hover:bg-red-500 transition">Expulsar Dispositivo Remoto</button>
+                    <button type="button" id="force-logout-cancel" class="w-full text-center text-[9px] font-bold text-gray-500 hover:text-white uppercase tracking-widest transition mt-3">Abortar</button>
+                </div>
+                <div class="text-center pt-2">
+                    <button type="button" id="force-whatsapp-sos" class="text-[8px] font-black text-gray-600 hover:text-[#FFC300] transition uppercase tracking-widest">¿Problemas con el código? Soporte SOS WhatsApp 📲</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div id="temp-message-modal" class="hidden fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center z-[2000] transition-opacity duration-500 opacity-0 px-4">
-        <div class="glass-panel p-6 md:p-10 w-full max-w-md mx-auto rounded-[24px] md:rounded-[32px] text-center transform scale-90 transition-transform duration-500 border-t border-emerald-500/50">
-            <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 md:mb-6 bg-emerald-500/10 rounded-full flex items-center justify-center">
-                <svg class="w-6 h-6 md:w-8 md:h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <h3 id="temp-message-text" class="text-[10px] md:text-xs font-bold text-gray-200 uppercase tracking-widest leading-relaxed">Intervención Exitosa. La sesión remota fue terminada.</h3>
+    <div id="activation-modal" class="hidden fixed inset-0 z-[1200] flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl">
+        <div class="glass-panel relative w-full max-w-md mx-auto p-6 md:p-10 rounded-[24px] md:rounded-[36px] border border-[#FFC300]/20 text-center">
+            <h3 class="text-2xl font-black mb-2 text-white tracking-tighter uppercase">Código SHIELD</h3>
+            <p class="text-[10px] text-gray-400 mb-6 font-medium leading-relaxed">Ingresa la clave de verificación enviada a tu correo.</p>
+            <form id="activation-form" class="space-y-6">
+                <input type="hidden" id="activation-email">
+                <div><input type="text" id="activation-code" maxlength="6" placeholder="······" class="w-full max-w-[260px] mx-auto block px-2 py-3 text-center text-3xl tracking-[0.4em] rounded-xl glass-input text-[#FFC300] font-mono" required></div>
+                <div class="space-y-2">
+                    <button type="submit" id="verify-btn" class="btn-gold w-full py-3.5 rounded-xl font-black text-[10px] uppercase tracking-[0.2em]">Autenticar Código</button>
+                    <button type="button" id="close-activation-modal" class="w-full py-2 text-[9px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition">Volver</button>
+                </div>
+            </form>
         </div>
     </div>
 
     <div id="block-modal" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-[2000] hidden flex items-center justify-center p-4">
-        <div class="glass-panel p-6 md:p-10 w-full max-w-sm mx-auto rounded-[24px] md:rounded-[32px] border border-red-600/30 text-center relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1 bg-red-600"></div>
-            <svg class="mx-auto h-12 w-12 md:h-16 md:w-16 text-red-600 mb-4 md:mb-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
-            <h3 class="text-xl md:text-2xl font-black text-white uppercase tracking-widest mb-3 md:mb-4">Acceso Denegado</h3>
-            <p class="text-[10px] md:text-xs text-gray-400 leading-relaxed mb-4 md:mb-6 uppercase tracking-wider">Perfil inhabilitado por directrices de seguridad o estado de facturación.</p>
-            <p class="text-[8px] md:text-[9px] font-bold text-red-500 uppercase tracking-[0.2em] md:tracking-[0.3em]">CODE: 403_RESTRICTED</p>
+        <div class="glass-panel p-6 md:p-10 w-full max-w-sm mx-auto rounded-[24px] md:rounded-[32px] border border-red-600/30 text-center">
+            <h3 class="text-xl font-black text-white uppercase tracking-widest mb-2">Acceso Denegado</h3>
+            <p class="text-[10px] text-gray-400 leading-relaxed mb-4 uppercase tracking-wider">Perfil inhabilitado por directrices de seguridad o estado de facturación.</p>
+            <p class="text-[8px] font-bold text-red-500 uppercase tracking-[0.2em]">CODE: 403_RESTRICTED</p>
         </div>
     </div>
 
-    <div id="register-modal" class="hidden fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center z-[1100] transition-opacity duration-300 opacity-0 overflow-y-auto py-6 md:py-10 px-4">
-        <div class="glass-panel p-6 md:p-12 w-full max-w-2xl mx-auto rounded-[24px] md:rounded-[40px] border border-white/5 my-auto relative">
-            <button type="button" id="close-register-modal" class="absolute top-4 right-4 md:top-8 md:right-8 text-gray-500 hover:text-white transition">
-                <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            <div class="text-center mb-6 md:mb-10 mt-2 md:mt-0">
-                <h2 class="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter mb-1 md:mb-2">Crear Perfil</h2>
-                <p class="text-gray-500 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em]">Alta de nuevo atleta en el sistema</p>
-            </div>
-            <form id="register-form" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 md:gap-y-5">
-                <div class="md:col-span-2 border-b border-white/5 pb-1 md:pb-2 mb-1 md:mb-2"><span class="text-[#FFC300] text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em]">1. Credenciales de Acceso</span></div>
-                <div><label class="block text-[9px] md:text-[10px] font-bold text-gray-400 mb-1 ml-1 uppercase">Correo Electrónico</label><input type="email" id="reg-email" class="w-full glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white text-xs md:text-sm" placeholder="usuario@gymenez.com" required></div>
-                <div><label class="block text-[9px] md:text-[10px] font-bold text-gray-400 mb-1 ml-1 uppercase">Contraseña</label><input type="password" id="reg-password" class="w-full glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white text-xs md:text-sm" required></div>
-
-                <div class="md:col-span-2 border-b border-white/5 pb-1 md:pb-2 mt-2 md:mt-4 mb-1 md:mb-2"><span class="text-[#FFC300] text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em]">2. Biometría e Identidad</span></div>
-                <div><label class="block text-[9px] md:text-[10px] font-bold text-gray-400 mb-1 ml-1 uppercase">Nombre(s)</label><input type="text" id="reg-name" class="w-full glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white uppercase text-xs md:text-sm" required></div>
-                <div><label class="block text-[9px] md:text-[10px] font-bold text-gray-400 mb-1 ml-1 uppercase">Apellido(s)</label><input type="text" id="reg-lastname" class="w-full glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white uppercase text-xs md:text-sm" required></div>
-                
-                <div>
-                    <label class="block text-[9px] md:text-[10px] font-bold text-gray-400 mb-1 ml-1 uppercase">Cédula</label>
-                    <div class="flex gap-2">
-                        <select id="reg-ci-type" class="w-16 md:w-20 px-1 md:px-2 py-2.5 md:py-3 rounded-xl glass-input text-white font-bold text-center appearance-none text-xs md:text-sm"><option value="V">V</option><option value="E">E</option></select>
-                        <input type="text" id="reg-ci" class="flex-1 glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white text-xs md:text-sm" placeholder="00.000.000" maxlength="11" required>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-[9px] md:text-[10px] font-bold text-gray-400 mb-1 ml-1 uppercase">Teléfono Móvil</label>
-                    <div class="flex gap-2">
-                        <select id="reg-phone-prefix" class="w-20 md:w-24 px-1 md:px-2 py-2.5 md:py-3 rounded-xl glass-input text-white font-bold text-center appearance-none text-xs md:text-sm">
-                            <option value="0414">0414</option><option value="0424">0424</option><option value="0412">0412</option><option value="0422">0422</option><option value="0416">0416</option><option value="0426">0426</option>
-                        </select>
-                        <input type="text" id="reg-phone-num" class="flex-1 glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white text-xs md:text-sm" placeholder="1234567" maxlength="7" required>
-                    </div>
-                </div>
-                <div><label class="block text-[9px] md:text-[10px] font-bold text-gray-400 mb-1 ml-1 uppercase">Nacimiento</label><input type="text" id="reg-dob" class="w-full glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white text-xs md:text-sm" placeholder="DD/MM/YYYY" maxlength="10" required></div>
-                <div>
-                    <label class="block text-[9px] md:text-[10px] font-bold text-gray-400 mb-1 ml-1 uppercase">Sexo Biológico</label>
-                    <select id="reg-sex" class="w-full glass-input px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-white font-bold appearance-none text-xs md:text-sm"><option value="Hombre">Hombre</option><option value="Mujer">Mujer</option><option value="Otro">Otro</option></select>
-                </div>
-                <div class="md:col-span-2 pt-4 md:pt-6 mt-2 md:mt-4 border-t border-white/5">
-                    <button type="submit" id="reg-submit-btn" class="btn-gold w-full py-3 md:py-4 rounded-xl font-black text-[10px] md:text-xs uppercase tracking-[0.2em]">Registrar en Sistema</button>
-                </div>
-            </form>
+    <div id="area-selection-modal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-[1100] p-4 transition-opacity">
+        <div class="glass-panel p-6 md:p-10 w-full max-w-sm mx-auto rounded-[24px] md:rounded-[32px] text-center border-t border-[#FFC300]/30">
+            <h3 class="text-base md:text-lg font-black mb-6 text-white uppercase tracking-[0.2em]">División Operativa</h3>
+            <button id="select-trainer-btn" onclick="window.location.href='/apps/staff/trainer.html'" class="w-full py-3.5 mb-3 rounded-xl bg-white/5 border border-white/5 font-bold text-[10px] hover:border-[#FFC300] hover:text-[#FFC300] hover:bg-white/10 uppercase tracking-widest transition-all">Portal Coach</button>
+            <button id="select-admin-btn" onclick="window.location.href='/apps/admin/login.html'" class="w-full py-3.5 mb-6 rounded-xl bg-white/5 border border-white/5 font-bold text-[10px] hover:border-red-500 hover:text-red-500 hover:bg-white/10 uppercase tracking-widest transition-all">Portal Admin</button>
+            <button id="modal-close-btn" class="w-full py-2 text-[9px] font-bold text-gray-500 hover:text-white uppercase tracking-widest transition">Cerrar</button>
         </div>
     </div>
 
-    <div id="activation-modal" class="hidden fixed inset-0 z-[1200] flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/95 backdrop-blur-xl"></div>
-        <div class="glass-panel relative w-full max-w-md mx-auto p-6 md:p-10 rounded-[24px] md:rounded-[40px] border border-[#FFC300]/20 text-center overflow-hidden">
-            <div class="absolute -top-16 md:-top-20 left-1/2 -translate-x-1/2 w-32 md:w-40 h-32 md:h-40 bg-[#FFC300]/10 blur-[40px] md:blur-[60px] rounded-full pointer-events-none"></div>
-            <div class="relative mb-6 md:mb-8">
-                <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-[#FFC300]/10 rounded-2xl flex items-center justify-center border border-[#FFC300]/20">
-                    <svg class="w-8 h-8 md:w-10 md:h-10 text-[#FFC300] animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
-                </div>
-            </div>
-            <h3 class="text-2xl md:text-3xl font-black mb-2 text-white tracking-tighter uppercase">Código SHIELD</h3>
-            <p class="text-[10px] md:text-xs text-gray-400 mb-6 md:mb-8 font-medium leading-relaxed">Verifica tu identidad ingresando la clave enviada a tu correo.</p>
-            <form id="activation-form" class="space-y-6 md:space-y-8 relative z-10">
-                <input type="hidden" id="activation-email">
-                <div><input type="text" id="activation-code" maxlength="6" placeholder="······" class="w-full max-w-[240px] md:max-w-[280px] mx-auto block px-2 py-3 md:py-4 text-center text-3xl md:text-4xl tracking-[0.4em] rounded-xl md:rounded-2xl glass-input text-[#FFC300] font-mono transition-all" required></div>
-                <div class="space-y-2 md:space-y-3">
-                    <button type="submit" id="verify-btn" class="btn-gold w-full py-3 md:py-4 rounded-xl font-black text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(251,191,36,0.2)]">Autenticar Código</button>
-                    <button type="button" id="close-activation-modal" class="w-full py-2 md:py-3 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition">Volver</button>
-                </div>
-            </form>
-            <p class="mt-6 md:mt-8 text-[8px] md:text-[9px] text-gray-600 uppercase tracking-widest font-black">Powered by GYMENEZ SECURITY</p>
-        </div>
-    </div>
+    <footer class="relative z-10 py-8 text-center border-t border-white/5 opacity-40 transition-all duration-1000 delay-500" id="main-footer">
+        <p class="text-[9px] font-bold uppercase tracking-[0.5em] text-gray-600">
+            © 2026 GYMENEZ PERFORMANCE • EL ESTÁNDAR DE EXCELENCIA
+        </p>
+    </footer>
 
     <script src="/static/js/auth.js"></script>
+    <script>
+        // Lógica de Splash Screen y Cortina de Precarga
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const nav = document.getElementById('main-nav');
+            const footer = document.getElementById('main-footer');
+            const splashScreen = document.getElementById('splash-screen');
+            const loginScreen = document.getElementById('login-screen');
+            const splashText = document.getElementById('splash-text');
+
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+                document.body.classList.add('loaded');
+                document.body.style.overflow = 'auto';
+            }, 1000);
+
+            if (!localStorage.getItem('userSession')) {
+                setTimeout(() => {
+                    splashText.classList.remove('opacity-0', 'blur-[4px]');
+                    splashText.classList.add('opacity-100', 'blur-0');
+                }, 300);
+
+                setTimeout(() => {
+                    splashScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        splashScreen.classList.add('hidden');
+                        loginScreen.classList.remove('hidden');
+                        nav.classList.remove('opacity-0', '-translate-y-4');
+                        footer.classList.remove('opacity-0');
+                    }, 1000);
+                }, 2500);
+            }
+        });
+
+        // Callback unificado de alertas UI para procesos internos de login
+        function showUIFeedback(message, type = 'success') {
+            const box = document.getElementById('message-box');
+            if(!box) return;
+            box.textContent = message;
+            box.className = 'fixed top-6 left-1/2 transform -translate-x-1/2 px-5 py-3 rounded-full text-[10px] font-black tracking-widest uppercase shadow-2xl z-[9999] transition-all duration-400 text-center border backdrop-blur-md w-11/12 max-w-[360px]';
+            
+            if(type === 'success') {
+                box.classList.add('bg-emerald-950/80', 'text-emerald-400', 'border-emerald-500/30');
+            } else {
+                box.classList.add('bg-red-950/80', 'text-red-400', 'border-red-500/30');
+            }
+            
+            box.style.opacity = '1';
+            box.style.transform = 'translate(-50%, 0)';
+            
+            setTimeout(() => {
+                box.style.opacity = '0';
+                box.style.transform = 'translate(-50%, -20px)';
+            }, 4000);
+        }
+    </script>
 </body>
 </html>
