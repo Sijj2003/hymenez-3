@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMENEZ - Gestión de Staff</title>
+    <link rel="icon" type="image/png" href="mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d1a;
+            background-image: url('FONDO.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #e5e7eb;
+        }
+        .glass-panel {
+            background: rgba(13, 13, 26, 0.75);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .custom-input {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            width: 100%;
+            font-size: 0.875rem;
+        }
+        .custom-input:focus { border-color: #facc15; outline: none; background: rgba(0, 0, 0, 0.4); }
+        .btn-amber { background: #facc15; color: #000; font-weight: 800; transition: all 0.2s; }
+        .btn-amber:hover { background: #eab308; transform: translateY(-1px); }
+        
+        /* Scrollbar minimalista */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <header class="glass-panel fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <h1 class="text-2xl font-black tracking-tighter"><span class="text-yellow-400">GYM</span>ENEZ</h1>
+            <span class="px-3 py-1 bg-yellow-400/10 text-yellow-400 text-[10px] font-bold rounded-full border border-yellow-400/20 uppercase">Gestión de Entrenadores</span>
+        </div>
+        <button onclick="window.location.href='administration.html'" class="text-xs text-gray-400 hover:text-white transition">Volver al Panel Central</button>
+    </header>
+
+    <main class="pt-28 pb-12 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-4 space-y-4">
+            <div class="glass-panel p-4 rounded-2xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-sm font-bold text-gray-300">STAFF ACTIVO</h3>
+                    <button onclick="prepareNewTrainer()" class="bg-white/5 hover:bg-white/10 p-2 rounded-lg text-yellow-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    </button>
+                </div>
+                <input type="text" id="search-trainer" class="custom-input mb-4" placeholder="Buscar entrenador...">
+                <div id="trainers-list" class="space-y-2 max-h-[60vh] overflow-y-auto pr-2">
+                    </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-8">
+            <form id="trainer-form" class="glass-panel p-8 rounded-3xl space-y-8">
+                <input type="hidden" id="trainer-id">
+                
+                <div class="flex justify-between items-start border-b border-white/5 pb-6">
+                    <div>
+                        <h2 id="form-title" class="text-3xl font-black text-white">Nuevo Entrenador</h2>
+                        <p class="text-gray-500 text-xs">Completa la ficha profesional para el acceso al sistema.</p>
+                    </div>
+                    <div id="delete-zone" class="hidden">
+                        <button type="button" onclick="deleteCurrentTrainer()" class="text-red-500 hover:text-red-400 text-xs font-bold uppercase tracking-tighter">Eliminar del Staff</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase ml-2">Correo de Acceso</label>
+                        <input type="email" id="t-email" class="custom-input mt-1" required placeholder="ejemplo@gymenez.com">
+                    </div>
+                    <div id="password-field">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase ml-2">Contraseña Inicial</label>
+                        <input type="text" id="t-password" class="custom-input mt-1" placeholder="gymenez123">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase ml-2">Nombre</label>
+                        <input type="text" id="t-first_name" class="custom-input mt-1" required>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase ml-2">Apellido</label>
+                        <input type="text" id="t-last_name" class="custom-input mt-1" required>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase ml-2">Cédula / ID</label>
+                        <input type="text" id="t-id_number" class="custom-input mt-1" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase ml-2">Estado</label>
+                        <input type="text" id="t-state" class="custom-input mt-1">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase ml-2">Ciudad</label>
+                        <input type="text" id="t-city" class="custom-input mt-1">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase ml-2">Teléfono</label>
+                        <input type="text" id="t-phone" class="custom-input mt-1" placeholder="0414-0000000">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase ml-2">Especialidad</label>
+                        <input type="text" id="t-specialty" class="custom-input mt-1" placeholder="Ej: Musculación, CrossFit, Yoga">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase ml-2">Horario de Trabajo</label>
+                        <input type="text" id="t-schedule" class="custom-input mt-1" placeholder="Ej: Lunes a Viernes 8:00 AM - 4:00 PM">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase ml-2">Títulos y Estudios</label>
+                        <textarea id="t-titles" rows="3" class="custom-input mt-1" placeholder="Describe la formación académica del entrenador..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full btn-amber py-4 rounded-2xl shadow-xl shadow-yellow-400/10">
+                    GUARDAR CAMBIOS EN EL STAFF
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        const API_URL = "https://sijj2003.pythonanywhere.com";
+        let allTrainers = [];
+
+        async function loadTrainers() {
+            const res = await fetch(`${API_URL}/api/admin/trainers`);
+            const data = await res.json();
+            if (data.success) {
+                allTrainers = data.trainers;
+                renderTrainers(allTrainers);
+            }
+        }
+
+        function renderTrainers(list) {
+            const container = document.getElementById('trainers-list');
+            container.innerHTML = list.map(t => `
+                <button onclick="editTrainer('${t.id}')" class="w-full text-left p-4 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/10 transition group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-yellow-400/20 flex items-center justify-center text-yellow-400 font-bold">
+                            ${t.first_name ? t.first_name[0] : '?'}
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-white">${t.first_name} ${t.last_name}</p>
+                            <p class="text-[10px] text-gray-500 uppercase">${t.specialty || 'Sin especialidad'}</p>
+                        </div>
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        function prepareNewTrainer() {
+            document.getElementById('trainer-form').reset();
+            document.getElementById('trainer-id').value = '';
+            document.getElementById('form-title').textContent = "Nuevo Entrenador";
+            document.getElementById('password-field').classList.remove('hidden');
+            document.getElementById('delete-zone').classList.add('hidden');
+            document.getElementById('t-email').disabled = false;
+        }
+
+        function editTrainer(id) {
+            const t = allTrainers.find(x => x.id === id);
+            if (!t) return;
+
+            document.getElementById('trainer-id').value = t.id;
+            document.getElementById('form-title').textContent = "Editar Entrenador";
+            document.getElementById('t-email').value = t.email;
+            document.getElementById('t-email').disabled = true;
+            document.getElementById('t-first_name').value = t.first_name || '';
+            document.getElementById('t-last_name').value = t.last_name || '';
+            document.getElementById('t-id_number').value = t.id_number || '';
+            document.getElementById('t-state').value = t.state || '';
+            document.getElementById('t-city').value = t.city || '';
+            document.getElementById('t-phone').value = t.phone || '';
+            document.getElementById('t-specialty').value = t.specialty || '';
+            document.getElementById('t-schedule').value = t.schedule || '';
+            document.getElementById('t-titles').value = t.titles || '';
+
+            document.getElementById('password-field').classList.add('hidden');
+            document.getElementById('delete-zone').classList.remove('hidden');
+        }
+
+        document.getElementById('trainer-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('trainer-id').value;
+            const payload = {
+                email: document.getElementById('t-email').value,
+                password: document.getElementById('t-password').value,
+                first_name: document.getElementById('t-first_name').value,
+                last_name: document.getElementById('t-last_name').value,
+                id_number: document.getElementById('t-id_number').value,
+                state: document.getElementById('t-state').value,
+                city: document.getElementById('t-city').value,
+                phone: document.getElementById('t-phone').value,
+                specialty: document.getElementById('t-specialty').value,
+                schedule: document.getElementById('t-schedule').value,
+                titles: document.getElementById('t-titles').value
+            };
+
+            const url = id ? `${API_URL}/api/trainer/profile/${id}` : `${API_URL}/api/admin/trainers/create`;
+            const method = id ? 'POST' : 'POST';
+
+            try {
+                const res = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+                if (result.success) {
+                    alert("Operación exitosa");
+                    loadTrainers();
+                    if (!id) prepareNewTrainer();
+                } else {
+                    alert("Error: " + result.error);
+                }
+            } catch (err) { alert("Error de conexión"); }
+        };
+
+        async function deleteCurrentTrainer() {
+            const id = document.getElementById('trainer-id').value;
+            if (!confirm("¿Seguro que deseas eliminar este entrenador? Perderá acceso inmediato.")) return;
+
+            const res = await fetch(`${API_URL}/api/admin/trainers/delete/${id}`, { method: 'DELETE' });
+            const result = await res.json();
+            if (result.success) {
+                alert("Entrenador eliminado");
+                prepareNewTrainer();
+                loadTrainers();
+            }
+        }
+
+        document.getElementById('search-trainer').oninput = (e) => {
+            const term = e.target.value.toLowerCase();
+            renderTrainers(allTrainers.filter(t => 
+                (t.first_name + " " + t.last_name).toLowerCase().includes(term)
+            ));
+        };
+
+        window.onload = loadTrainers;
+    </script>
+</body>
+</html>

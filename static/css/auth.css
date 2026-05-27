@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+/* Tema de Fondo Minimalista: Base Oscura (DEFAULT/LOGIN) */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0d0d1a;
+    /* Ruta actualizada: subimos dos niveles para llegar a backgrounds */
+    background-image: url('../img/backgrounds/FONDO.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #e5e7eb; 
+    /* Transición para un cambio de fondo suave */
+    transition: background-image 1s ease-in-out; 
+    
+    /* === APLICADO: Borde negro para todas las letras (Text Stroke Effect) === */
+    text-shadow: 
+        -0.5px -0.5px 0 #000,  
+         0.5px -0.5px 0 #000,
+        -0.5px  0.5px 0 #000,
+         0.5px  0.5px 0 #000;
+}
+
+/* Estilo específico para el efecto Glassmorphism en las tarjetas */
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.6);
+}
+
+/* Estilo para el botón con efecto NEON (AMARILLO/GRIS) */
+.neon-button {
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #fbbf24, 0 0 20px #fbbf24; 
+}
+.neon-button:hover {
+    box-shadow: 0 0 15px #fcd34d, 0 0 30px #fcd34d;
+    transform: scale(1.02);
+}
+
+/* Splash Screen */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000;
+    z-index: 100; 
+}
+
+/* === ESTILOS PARA EL LOGO Y ANIMACIÓN (Simple Pulse sin Neon) === */
+#splash-logo {
+    width: 250px;
+    height: auto;
+    animation: simple-pulse 1.5s infinite alternate; 
+    filter: none; 
+}
+
+@keyframes simple-pulse {
+    from {
+        opacity: 0.8;
+        transform: scale(1.0);
+    }
+    to {
+        opacity: 1.0;
+        transform: scale(1.05); 
+    }
+}
+/* ======================================= */
+
+/* Estilos para el mensaje de estado (Mantiene el mensaje superior para errores/éxito genérico) */
+#message-box {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    z-index: 9999; 
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    pointer-events: none;
+}
+.message-success { background-color: #10b981; color: white; } 
+.message-error { background-color: #ef4444; color: white; } 
+
+/* Estilo específico para el logo del login (50% más grande) */
+#login-logo-img {
+    width: 225px; 
+    height: auto;
+    margin: 0 auto;
+}
+
+/* === FONDO ESPECÍFICO PARA EL DASHBOARD === */
+.dashboard-background {
+    /* Ruta actualizada: subimos dos niveles para llegar a backgrounds */
+    background-image: url('../img/backgrounds/PROFILE_FONDO.png') !important;
+}
+
+/* === ESTILO: Sombra/Borde para el texto del Header (Gris) === */
+.text-border-gray {
+    text-shadow: 0 0 3px #4b5563; 
+}
+
+/* Estilo para los enlaces de ayuda (pequeños y pulsables) */
+.help-link {
+    font-size: 0.875rem; 
+    font-weight: 500;
+    color: #9ca3af; 
+    transition: color 0.3s ease;
+    cursor: pointer;
+    flex-grow: 1; 
+    text-align: center;
+}
+.help-link:hover {
+    color: #38bdf8; 
+    text-shadow: 0 0 5px rgba(56, 189, 248, 0.5); 
+}
+/* Ajuste específico para que el contenedor de enlaces maneje tres elementos */
+#login-help-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; 
+}

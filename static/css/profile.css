@@ -1,0 +1,66 @@
+/* static/css/profile.css */
+
+body {
+    background-color: #030305;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* Glassmorphism de Alta Gama (Consistente con inicio.html) */
+.glass-panel {
+    background: rgba(15, 15, 20, 0.5);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 195, 0, 0.3);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 195, 0, 0.1);
+    z-index: 10;
+}
+
+/* Filas de métricas dentro de las tarjetas */
+.metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.metric-row:last-child {
+    border-bottom: none;
+}
+.metric-row .label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+}
+.metric-row .value {
+    font-size: 0.875rem;
+    font-weight: 800;
+    color: #e5e7eb;
+    font-family: monospace;
+}
+
+/* Animación de entrada suave */
+.fade-in-up {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0; 
+    transform: translateY(20px);
+}
+
+@keyframes fadeInUp { 
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    } 
+}
+
+/* Scrollbar Minimalista */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }

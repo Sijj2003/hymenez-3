@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMENEZ - Gestión de Rutinas y Ejercicios</title>
+    <link rel="icon" type="image/png" href="mini_logo.png">
+    <link rel="shortcut icon" type="image/png" href="mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /*
+         * ESTILOS COPIADOS DE admin_users.html
+         * Se mantienen las variables de color, la fuente 'Inter' y los estilos base
+         * para asegurar una apariencia consistente en todo el panel de administración.
+         */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* 💡 Define el color de acento amarillo de tu marca */
+        .GYM-YELLOW {
+            color: #FFC300; /* Amarillo */
+        }
+        .bg-GYM-YELLOW {
+            background-color: #FFC300;
+        }
+        .hover\:bg-GYM-YELLOW-dark:hover {
+            background-color: #FFB300; /* Amarillo ligeramente más oscuro para el hover */
+        }
+        .border-GYM-YELLOW {
+            border-color: #FFC300;
+        }
+
+        /* Estilos base del Administrador */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d1a; /* Negro muy oscuro */
+            background-image: url('FONDO.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #e5e7eb; /* Blanco suave para el texto */
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            background-color: rgba(13, 13, 26, 0.9); /* Fondo oscuro semitransparente */
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .content-container {
+            /* Se modifica para que sirva como un contenedor central para las cards */
+            background-color: rgba(18, 18, 30, 0.95); /* Contenedor ligeramente más claro que el fondo */
+            backdrop-filter: blur(3px);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            padding: 24px;
+            /* Se elimina el margen superior para usar flexbox en el main */
+        }
+        
+        /* Estilo para las tarjetas (cards) de gestión */
+        .management-card {
+            background-color: #1a1a2e; /* Fondo de la tarjeta */
+            border: 1px solid #334155;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .management-card:hover {
+            border-color: #FFC300; /* Color de acento al pasar el mouse */
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(255, 195, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="flex flex-col">
+    
+    <header class="dashboard-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white">
+                <span class="GYM-YELLOW">GYM</span>ENEZ
+            </h1>
+            <nav class="space-x-4">
+                <button id="back-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out">
+                    ← Regresar
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow flex items-center justify-center py-12">
+        <div class="content-container w-full max-w-4xl">
+            <h2 class="text-3xl font-bold text-white mb-8 text-center border-b border-gray-700 pb-4">
+                Administración de Contenido Físico
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <a href="admin_exercises_creator.html" class="management-card p-6 block">
+                    <div class="text-5xl mb-4 GYM-YELLOW">🏋️</div> <h3 class="text-xl font-bold text-white mb-2">GESTIÓN DE EJERCICIOS</h3>
+                    <p class="text-gray-400">Crear, editar y eliminar ejercicios (nombre, descripción, grupo muscular, video).</p>
+                </a>
+
+                <a href="admin_routines_creator.html" class="management-card p-6 block">
+                    <div class="text-5xl mb-4 GYM-YELLOW">📋</div> <h3 class="text-xl font-bold text-white mb-2">GESTIÓN DE RUTINAS</h3>
+                    <p class="text-gray-400">Construir, asignar y modificar planes de entrenamiento basados en los ejercicios.</p>
+                </a>
+
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // LÓGICA DE NAVEGACIÓN (REGRESAR) 
+        function handleNavigateBack() {
+            // Simplemente redirige a la página de administración sin cerrar la sesión
+            window.location.href = 'administration.html'; 
+        }
+
+        // --- INICIALIZACIÓN ---
+        window.onload = function() {
+            const storedSession = localStorage.getItem('adminSession');
+            
+            if (!storedSession) {
+                // Si no hay sesión, aún redirigir al login
+                window.location.href = 'administration.html'; 
+                return;
+            }
+
+            // LISTENER GLOBAL
+            document.getElementById('back-btn').addEventListener('click', handleNavigateBack);
+        };
+    </script>
+</body>
+</html>

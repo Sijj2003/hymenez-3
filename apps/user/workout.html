@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutina | GYMENEZ</title>
+    
+    <link rel="icon" type="image/png" href="/static/img/logos/mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/static/css/workout.css">
+</head>
+<body class="selection:bg-[#FFC300] selection:text-black overflow-x-hidden">
+
+    <div id="message-box" class="fixed top-6 left-1/2 transform -translate-x-1/2 px-4 md:px-6 py-2 md:py-3 rounded-full text-[10px] md:text-xs font-black tracking-widest uppercase shadow-2xl z-[9999] opacity-0 transition-all duration-500 pointer-events-none text-center w-11/12 max-w-[350px]"></div>
+    
+    <div class="fixed inset-0 bg-[url('/static/img/backgrounds/PROFILE_FONDO.png')] bg-cover bg-center opacity-20 -z-10 mix-blend-screen grayscale"></div>
+    <div class="fixed inset-0 bg-gradient-to-b from-[#030305]/50 via-[#030305]/90 to-[#030305] -z-10"></div>
+
+    <div id="video-modal" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-[5000] hidden flex-col items-center justify-center transition-opacity duration-300 opacity-0">
+        <div class="w-[95%] md:w-full max-w-5xl px-2 md:px-8 relative transform scale-95 transition-transform duration-300" id="video-modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <span class="text-[#FFC300] text-[8px] md:text-[9px] font-black uppercase tracking-widest block mb-1">GYMENEZ ON // Técnica</span>
+                    <h3 id="video-title" class="text-lg md:text-2xl font-black text-white uppercase tracking-tighter break-words">Cargando...</h3>
+                </div>
+                <button id="close-video-btn" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors border border-white/20">
+                    <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="relative w-full aspect-video rounded-xl md:rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(255,195,0,0.15)] border border-white/10 bg-black">
+                <div id="video-loader" class="absolute inset-0 flex flex-col items-center justify-center z-0">
+                    <div class="w-6 h-6 md:w-8 md:h-8 border-2 border-white/20 border-t-[#FFC300] rounded-full animate-spin mb-2"></div>
+                    <span class="text-[8px] md:text-[9px] text-gray-500 uppercase tracking-widest font-bold">Cargando Media...</span>
+                </div>
+            <iframe id="video-iframe" class="absolute inset-0 w-full h-full z-10 opacity-0 transition-opacity duration-500" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="finish-screen" class="fixed inset-0 bg-[#030305]/95 backdrop-blur-md z-[2000] hidden flex-col items-center justify-center opacity-0 transition-opacity duration-700">
+        <h2 id="finish-message" class="text-4xl sm:text-5xl md:text-8xl font-black text-[#FFC300] uppercase tracking-tighter drop-shadow-[0_0_30px_rgba(255,195,0,0.5)] text-center px-4">VICTORIA</h2>
+        
+        <div id="survey-container" class="hidden w-[95%] sm:w-full max-w-lg p-6 md:p-8 glass-panel rounded-3xl border border-white/10 mt-6 md:mt-8 transform transition-all duration-500 scale-95 opacity-0">
+            <h3 class="text-xl md:text-2xl font-black text-white mb-6 md:mb-8 text-center uppercase tracking-wider">Reporte de Sesión</h3>
+            <form id="routine-survey-form" class="space-y-5 md:space-y-6">
+                <div>
+                    <label class="block text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">1. Nivel de Esfuerzo (RPE)</label>
+                    <select id="costo-rutina" class="w-full bg-[#0d0d1a] border border-white/10 rounded-xl px-3 md:px-4 py-2.5 md:py-3 text-white text-xs md:text-sm focus:border-[#FFC300] outline-none transition" required>
+                        <option value="">Selecciona la intensidad...</option>
+                        <option value="1">1 - 3 (Recuperación / Muy Fácil)</option>
+                        <option value="5">4 - 6 (Moderado / Base)</option>
+                        <option value="8">7 - 8 (Intenso / Cerca del fallo)</option>
+                        <option value="10">9 - 10 (Extremo / Fallo Muscular)</option>
+                    </select>
+                </div>
+                <div class="p-4 md:p-5 bg-black/40 border border-white/5 rounded-2xl">
+                    <label class="block text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">2. ¿Dolor articular o inusual?</label>
+                    <div class="flex items-center space-x-4 md:space-x-6">
+                        <label class="flex items-center cursor-pointer group">
+                            <input type="radio" id="dolor-si" name="sintio-dolor" value="si" class="hidden">
+                            <div class="w-4 h-4 md:w-5 md:h-5 rounded-full border-2 border-gray-600 group-hover:border-red-500 mr-2 flex items-center justify-center transition">
+                                <div class="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-red-500 hidden indicator"></div>
+                            </div>
+                            <span class="text-xs md:text-sm font-semibold text-gray-300 group-hover:text-white transition">Sí, reportar</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer group">
+                            <input type="radio" id="dolor-no" name="sintio-dolor" value="no" class="hidden" checked>
+                            <div class="w-4 h-4 md:w-5 md:h-5 rounded-full border-2 border-emerald-500 mr-2 flex items-center justify-center transition">
+                                <div class="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-emerald-500 indicator"></div>
+                            </div>
+                            <span class="text-xs md:text-sm font-semibold text-white transition">No, todo en orden</span>
+                        </label>
+                    </div>
+                    
+                    <style> input[type="radio"]:checked + div { border-color: inherit; } input[type="radio"]:checked + div .indicator { display: block; } </style>
+
+                    <div id="dolor-details" class="space-y-3 md:space-y-4 mt-4 md:mt-6 hidden border-t border-white/5 pt-4">
+                        <div>
+                            <input type="text" id="zona-dolor" placeholder="Zona (Ej: Hombro derecho)" class="w-full bg-[#0d0d1a] border border-white/10 rounded-xl px-3 md:px-4 py-2.5 md:py-3 text-white text-xs md:text-sm focus:border-red-500 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Tipo de Sensación</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[10px] md:text-xs">
+                                <label class="bg-[#0d0d1a] border border-white/10 rounded-lg p-2 text-center cursor-pointer hover:border-red-500 transition"><input type="radio" name="tipo-dolor" value="pinchazo" class="hidden">Pinchazo</label>
+                                <label class="bg-[#0d0d1a] border border-white/10 rounded-lg p-2 text-center cursor-pointer hover:border-red-500 transition"><input type="radio" name="tipo-dolor" value="ardor" class="hidden">Ardor</label>
+                                <label class="bg-[#0d0d1a] border border-white/10 rounded-lg p-2 text-center cursor-pointer hover:border-red-500 transition"><input type="radio" name="tipo-dolor" value="otro" class="hidden">Otro</label>
+                            </div>
+                        </div>
+                        <div id="otro-dolor-container" class="hidden">
+                            <input type="text" id="otro-dolor-desc" placeholder="Describe brevemente..." class="w-full bg-[#0d0d1a] border border-white/10 rounded-xl px-3 md:px-4 py-2.5 md:py-3 text-white text-xs md:text-sm focus:border-red-500 outline-none transition">
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3 md:py-4 rounded-xl text-[10px] md:text-xs font-black tracking-[0.2em] bg-[#FFC300] text-black hover:bg-yellow-400 transition shadow-[0_0_20px_rgba(255,195,0,0.2)] uppercase">REGISTRAR VICTORIA</button>
+                    <a href="#" id="skip-survey-link" class="block text-center text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-4 hover:text-white transition">Omitir (No recomendado)</a>
+                </div>
+            </form>
+        </div>
+        
+        <div id="contact-modal" class="hidden w-[95%] sm:w-full max-w-md p-6 md:p-8 glass-panel rounded-3xl border border-white/10 mt-6 md:mt-8 text-center transform transition-all duration-500 scale-95 opacity-0">
+            <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-sky-500/10 rounded-full flex items-center justify-center mb-4 md:mb-6">
+                <svg class="w-6 h-6 md:w-8 md:h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+            </div>
+            <h3 class="text-lg md:text-xl font-black text-white mb-2 uppercase tracking-tight">¿Notificar al Coach?</h3>
+            <p class="text-xs md:text-sm text-gray-400 mb-6 leading-relaxed">Te redirigiremos en <span id="timer-count" class="text-sky-400 font-bold">25</span> seg. ¿Deseas enviar un reporte directo vía WhatsApp?</p>
+            <div class="flex gap-3 md:gap-4">
+                <button id="contact-no-btn" class="w-1/2 py-3 md:py-3 rounded-xl font-black text-[9px] md:text-[10px] tracking-widest border border-white/10 text-gray-400 hover:text-white hover:bg-white/5 transition uppercase">Omitir</button>
+                <button id="contact-yes-btn" class="w-1/2 py-3 md:py-3 rounded-xl font-black text-[9px] md:text-[10px] tracking-widest bg-sky-500 text-white hover:bg-sky-400 transition shadow-[0_0_15px_rgba(14,165,233,0.3)] uppercase">Notificar</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="fireworks-audio" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/download/mixkit-fireworks-whistle-explosion-466.wav" type="audio/wav">
+    </audio>
+
+    <header class="w-full border-b border-white/5 bg-black/30 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
+            <h1 class="text-lg md:text-xl font-black uppercase tracking-tighter block">
+                <span class="text-[#FFC300]">GYM</span><span class="text-white">ENEZ</span>
+            </h1>
+            <a href="routines.html" class="px-4 py-2 md:px-6 md:py-2 rounded-full border border-white/10 text-white font-bold text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+                Volver al Hub
+            </a>
+        </div>
+    </header>
+    
+    <main class="max-w-4xl mx-auto w-full px-4 md:px-6 py-6 md:py-10 flex-grow">
+            
+        <div class="mb-8 md:mb-10 text-center fade-in-up">
+            <p class="text-[#FFC300] text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] mb-1 md:mb-2">Protocolo del Día</p>
+            <h2 id="day-title" class="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-tight md:leading-none text-white break-words">
+                Cargando...
+            </h2>
+        </div>
+
+        <div id="loading-spinner" class="flex flex-col items-center justify-center py-16 md:py-20 fade-in-up">
+            <div class="w-10 h-10 md:w-12 md:h-12 border-4 border-white/10 border-t-[#FFC300] rounded-full animate-spin mb-4"></div>
+            <p class="text-gray-500 text-[10px] md:text-xs font-bold uppercase tracking-widest">Alineando Músculos...</p>
+        </div>
+
+        <div id="exercises-container" class="space-y-4 fade-in-up" style="animation-delay: 0.2s;"></div>
+        
+        <div id="finish-routine-container" class="mt-8 md:mt-12 text-center hidden pb-8 md:pb-10">
+            <button id="finish-routine-btn" class="w-full md:w-2/3 py-4 md:py-5 rounded-xl md:rounded-2xl text-[10px] md:text-sm tracking-[0.2em] font-black transition duration-300 uppercase shadow-2xl" disabled>
+                FINALIZAR SESIÓN
+            </button>
+        </div>
+        
+        <div id="no-data-message" class="hidden text-center py-16 md:py-20 glass-panel rounded-[24px] md:rounded-[32px] border border-white/5 p-6 md:p-8 fade-in-up">
+            <svg class="w-12 h-12 md:w-16 md:h-16 mx-auto text-[#FFC300] mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+            <p class="text-2xl md:text-3xl tracking-tighter font-black text-white uppercase">Día de <span class="text-[#FFC300]">Recuperación</span></p>
+            <p class="mt-2 md:mt-3 text-xs md:text-sm text-gray-400 max-w-md mx-auto">No hay exigencia física programada para hoy. El músculo crece mientras descansas. Disfruta tu día o nutre tu mente en GYMENEZ ON.</p>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-6 border-t border-white/5 mt-auto">
+        <p class="text-[8px] md:text-[9px] font-bold uppercase tracking-[0.3em] md:tracking-[0.5em] text-gray-600">© 2026 GYMENEZ PERFORMANCE</p>
+    </footer>
+
+    <script type="module" src="/static/js/workout.js"></script>
+</body>
+</html>

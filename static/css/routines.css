@@ -1,0 +1,83 @@
+/* static/css/routines.css */
+
+body {
+    background-color: #030305;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* Glassmorphism y Bento Grid Base */
+.glass-panel {
+    background: rgba(15, 15, 20, 0.5);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: rgba(255, 195, 0, 0.4);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 195, 0, 0.15);
+    z-index: 10;
+}
+
+/* Variantes de color para hover en sinergias */
+.bento-card.hover-green:hover { border-color: rgba(16, 185, 129, 0.5); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.9), 0 0 30px rgba(16, 185, 129, 0.2); }
+.bento-card.hover-red:hover { border-color: rgba(220, 38, 38, 0.5); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.9), 0 0 30px rgba(220, 38, 38, 0.2); }
+
+/* Fondos para módulos de Sinergia (Cross-selling) */
+.bg-eats {
+    background: linear-gradient(to top, rgba(5,5,5,1) 5%, rgba(5,5,5,0.2)), url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=600');
+    background-size: cover; background-position: center;
+}
+.bg-on {
+    background: linear-gradient(to top, rgba(5,5,5,1) 5%, rgba(5,5,5,0.2)), url('https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?q=80&w=600');
+    background-size: cover; background-position: center;
+}
+
+/* Efectos visuales de texto */
+.day-name-text {
+    text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+}
+
+/* === ESTILOS PARA EL DÍA ACTUAL (HOY) === */
+@keyframes pulse-emerald {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.3), inset 0 0 20px rgba(16, 185, 129, 0.1);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(16, 185, 129, 0.6), inset 0 0 20px rgba(16, 185, 129, 0.2);
+    }
+}
+
+.day-card.today {
+    border-color: rgba(16, 185, 129, 0.8) !important;
+    animation: pulse-emerald 2.5s infinite ease-in-out;
+    
+    /* 🚨 CORRECCIÓN DEL GHOST BUG: Fuerza la visibilidad y posición 🚨 */
+    opacity: 1 !important; 
+    transform: translateY(0) scale(1.02) !important;
+}
+
+.day-card.today img {
+    opacity: 0.6 !important;
+    filter: grayscale(0) !important;
+}
+
+.day-card.today .day-name-text {
+    color: #10b981 !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.9), 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+/* Animación de entrada suave escalonada */
+.fade-in-up {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0; transform: translateY(30px);
+}
+@keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+/* Scrollbar Minimalista */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }

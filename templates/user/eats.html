@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Función en Desarrollo | GYMENEZ</title>
+    <link rel="icon" type="image/png" href="mini_logo.png">
+    <link rel="shortcut icon" type="image/png" href="mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* Tema de Fondo Minimalista: Base Oscura (Tomado de routines.html) */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d1a;
+            /* Usamos el mismo fondo del Dashboard (PROFILE_FONDO) */
+            background-image: url('PROFILE_FONDO.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #e5e7eb; 
+            transition: background-image 1s ease-in-out; 
+
+            /* Borde negro para todas las letras (Text Stroke Effect) */
+            text-shadow: 
+                -0.5px -0.5px 0 #000,  
+                 0.5px -0.5px 0 #000,
+                -0.5px  0.5px 0 #000,
+                 0.5px  0.5px 0 #000;
+        }
+        
+        /* Estilo específico para el efecto Glassmorphism en las tarjetas (Tomado de routines.html) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* Cursor no es necesario en esta página, pero lo mantenemos para consistencia */
+            /* cursor: pointer; */ 
+        }
+        
+        /* Sombra/Borde para el texto del Header (Gris) (Tomado de routines.html) */
+        .text-border-gray {
+            text-shadow: 0 0 3px #4b5563; 
+        }
+
+        /* Estilos específicos para la tarjeta de 'Próximamente' */
+        .coming-soon-icon {
+            filter: drop-shadow(0 0 5px rgba(250, 202, 25, 0.8));
+        }
+
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="flex justify-between items-center py-4 px-8 mb-10">
+        <h1 class="text-3xl font-extrabold uppercase tracking-wider text-border-gray">
+            <span class="text-amber-400">GYM</span><span class="text-white">ENEZ</span>
+        </h1>
+        
+        <div class="flex space-x-4">
+            <a href="index.html" 
+               class="px-4 py-2 text-sm font-semibold rounded-full bg-sky-600 text-white hover:bg-sky-500 transition duration-300">
+                REGRESAR
+            </a>
+        </div>
+    </header>
+    
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="max-w-xl w-full">
+            
+            <div class="glass-card p-8 md:p-12 rounded-2xl shadow-2xl text-center border-t-4 border-sky-400">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 mx-auto mb-6 text-amber-400 coming-soon-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.707 15.707c-.19.19-.44.293-.707.293s-.517-.103-.707-.293l-3-3c-.39-.39-.39-1.02 0-1.41s1.02-.39 1.41 0L11 15.58V7c0-.55.45-1 1-1s1 .45 1 1v8.58l1.79-1.79c.39-.39 1.02-.39 1.41 0s.39 1.02 0 1.41l-3 3z"/>
+                </svg>
+
+
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-4 uppercase text-amber-400">
+                    Función en Desarrollo
+                </h2>
+                
+                <p class="text-lg text-gray-300 mb-6">
+                    Agradecemos tu interés. Estamos trabajando arduamente para brindarte una **experiencia de usuario excepcional** con esta nueva funcionalidad.
+                </p>
+                
+                <p class="text-lg font-semibold text-sky-400">
+                    **¡Próximamente disponible!**
+                </p>
+
+            </div>
+            
+        </div>
+    </main>
+
+    </body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMENEZ PULSE - Centro de Mensajería</title>
+    <link rel="icon" type="image/png" href="mini_logo.png">
+    <link rel="shortcut icon" type="image/png" href="mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* Tema de Fondo y Tipografía */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d1a;
+            color: #e5e7eb; 
+            background-image: url('PROFILE_FONDO.png') !important; 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            transition: background-image 1s ease-in-out; 
+            text-shadow: 
+                -0.5px -0.5px 0 #000,  
+                 0.5px -0.5px 0 #000,
+                -0.5px  0.5px 0 #000,
+                 0.5px  0.5px 0 #000;
+        }
+        
+        /* Estilo para el efecto Glassmorphism en las tarjetas */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Estilo para los elementos de navegación de Pulse */
+        .pulse-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, border-left 0.3s;
+            border-left: 4px solid transparent;
+        }
+        .pulse-nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .pulse-nav-item.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left-color: #fbbf24; /* amber-400 */
+            color: #fbbf24;
+            box-shadow: 0 0 5px rgba(251, 191, 36, 0.5);
+        }
+        
+        /* Área de mensajes con scroll */
+        .message-area {
+            overflow-y: auto;
+            /* Calcula el espacio para el área de scroll, ajusta si es necesario */
+            max-height: calc(75vh - 180px); 
+        }
+        
+        /* Estilo: Sombra/Borde para el texto del Header (Gris) */
+        .text-border-gray {
+            text-shadow: 0 0 3px #4b5563; 
+        }
+        
+        /* Estilo para el botón de acción rápida del chat */
+        .quick-action-btn {
+            @apply px-3 py-1 text-sm rounded-full border border-gray-600 text-gray-300 hover:bg-gray-700 transition duration-200 whitespace-nowrap;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen bg-[#0d0d1a] text-white">
+
+    <div id="dashboard-screen" class="min-h-screen w-full p-4 md:p-8">
+        
+        <header class="flex justify-between items-center py-4 px-2 mb-8">
+            <a href="index.html" class="text-3xl font-extrabold uppercase tracking-wider text-border-gray">
+                <span class="text-amber-400">GYM</span><span class="text-white">ENEZ</span>
+            </a>
+            
+            <a href="index.html" 
+               class="px-6 py-2 text-sm font-semibold rounded-full bg-blue-600 text-white hover:bg-blue-500 transition duration-300 uppercase tracking-widest shadow-lg shadow-blue-500/50">
+                REGRESAR
+            </a>
+        </header>
+
+        <main class="w-full max-w-7xl mx-auto">
+            
+            <h2 class="text-3xl font-bold mb-6 uppercase tracking-wider text-amber-400 text-border-gray">
+                <span class="text-amber-400">PULSE</span><span class="text-white"> CENTER</span>
+            </h2>
+
+            <div class="flex flex-col md:flex-row gap-6 h-[75vh]">
+                
+                <nav class="glass-card p-4 md:w-1/4 flex-shrink-0 rounded-2xl border-t-2 border-sky-400/50">
+                    
+                    <h3 class="text-lg font-semibold mb-4 text-sky-400 border-b border-sky-400/30 pb-2">Bandejas</h3>
+                    
+                    <div id="nav-notifications" class="pulse-nav-item active">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                        Notificaciones Globales
+                    </div>
+                    
+                    <div id="nav-trainer-chat" class="pulse-nav-item">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z"></path></svg>
+                        Chat: Entrenador
+                    </div>
+
+                    <div id="nav-admin-chat" class="pulse-nav-item">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M12 20.91a8.962 8.962 0 01-5-1.748L4 20l1.378-3.093c.12-.266.309-.50.518-.707A8.96 8.96 0 0112 14v6.91zM20 18l-1.378-3.093c-.12-.266-.309-.50-.518-.707A8.96 8.96 0 0112 14v6.91a8.962 8.962 0 005-1.748L20 18z"></path></svg>
+                        Chat: Administrador
+                    </div>
+                    
+                    <div id="nav-group-channel" class="pulse-nav-item">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5m-5 0a2 2 0 100-4m0 4a2 2 0 110-4m-9-1h4m-4 0v4m-5-4h2a2 2 0 012 2v2a2 2 0 01-2 2H9l-3 3v-3H5a2 2 0 01-2-2V9a2 2 0 012-2h10a2 2 0 012 2v.5"></path></svg>
+                        Canal de Grupo (Difusión)
+                    </div>
+                </nav>
+
+                <div class="glass-card flex-grow p-6 rounded-2xl border-t-2 border-amber-400/50 flex flex-col">
+                    
+                    <h3 id="content-title" class="text-xl md:text-2xl font-bold mb-4 text-amber-400 pb-2 border-b border-gray-700">
+                        Notificaciones Globales
+                    </h3>
+                    <p id="content-context" class="text-sm text-gray-400 mb-4 hidden">
+                        Entrenador Asignado: **Juan Pérez** (Meta Actual: Pérdida de Peso).
+                    </p>
+
+                    <div id="message-list" class="message-area flex-grow space-y-4">
+                        
+                        <div class="bg-red-800/20 p-4 rounded-lg shadow-md border-l-4 border-red-400">
+                            <p class="text-sm font-semibold text-red-400">RECORDATORIO URGENTE</p>
+                            <p class="text-white mt-1">Tu próxima cuota de membresía vence en 3 días. Realiza el pago para evitar la suspensión.</p>
+                            <span class="text-xs text-gray-400 block mt-2">Recibido: 22/11/2025</span>
+                        </div>
+                        
+                        <div class="bg-green-800/20 p-4 rounded-lg shadow-md border-l-4 border-green-400">
+                            <p class="text-sm font-semibold text-green-400">¡RACHA DE ENTRENAMIENTO!</p>
+                            <p class="text-white mt-1">¡Felicidades! Has completado **7 días** de entrenamiento consecutivo. Sigue así, campeón.</p>
+                            <span class="text-xs text-gray-400 block mt-2">Recibido: 25/11/2025</span>
+                        </div>
+                        
+                        <div class="bg-amber-800/20 p-4 rounded-lg shadow-md border-l-4 border-amber-400">
+                            <p class="text-sm font-semibold text-amber-400 uppercase">GYMENEZ ON: ¡FLASH CONTENT!</p>
+                            <p class="text-white mt-1">Nuevo vídeo exclusivo ya disponible: "Los 5 errores más comunes en la sentadilla". Míralo ahora.</p>
+                            <a href="gymen_on.html" class="text-xs text-amber-300 underline block mt-2 hover:text-amber-100">Ver Contenido</a>
+                            <span class="text-xs text-gray-400 block mt-1">Recibido: 24/11/2025</span>
+                        </div>
+
+                        <div class="p-4 text-center text-gray-500 italic">
+                            ... Fin de Notificaciones Antiguas ...
+                        </div>
+                    </div>
+                    
+                    <div id="quick-actions-area" class="mt-4 pt-4 border-t border-gray-700 hidden">
+                        <h4 class="text-sm font-semibold text-gray-300 mb-2">Acciones Rápidas:</h4>
+                        <div class="flex flex-wrap gap-2 overflow-x-auto pb-2">
+                            <button type="button" class="quick-action-btn" data-message="Tengo dudas con el ejercicio de 'Peso Muerto'.">Duda con Ejercicio</button>
+                            <button type="button" class="quick-action-btn" data-message="Necesito un reemplazo de ejercicio para la pierna derecha (lesión).">Sustitución por Lesión</button>
+                            <button type="button" class="quick-action-btn" data-message="Quiero discutir la progresión de mi objetivo para el próximo mes.">Discutir Progresión</button>
+                            <button type="button" class="quick-action-btn" data-message="No podré entrenar esta semana, ¿puedes ajustar mi plan?">Ajuste de Horario</button>
+                        </div>
+                    </div>
+
+                    <div id="chat-input-area" class="mt-4 pt-4 border-t border-gray-700 hidden">
+                        <form id="chat-form" class="flex gap-3">
+                            <input type="text" id="chat-text-input" placeholder="Escribe tu mensaje..."
+                                   class="flex-grow px-4 py-3 rounded-lg bg-transparent text-white border border-gray-500 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition placeholder-gray-400 text-base"
+                                   required>
+                            <button type="submit" 
+                                    class="neon-button px-6 py-3 rounded-lg bg-gray-800 text-amber-400 font-bold uppercase tracking-wider border-2 border-amber-400/50 hover:bg-gray-700">
+                                Enviar
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const navItems = document.querySelectorAll('.pulse-nav-item');
+        const contentTitle = document.getElementById('content-title');
+        const contentContext = document.getElementById('content-context');
+        const messageList = document.getElementById('message-list');
+        const chatInputArea = document.getElementById('chat-input-area');
+        const quickActionsArea = document.getElementById('quick-actions-area');
+        const chatTextInput = document.getElementById('chat-text-input');
+        const chatForm = document.getElementById('chat-form');
+
+        const contentTemplates = {
+            'nav-notifications': {
+                title: 'Notificaciones Globales',
+                isChat: false,
+                context: false,
+                html: `
+                    <div class="bg-red-800/20 p-4 rounded-lg shadow-md border-l-4 border-red-400">
+                        <p class="text-sm font-semibold text-red-400">RECORDATORIO URGENTE</p>
+                        <p class="text-white mt-1">Tu próxima cuota de membresía vence en 3 días. Evita la suspensión.</p>
+                        <span class="text-xs text-gray-400 block mt-2">Recibido: 22/11/2025</span>
+                    </div>
+                    <div class="bg-green-800/20 p-4 rounded-lg shadow-md border-l-4 border-green-400">
+                        <p class="text-sm font-semibold text-green-400">¡RACHA DE ENTRENAMIENTO!</p>
+                        <p class="text-white mt-1">¡Felicidades! Has completado 7 días de entrenamiento consecutivo.</p>
+                        <span class="text-xs text-gray-400 block mt-2">Recibido: 25/11/2025</span>
+                    </div>
+                    <div class="bg-sky-800/20 p-4 rounded-lg shadow-md border-l-4 border-sky-400">
+                        <p class="text-sm font-semibold text-sky-400">RESUMEN SEMANAL</p>
+                        <p class="text-white mt-1">Completaste el 80% de tus entrenamientos. ¡Sigue con ese enfoque!</p>
+                        <span class="text-xs text-gray-400 block mt-2">Recibido: 26/11/2025</span>
+                    </div>
+                `
+            },
+            'nav-trainer-chat': {
+                title: 'Chat con Tu Entrenador',
+                isChat: true,
+                context: 'Entrenador Asignado: **Juan Pérez** (Meta Actual: Pérdida de Peso).',
+                hasQuickActions: true,
+                html: `
+                    <div class="flex justify-end">
+                        <div class="bg-amber-600 p-3 rounded-xl rounded-br-none max-w-xs md:max-w-md">
+                            <p class="text-white">Hola Juan, tengo problemas para hacer el 'Hip Thrust'. ¿Podrías revisar mi forma?</p>
+                            <span class="text-xs text-white/70 block mt-1 text-right">09:15 AM</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-start">
+                        <div class="bg-gray-700 p-3 rounded-xl rounded-tl-none max-w-xs md:max-w-md border-l-4 border-sky-400">
+                            <p class="text-sky-400 font-semibold">Juan Pérez (Entrenador)</p>
+                            <p class="text-white mt-1">¡Claro! Veo que estás en tu fase de fuerza. Recuerda mantener la barbilla pegada al pecho. Te envío un video rápido.</p>
+                            <span class="text-xs text-gray-400 block mt-1 text-left">09:17 AM</span>
+                            <div class="text-xs text-right mt-1 text-green-400">✓✓ Visto</div>
+                        </div>
+                    </div>
+                `
+            },
+            'nav-admin-chat': {
+                title: 'Chat con Administrador (Soporte)',
+                isChat: true,
+                context: 'Ticket Activo: #GYM-2025-582. Tiempo de Respuesta Estimado: 15 min.',
+                hasQuickActions: false,
+                html: `
+                    <div class="flex justify-start">
+                        <div class="bg-gray-700 p-3 rounded-xl rounded-tl-none max-w-xs md:max-w-md border-l-4 border-blue-400">
+                            <p class="text-blue-400 font-semibold">GYMBOT 🤖</p>
+                            <p class="text-white mt-1">Hola, soy GymBot. ¿Tu pregunta es sobre Facturación, Acceso o Rutinas? Por favor, escribe una palabra clave o espera por un administrador.</p>
+                            <span class="text-xs text-gray-400 block mt-1 text-left">10:00 AM</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <div class="bg-amber-600 p-3 rounded-xl rounded-br-none max-w-xs md:max-w-md">
+                            <p class="text-white">Necesito el enlace para pagar mi membresía de Diciembre.</p>
+                            <span class="text-xs text-white/70 block mt-1 text-right">10:01 AM</span>
+                        </div>
+                    </div>
+                `
+            },
+            'nav-group-channel': {
+                title: 'Canal de Grupo: Rutina Avanzada',
+                isChat: false,
+                context: 'Este es un canal de difusión. Solo el Entrenador puede enviar mensajes.',
+                html: `
+                    <div class="flex justify-start">
+                        <div class="bg-gray-800 p-3 rounded-xl max-w-full border-l-4 border-amber-400">
+                            <p class="text-amber-400 font-semibold mb-1">📢 ANUNCIO DEL ENTRENADOR</p>
+                            <h5 class="font-bold text-lg text-white">¡No olvides tu Hidratación!</h5>
+                            <p class="text-gray-200 mt-1">Recuerden que la fatiga se reduce con una hidratación constante. Objetivo para hoy: 3 litros de agua. ¡Vamos con todo!</p>
+                            <span class="text-xs text-gray-500 block mt-2 text-right">27/11/2025 - 07:00 AM</span>
+                        </div>
+                    </div>
+                     <div class="flex justify-start">
+                        <div class="bg-gray-800 p-3 rounded-xl max-w-full border-l-4 border-amber-400">
+                            <p class="text-amber-400 font-semibold mb-1">📚 CONTENIDO DE RUTINA</p>
+                            <h5 class="font-bold text-lg text-white">Técnica: Press de Banca</h5>
+                            <p class="text-gray-200 mt-1">En la sesión de hoy, enfócate en el agarre. El codo debe formar un ángulo de 45° con el torso. Cualquier duda, escríbeme por el chat personal.</p>
+                            <span class="text-xs text-gray-500 block mt-2 text-right">26/11/2025 - 06:30 PM</span>
+                        </div>
+                    </div>
+                    <div class="p-4 text-center text-gray-500 italic">
+                        ... No hay más mensajes del canal ...
+                    </div>
+                `
+            }
+        };
+
+        function switchContent(id) {
+            const template = contentTemplates[id];
+            
+            // 1. Manejo de la navegación activa
+            navItems.forEach(item => item.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            
+            // 2. Actualizar Título y Contexto
+            contentTitle.textContent = template.title;
+            if (template.context) {
+                contentContext.innerHTML = template.context;
+                contentContext.classList.remove('hidden');
+            } else {
+                contentContext.classList.add('hidden');
+            }
+
+            // 3. Cargar contenido HTML
+            messageList.innerHTML = template.html;
+            
+            // 4. Mostrar/Ocultar el área de input y acciones rápidas
+            if (template.isChat) {
+                chatInputArea.classList.remove('hidden');
+                chatTextInput.placeholder = 'Escribe tu mensaje...';
+            } else {
+                chatInputArea.classList.add('hidden');
+            }
+
+            if (template.hasQuickActions) {
+                quickActionsArea.classList.remove('hidden');
+                // Ajusta el área de scroll si las quick actions están visibles
+                messageList.style.maxHeight = 'calc(75vh - 250px)'; 
+            } else {
+                quickActionsArea.classList.add('hidden');
+                // Restaura el área de scroll
+                messageList.style.maxHeight = 'calc(75vh - 180px)'; 
+            }
+            
+            // Mover el scroll al fondo (simulando chat)
+            messageList.scrollTop = messageList.scrollHeight;
+        }
+
+        // Asigna la funcionalidad a los elementos de navegación
+        document.getElementById('nav-notifications').addEventListener('click', () => {
+            switchContent('nav-notifications');
+        });
+        document.getElementById('nav-trainer-chat').addEventListener('click', () => {
+            switchContent('nav-trainer-chat');
+        });
+        document.getElementById('nav-admin-chat').addEventListener('click', () => {
+            switchContent('nav-admin-chat');
+        });
+        document.getElementById('nav-group-channel').addEventListener('click', () => {
+            switchContent('nav-group-channel');
+        });
+
+        // Funcionalidad de Botones de Acción Rápida
+        document.querySelectorAll('.quick-action-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const message = button.getAttribute('data-message');
+                chatTextInput.value = message;
+                chatTextInput.focus();
+            });
+        });
+
+        // Simulación de envío de mensaje
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = chatTextInput.value.trim();
+            if (message) {
+                 // Aquí se enviaría el mensaje al servidor...
+                 alert(`Simulando envío de mensaje: "${message}"`);
+                 chatTextInput.value = '';
+            }
+        });
+        
+        // Inicializa la vista por defecto (Notificaciones)
+        switchContent('nav-notifications');
+    </script>
+</body>
+</html>

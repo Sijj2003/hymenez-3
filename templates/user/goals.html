@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Objetivos | GYMENEZ</title>
+    <link rel="icon" type="image/png" href="mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d1a;
+            background-image: url('PROFILE_FONDO.png');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #e5e7eb;
+            text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+        }
+        .check-icon { color: #4ade80; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="flex justify-between items-center py-6 px-8">
+        <h1 class="text-2xl font-black tracking-tighter text-white">MIS OBJETIVOS</h1>
+        <a href="index.html" class="px-6 py-2 rounded-full border border-white hover:bg-sky-500 transition duration-300">REGRESAR</a>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center p-4">
+        <div class="max-w-2xl w-full space-y-6">
+            <div class="glass-card p-8 border-t-4 border-sky-400">
+                <div class="text-center mb-8">
+                    <span class="text-sky-400 font-bold tracking-widest text-xs uppercase">Plan Trimestral</span>
+                    <h2 id="display-title" class="text-3xl font-black mt-2 italic tracking-tight">CARGANDO...</h2>
+                </div>
+
+                <div id="goals-list" class="space-y-4">
+                    </div>
+            </div>
+
+            <div class="text-center text-sm text-gray-400 italic">
+                "El éxito es la suma de pequeños esfuerzos repetidos día tras día."
+            </div>
+        </div>
+    </main>
+
+    <script>
+        async function loadGoals() {
+            // Aquí iría el fetch a tu endpoint de API (ej: api/data/goals)
+            // Simulación de respuesta de la DB
+            const mockData = {
+                title: "Primer Trimestre 2024",
+                goals: [
+                    "Aumentar masa muscular en tren inferior",
+                    "Mejorar resistencia cardiovascular (Running 5km)",
+                    "Mantener constancia de 4 días por semana",
+                    "Reducir porcentaje de grasa corporal en 2%"
+                ]
+            };
+
+            document.getElementById('display-title').innerText = mockData.title;
+            const list = document.getElementById('goals-list');
+            list.innerHTML = mockData.goals.map(goal => `
+                <div class="flex items-center p-4 bg-white/5 rounded-xl border border-white/10">
+                    <svg class="w-6 h-6 check-icon mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span class="text-lg font-medium">${goal}</span>
+                </div>
+            `).join('');
+        }
+
+        window.onload = loadGoals;
+    </script>
+</body>
+</html>

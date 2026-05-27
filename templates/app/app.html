@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMENEZ</title>
+    <link rel="icon" type="image/png" href="static/img/logos/mini_logo.png">
+    <link rel="shortcut icon" type="image/png" href="static/img/logos/mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="static/css/auth.css">
+</head>
+<body class="min-h-screen flex items-center justify-center bg-[#0d0d1a] text-white">
+
+    <div id="message-box"></div>
+
+    <div id="splash-screen" class="z-[1000]">
+        <div class="text-center">
+            <img id="splash-logo" 
+                src="static/img/logos/LOADING.png" 
+                alt="Logo GYMENEZ Neon" 
+                class="mx-auto"
+            >
+            <div id="loading-text" class="mt-4 text-xl md:text-2xl font-semibold tracking-widest text-sky-400 z-10">
+                
+            </div>
+        </div>
+    </div>
+
+    <div id="login-screen" class="hidden min-h-screen w-full flex items-center justify-center p-4">
+        <div class="glass-card p-6 md:p-8 w-full max-w-lg mx-auto rounded-2xl shadow-2xl border-t-2 border-sky-500/30">
+            <div class="text-center mb-6">
+                <div class="text-center mb-6">
+                    <img id="login-logo-img"
+                         src="static/img/logos/LOGIN_LOGO.png" 
+                         alt="Logo GYMENEZ" 
+                         class="mx-auto"
+                    >
+                </div>
+            </div>
+
+            <form id="login-form">
+                <div class="mb-6">
+                    <label for="login-email" class="block text-sm font-medium text-white mb-2">Correo Electrónico</label>
+                    <input type="email" id="login-email" name="email" value="" placeholder="tu.correo@ejemplo.com"
+                           class="w-full px-4 py-3 rounded-lg bg-transparent text-white border border-gray-500 focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition duration-300 placeholder-gray-400 text-base" required>
+                </div>
+                <div class="mb-8">
+                    <label for="login-password" class="block text-sm font-medium text-white mb-2">Contraseña</label>
+                     <input type="password" id="login-password" name="password" value="" placeholder=""
+                           class="w-full px-4 py-3 rounded-lg bg-transparent text-white border border-gray-500 focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition duration-300 placeholder-gray-400 text-base" required>
+                </div>
+
+                <button type="submit" id="login-btn"
+                        class="neon-button w-full py-3 rounded-lg bg-gray-800 text-amber-400 font-bold text-lg hover:bg-gray-700 uppercase tracking-wider border-2 border-amber-400/50">
+                    INGRESAR
+                </button>
+            </form>
+            
+            <div id="login-help-links" class="mt-4 pt-2 border-t border-gray-700/50">
+                <span id="register-request-link" class="help-link">
+                    Registrarme
+                </span>
+                <span id="staff-access-link" class="help-link">
+                    Acceso Staff
+                </span>
+                <span id="forgot-password-link" class="help-link">
+                    Recuperar Usuario
+                </span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div id="area-selection-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[1100]">
+        <div class="glass-card p-6 md:p-8 w-full max-w-sm mx-auto rounded-2xl shadow-2xl border-t-2 border-amber-400/50 text-center">
+            
+            <h3 class="text-xl md:text-2xl font-bold mb-6 text-white uppercase">Seleccione su Área</h3>
+
+            <button id="select-trainer-btn" 
+                    class="neon-button w-full py-4 mb-4 rounded-lg bg-gray-800 text-amber-400 font-bold text-lg hover:bg-gray-700 uppercase tracking-wider border-2 border-amber-400/50">
+                SOY ENTRENADOR
+            </button>
+
+            <button id="select-admin-btn" 
+                    class="neon-button w-full py-4 mb-6 rounded-lg bg-gray-800 text-sky-400 font-bold text-lg hover:bg-gray-700 uppercase tracking-wider border-2 border-sky-400/50">
+                SOY ADMINISTRADOR
+            </button>
+
+            <button id="modal-close-btn" 
+                    class="w-full py-3 text-sm rounded-lg bg-gray-600 text-white font-bold hover:bg-gray-700 transition duration-300">
+                Cerrar
+            </button>
+            
+        </div>
+    </div>
+    
+    <div id="active-session-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[1000]">
+        <div class="glass-card p-6 md:p-8 w-full max-w-lg mx-auto rounded-2xl shadow-2xl border-t-2 border-sky-500/30 text-center max-h-[90vh] overflow-y-auto">
+            <svg class="w-16 h-16 mx-auto mb-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <h3 class="text-xl md:text-2xl font-bold mb-4 text-amber-400">Sesión Activa Detectada</h3>
+            <p class="text-white mb-6">Parece que ya hay una sesión iniciada con este usuario en otro dispositivo.</p>
+            
+            <div id="modal-options">
+                <p class="text-lg font-semibold mb-6">¿Deseas cerrarla y continuar aquí?</p>
+                <div class="flex justify-center space-x-4">
+                    <button id="modal-cancel-btn" 
+                            class="px-6 py-3 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700 transition duration-300">
+                        No, Cancelar
+                    </button>
+                    <button id="modal-confirm-btn" 
+                            class="px-6 py-3 rounded-lg bg-amber-600 text-white font-bold hover:bg-amber-700 transition duration-300">
+                        Sí, Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+
+            <form id="force-logout-form" class="hidden mt-6 text-left">
+                <p class="text-sm text-gray-400 mb-4">Para confirmar el cierre, verifica tu identidad con los siguientes datos:</p>
+                
+                <div id="force-logout-message" class="hidden p-3 mb-4 rounded-lg bg-red-800/70 text-sm text-red-100 font-semibold text-center">
+                    </div>
+
+                <div class="mb-4">
+                    <label for="force-email" class="block text-sm font-medium text-white mb-2">Email Asociado</label>
+                    <input type="email" id="force-email" name="email" placeholder="tu.correo@ejemplo.com" readonly
+                           class="w-full px-4 py-3 rounded-lg bg-transparent text-white border border-gray-500 focus:border-sky-400 transition bg-gray-700/50 cursor-not-allowed" required>
+                </div>
+                <div class="mb-4">
+                    <label for="force-name" class="block text-sm font-medium text-white mb-2">Primer Nombre</label>
+                    <input type="text" id="force-name" name="name" placeholder="Tu primer nombre"
+                           class="w-full px-4 py-3 rounded-lg bg-transparent text-white border border-gray-500 focus:border-sky-400 transition" required>
+                </div>
+                <div class="mb-4">
+                    <label for="force-name" class="block text-sm font-medium text-white mb-2">Primer Apellido</label>
+                    <input type="text" id="force-lastname" name="lastname" placeholder="Tu primer apellido"
+                           class="w-full px-4 py-3 rounded-lg bg-transparent text-white border border-gray-500 focus:border-sky-400 transition" required>
+                </div>
+                <div class="mb-4">
+                    <label for="force-dob" class="block text-sm font-medium text-white mb-2">Fecha de Nacimiento (dd/mm/yyyy)</label>
+                    <input type="text" id="force-dob" name="dob" placeholder="01/01/1990" maxlength="10"
+                           class="w-full px-4 py-3 rounded-lg bg-transparent text-white border border-gray-500 focus:border-sky-400 transition" required>
+                </div>
+                 <div class="mb-4">
+                    <label for="force-phone" class="block text-sm font-medium text-white mb-2">Teléfono (ej: 04149283757)</label>
+                    <input type="text" id="force-phone" name="phone" placeholder="0414..."
+                           class="w-full px-4 py-3 rounded-lg bg-transparent text-white border border-gray-500 focus:border-sky-400 transition" required>
+                </div>
+                 <div class="mb-6">
+                    <label for="force-ci" class="block text-sm font-medium text-white mb-2">Cédula de Identidad (ej: 10584737)</label>
+                    <input type="text" id="force-ci" name="ci" placeholder="CI sin puntos ni guiones"
+                           class="w-full px-4 py-3 rounded-lg bg-transparent text-white border border-gray-500 focus:border-sky-400 transition" required>
+                </div>
+
+                <button type="submit" id="force-logout-btn"
+                        class="neon-button w-full py-3 rounded-lg bg-gray-800 text-amber-400 font-bold text-lg hover:bg-gray-700 uppercase tracking-wider border-2 border-amber-400/50">
+                    Cerrar Sesión Activa
+                </button>
+                <button type="button" id="force-logout-cancel"
+                        class="mt-3 w-full py-3 rounded-lg bg-gray-600 text-white font-bold hover:bg-gray-700 transition duration-300">
+                    Cancelar
+                </button>
+            </form>
+
+        </div>
+    </div>
+    
+    <div id="temp-message-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[2000] transition-opacity duration-500 opacity-0">
+        <div class="glass-card p-6 md:p-8 w-full max-w-md mx-auto rounded-2xl shadow-2xl border-t-2 border-sky-500/30 text-center transform scale-90 transition-transform duration-500">
+            <svg class="w-16 h-16 mx-auto mb-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h3 id="temp-message-text" class="text-xl md:text-2xl font-bold mb-0 text-white">
+                Proceso completado. La sesión anterior ha sido cerrada exitosamente. Por favor, inicie sesión nuevamente para acceder.
+            </h3>
+        </div>
+    </div>
+
+
+    <div id="dashboard-screen" class="hidden min-h-screen w-full p-4 md:p-8">
+        <header class="flex justify-between items-center py-4 px-2 mb-8">
+            <h1 class="text-3xl font-extrabold uppercase tracking-wider text-border-gray">
+                <span class="text-amber-400">GYM</span><span class="text-white">ENEZ</span>
+            </h1>
+            
+            <div class="flex space-x-4">
+                <a href="templates/user/profile.html" 
+                   class="px-4 py-2 text-sm font-semibold rounded-full bg-amber-600 text-white hover:bg-amber-500 transition duration-300">
+                    PROFILE
+                </a>
+                <button id="logout-button"
+                        class="px-4 py-2 text-sm font-semibold rounded-full bg-red-600 hover:bg-red-500 transition duration-300">
+                    Salir
+                </button>
+            </div>
+            </header>
+
+        <div class="grid grid-cols-1 gap-6">
+            
+            <a href="templates/user/routines.html" class="col-span-1 block"> 
+                <div class="glass-card p-6 md:p-8 w-full rounded-2xl flex flex-col items-center justify-center text-center h-64 cursor-pointer border-t-2 border-amber-400/50 hover:border-amber-400">
+                    <svg class="w-16 h-16 mb-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2 0l-2-1m2 1h-2m2 0h-2M4 7l2 1m-2 0l2-1m-2 1h2m-2 0h2M4 7h16M7 4h10a3 3 0 013 3v2a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3z"></path>
+                    </svg>
+                    <h2 class="text-4xl font-extrabold uppercase tracking-widest">
+                        <span class="text-amber-400">WORK</span><span class="text-white">OUT</span>
+                    </h2>
+                    <p class="text-base text-white mt-4">Comienza tu entrenamiento o explora tus rutinas.</p>
+                </div>
+            </a>
+            
+            <a href="templates/user/schedule.html" class="col-span-1 block"> 
+                <div class="glass-card p-6 md:p-8 w-full rounded-2xl flex flex-col items-center justify-center text-center h-64 cursor-pointer border-t-2 border-amber-400/50 hover:border-amber-400">
+                    <svg class="w-16 h-16 mb-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h.01M13 11h.01M17 11h.01M7 16h.01M11 16h.01M15 16h.01M6 18h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    <h2 class="text-4xl font-extrabold uppercase tracking-widest">
+                        <span class="text-amber-400">SCHE</span><span class="text-white">DULE</span>
+                    </h2>
+                    <p class="text-base text-white mt-4">Planifica y gestiona tus sesiones de entrenamiento grupales.</p>
+                </div>
+            </a>
+            <a href="templates/user/goals.html" class="col-span-1 block"> 
+                <div class="glass-card p-6 md:p-8 w-full rounded-2xl flex flex-col items-center justify-center text-center h-64 cursor-pointer border-t-2 border-amber-400/50 hover:border-amber-400">
+                    <svg class="w-16 h-16 mb-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h2 class="text-4xl font-extrabold uppercase tracking-widest">
+                        <span class="text-amber-400">GO</span><span class="text-white">ALS</span>
+                    </h2>
+                    <p class="text-base text-white mt-4">Hazle seguimiento a tus objetivos y ve tu progreso.</p>
+                </div>
+            </a>
+
+            <a href="templates/user/eats.html" class="col-span-1 block"> 
+                <div class="glass-card p-6 md:p-8 w-full rounded-2xl flex flex-col items-center justify-center text-center h-64 cursor-pointer border-t-2 border-amber-400/50 hover:border-amber-400">
+                    <svg class="w-16 h-16 mb-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2zM7 7h.01M17 7h.01M12 7h.01"/>
+                    </svg>
+                    <h2 class="text-4xl font-extrabold uppercase tracking-widest">
+                        <span class="text-amber-400">GYMENEZ </span><span class="text-white">EATS</span>
+                    </h2>
+                    <p class="text-base text-white mt-4">Planes de nutrición personalizados y gestión alimenticia para potenciar tus resultados.</p>
+                </div>
+            </a>
+
+            <a href="templates/user/on.html" class="col-span-1 block"> 
+                <div class="glass-card p-6 md:p-8 w-full rounded-2xl flex flex-col items-center justify-center text-center h-64 cursor-pointer border-t-2 border-amber-400/50 hover:border-amber-400">
+                    <svg class="w-16 h-16 mb-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.555-4.555A.996.996 0 0019 4H5a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2V9.445L15 14V10zM12 2v2m0 16v2m-8 0H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2h-8"></path>
+                    </svg>
+                    <h2 class="text-4xl font-extrabold uppercase tracking-widest">
+                        <span class="text-amber-400">GYMENEZ </span><span class="text-white">ON</span>
+                    </h2>
+                    <p class="text-base text-white mt-4">Canal exclusivo con programas del mundo de la salud y del fitness.</p>
+                </div>
+            </a>
+            
+            <a href="templates/user/pulse.html" class="col-span-1 block"> 
+                <div class="glass-card p-6 md:p-8 w-full rounded-2xl flex flex-col items-center justify-center text-center h-64 cursor-pointer border-t-2 border-amber-400/50 hover:border-amber-400">
+                    <svg class="w-16 h-16 mb-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z"></path>
+                    </svg>
+                    <h2 class="text-4xl font-extrabold uppercase tracking-widest">
+                        <span class="text-amber-400">GYMENEZ </span><span class="text-white">PULSE</span>
+                    </h2>
+                    <p class="text-base text-white mt-4">Tu centro de mensajería exclusivo.</p>
+                </div>
+            </a>
+
+            <a href="templates/user/support_center.html" class="col-span-1 block"> 
+                <div class="glass-card p-6 md:p-8 w-full rounded-2xl flex flex-col items-center justify-center text-center h-64 cursor-pointer border-t-2 border-amber-400/50 hover:border-amber-400">
+                    <svg class="w-16 h-16 mb-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M12 20a8 8 0 100-16 8 8 0 000 16zm0 0v-4m0-4v-4m-6.364 12.364l3.536-3.536m0-5.656l-3.536-3.536"></path>
+                    </svg>
+                    <h2 class="text-4xl font-extrabold uppercase tracking-widest">
+                        <span class="text-amber-400">CENTRO DE </span><span class="text-white">SOPORTE</span>
+                    </h2>
+                    <p class="text-base text-white mt-4">Obtén ayuda, resuelve dudas o reporta un problema.</p>
+                </div>
+            </a>
+            
+            </div>
+    </div>
+    
+    <div id="block-modal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden flex items-center justify-center p-4" aria-modal="true" role="dialog">
+        <div class="glass-card p-6 md:p-8 w-full max-w-sm mx-auto rounded-2xl shadow-2xl border-4 border-red-500/70 text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+            </svg>
+            <h3 class="mt-4 text-2xl font-bold text-white leading-6">¡Cuenta Bloqueada!</h3>
+            <div class="mt-2">
+                <p class="text-sm text-gray-400">
+                    Tu acceso ha sido **deshabilitado temporalmente**. Por favor, contacta a nuestro equipo de soporte para la reactivación de tu cuenta.
+                </p>
+                <p class="mt-4 text-xs font-semibold text-amber-400">
+                    Código de Soporte: **403**
+                </p>
+            </div>
+            </div>
+    </div>
+
+    <div id="register-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[1100] transition-opacity duration-300 opacity-0 overflow-y-auto py-10">
+    <div class="glass-card p-6 md:p-8 w-full max-w-2xl mx-auto rounded-2xl shadow-2xl border-t-2 border-emerald-400/50 my-auto">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-white uppercase tracking-wider mb-2">Crear Perfil Completo</h2>
+            <p class="text-gray-400 text-sm">Ingresa tus datos reales para completar tu perfil de una vez.</p>
+        </div>
+
+        <form id="register-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="md:col-span-2 border-b border-gray-700 pb-2 mb-2">
+                <span class="text-emerald-400 text-xs font-bold uppercase tracking-widest">Información de Acceso</span>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-400 mb-1">Correo Electrónico</label>
+                <input type="email" id="reg-email" class="w-full px-4 py-2 rounded-lg bg-gray-800/50 text-white border border-gray-500 focus:border-emerald-400 transition outline-none" placeholder="ejemplo@correo.com" required>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-400 mb-1">Contraseña</label>
+                <input type="password" id="reg-password" class="w-full px-4 py-2 rounded-lg bg-gray-800/50 text-white border border-gray-500 focus:border-emerald-400 transition outline-none" required>
+            </div>
+
+            <div class="md:col-span-2 border-b border-gray-700 pb-2 mt-2 mb-2">
+                <span class="text-emerald-400 text-xs font-bold uppercase tracking-widest">Datos del Perfil</span>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-400 mb-1">Nombre(s)</label>
+                <input type="text" id="reg-name" class="w-full px-4 py-2 rounded-lg bg-gray-800/50 text-white border border-gray-500 focus:border-emerald-400 transition uppercase outline-none" required>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-400 mb-1">Apellido(s)</label>
+                <input type="text" id="reg-lastname" class="w-full px-4 py-2 rounded-lg bg-gray-800/50 text-white border border-gray-500 focus:border-emerald-400 transition uppercase outline-none" required>
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium text-gray-400 mb-1">Cédula</label>
+                <div class="flex gap-2">
+                    <select id="reg-ci-type" class="w-20 px-2 py-2 rounded-lg bg-gray-800 text-white border border-gray-500 focus:border-emerald-400 outline-none">
+                        <option value="V">V</option>
+                        <option value="E">E</option>
+                    </select>
+                    <input type="text" id="reg-ci" class="flex-1 px-4 py-2 rounded-lg bg-gray-800/50 text-white border border-gray-500 focus:border-emerald-400 transition outline-none" placeholder="00.000.000" maxlength="11" inputmode="numeric" required>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium text-gray-400 mb-1">Teléfono</label>
+                <div class="flex gap-2">
+                    <select id="reg-phone-prefix" class="w-24 px-2 py-2 rounded-lg bg-gray-800 text-white border border-gray-500 focus:border-emerald-400 outline-none">
+                        <option value="0414">0414</option>
+                        <option value="0424">0424</option>
+                        <option value="0412">0412</option>
+                        <option value="0422">0422</option>
+                        <option value="0416">0416</option>
+                        <option value="0426">0426</option>
+                    </select>
+                    <input type="text" id="reg-phone-num" class="flex-1 px-4 py-2 rounded-lg bg-gray-800/50 text-white border border-gray-500 focus:border-emerald-400 transition outline-none" placeholder="1234567" maxlength="7" inputmode="numeric" required>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium text-gray-400 mb-1">Fecha Nacimiento</label>
+                <input type="text" id="reg-dob" class="w-full px-4 py-2 rounded-lg bg-gray-800/50 text-white border border-gray-500 focus:border-emerald-400 transition outline-none" placeholder="DD/MM/YYYY" maxlength="10" inputmode="numeric" required>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-400 mb-1">Sexo</label>
+                <select id="reg-sex" class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-500 focus:border-emerald-400 transition outline-none">
+                    <option value="Hombre">Hombre</option>
+                    <option value="Mujer">Mujer</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+
+            <div class="md:col-span-2 pt-4">
+                <button type="submit" id="reg-submit-btn" class="neon-button w-full py-3 rounded-lg bg-gray-800 text-emerald-400 font-bold text-lg hover:bg-gray-700 uppercase border-2 border-emerald-400/50 transition-all">
+                    Finalizar y Crear Perfil
+                </button>
+                <button type="button" id="close-register-modal" class="mt-2 w-full py-2 text-sm text-gray-500 hover:text-white transition duration-300">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="activation-modal" class="hidden fixed inset-0 z-[1200] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+
+    <div class="glass-card relative w-full max-w-md mx-auto p-8 rounded-3xl shadow-[0_0_50px_rgba(56,189,248,0.15)] border border-white/10 text-center transform transition-all">
+        
+        <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-32 bg-sky-500/20 blur-[50px] rounded-full"></div>
+
+        <div class="relative mb-6">
+            <div class="w-20 h-20 mx-auto bg-sky-500/10 rounded-2xl flex items-center justify-center border border-sky-400/30">
+                <svg class="w-10 h-10 text-sky-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
+                </svg>
+            </div>
+        </div>
+        
+        <h3 class="text-2xl md:text-3xl font-black mb-2 text-white tracking-tight">VERIFICACIÓN</h3>
+        <p class="text-sm md:text-base text-gray-400 mb-8 px-4">Hemos enviado un código de seguridad a tu correo. <br class="hidden md:block"> Introdúcelo debajo para continuar.</p>
+        
+        <form id="activation-form" class="space-y-6">
+            <input type="hidden" id="activation-email">
+            
+            <div class="relative group">
+                <input type="text" 
+                       id="activation-code" 
+                       maxlength="6" 
+                       placeholder="······"
+                       class="w-full max-w-[280px] md:max-w-[320px] px-2 py-4 text-center text-4xl md:text-5xl tracking-[0.4em] md:tracking-[0.6em] rounded-2xl bg-black/40 text-sky-400 border-2 border-white/10 group-hover:border-sky-400/50 focus:border-sky-400 focus:outline-none focus:ring-4 focus:ring-sky-500/20 font-mono transition-all duration-300" 
+                       required>
+                <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-sky-400 to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
+            </div>
+
+            <div class="pt-4 space-y-3">
+                <button type="submit" id="verify-btn"
+                        class="w-full py-4 rounded-xl bg-sky-500 text-white font-black text-lg hover:bg-sky-400 active:scale-[0.98] transition-all shadow-[0_10px_20px_-10px_rgba(56,189,248,0.5)] uppercase tracking-widest">
+                    Confirmar Código
+                </button>
+                
+                <button type="button" id="close-activation-modal" 
+                        class="w-full py-2 text-sm font-medium text-gray-500 hover:text-white transition-colors duration-300">
+                    Volver al inicio
+                </button>
+            </div>
+        </form>
+
+        <p class="mt-8 text-xs text-gray-600 uppercase tracking-tighter">
+            Sistema de Seguridad GYMENEZ SHIELD
+        </p>
+    </div>
+</div>
+
+<script src="static/js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { 
+      "source": "/fitness", 
+      "destination": "/templates/information/fitness.html" 
+    },
+    { 
+      "source": "/eats", 
+      "destination": "/templates/information/eats.html" 
+    },
+    { 
+      "source": "/on", 
+      "destination": "/templates/information/on.html" 
+    }
+  ]
+}

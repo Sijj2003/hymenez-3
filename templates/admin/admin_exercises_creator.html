@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMENEZ - Gestión de Ejercicios</title>
+    <link rel="icon" type="image/png" href="mini_logo.png">
+    <link rel="shortcut icon" type="image/png" href="mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /*
+         * ESTILOS BASE COPIADOS DE admin_users.html
+         * Asegura la consistencia visual (colores, fuente, fondo).
+         */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        .GYM-YELLOW { color: #FFC300; }
+        .bg-GYM-YELLOW { background-color: #FFC300; }
+        .hover\:bg-GYM-YELLOW-dark:hover { background-color: #FFB300; }
+        .border-GYM-YELLOW { border-color: #FFC300; }
+        .focus\:ring-GYM-YELLOW:focus { --tw-ring-color: #FFC300; }
+        .focus\:border-GYM-YELLOW:focus { border-color: #FFC300; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d1a;
+            background-image: url('FONDO.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #e5e7eb;
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            background-color: rgba(13, 13, 26, 0.9);
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .content-container {
+            background-color: rgba(18, 18, 30, 0.95);
+            backdrop-filter: blur(3px);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        /* Estilo para la tabla */
+        .admin-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-table th {
+            background-color: #1a1a2e;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+        
+        /* Modal backdrop y contenido */
+        .modal-backdrop { background-color: rgba(0, 0, 0, 0.85); }
+        .modal-content {
+            background-color: #1a1a2e;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        .modal-content input, .modal-content textarea {
+             /* Estilos personalizados para inputs y textareas */
+             background-color: #1a1a2e;
+             border: 1px solid #334155;
+             color: #e5e7eb;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <header class="dashboard-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white">
+                <span class="GYM-YELLOW">GYM</span>ENEZ
+            </h1>
+            <nav class="space-x-4">
+                <button id="back-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out">
+                    ← Regresar
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div class="content-container mt-8">
+            <div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-3">
+                <h2 class="text-xl font-semibold text-white">Lista de Ejercicios</h2>
+                <button id="add-exercise-btn" class="bg-GYM-YELLOW hover:bg-GYM-YELLOW-dark text-black font-semibold py-2 px-4 rounded-lg text-sm transition duration-150 ease-in-out">
+                    + Añadir Ejercicio
+                </button>
+            </div>
+            
+            <div class="mb-6">
+                <input type="text" id="exercise-search-input" placeholder="Buscar por Nombre o Descripción..." 
+                       class="w-full p-3 rounded-lg bg-[#1a1a2e] border border-gray-700 text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-GYM-YELLOW focus:border-GYM-YELLOW transition duration-150">
+            </div>
+
+            <div class="overflow-x-auto rounded-lg border border-gray-700">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th class="rounded-tl-lg">Nombre del Ejercicio</th>
+                            <th>Link Tutorial</th>
+                            <th>Descripción</th>
+                            <th class="rounded-tr-lg">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="exercises-table-body" class="text-sm text-gray-300 divide-y divide-gray-800">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <div id="exercise-modal" class="fixed inset-0 bg-black bg-opacity-80 modal-backdrop hidden z-[1010] flex justify-center p-4 overflow-y-auto">
+        
+        <div class="modal-content w-full max-w-xl p-6 rounded-xl transform transition-all duration-300 scale-100">
+            
+            <div class="flex justify-between items-center border-b border-gray-700 pb-4 mb-6">
+                <h3 id="modal-title" class="text-2xl font-semibold text-white">Añadir Nuevo Ejercicio</h3>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-GYM-YELLOW text-3xl leading-none transition-colors duration-200">&times;</button>
+            </div>
+
+            <form id="exercise-form" class="space-y-6">
+                <input type="hidden" id="exercise-id-field" name="id">
+                <input type="hidden" id="is-edit-mode" value="false">
+
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-300">Nombre del Ejercicio <span class="text-red-500">*</span></label>
+                    <input type="text" id="name" name="name" required 
+                           class="mt-1 w-full p-3 border rounded-lg focus:ring-GYM-YELLOW focus:border-GYM-YELLOW" 
+                           placeholder="Ej: Press de Banca Inclinado">
+                </div>
+
+                <div>
+                    <label for="link_tutorial" class="block text-sm font-medium text-gray-300">Link Tutorial del Ejercicio <span class="text-gray-500">(Opcional)</span></label>
+                    <input type="url" id="link_tutorial" name="link_tutorial" 
+                           class="mt-1 w-full p-3 border rounded-lg focus:ring-GYM-YELLOW focus:border-GYM-YELLOW" 
+                           placeholder="Ej: https://youtube.com/watch?v=tutorial">
+                </div>
+
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-300">Descripción del Ejercicio <span class="text-red-500">*</span></label>
+                    <textarea id="description" name="description" rows="4" required
+                              class="mt-1 w-full p-3 border rounded-lg focus:ring-GYM-YELLOW focus:border-GYM-YELLOW" 
+                              placeholder="Describe la ejecución, músculos trabajados y puntos clave."></textarea>
+                </div>
+
+                <div class="pt-6 flex justify-end space-x-3 border-t border-gray-700">
+                    <button type="button" id="cancel-modal-btn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-5 rounded-lg transition duration-200 ease-in-out" onclick="document.getElementById('exercise-modal').classList.add('hidden')">
+                        Cancelar
+                    </button>
+                    <button type="submit" id="submit-btn" class="bg-GYM-YELLOW hover:bg-GYM-YELLOW-dark text-black font-bold py-2 px-5 rounded-lg transition duration-200 ease-in-out">
+                        Crear Ejercicio
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // =============================================================
+        // 🚨 URL BASE DE LA API 
+        // =============================================================
+        const API_BASE_URL = 'https://sijj2003.pythonanywhere.com/api/admin/exercise'; 
+
+        // Variable para almacenar la lista completa de ejercicios
+        let allExercisesData = [];
+
+        // =============================================================
+        // LÓGICA DE LA TABLA (READ - Leer y Mostrar)
+        // =============================================================
+
+        async function fetchAllExercises() {
+            const tableBody = document.getElementById('exercises-table-body');
+            tableBody.innerHTML = '<tr><td colspan="4" class="text-center py-4 GYM-YELLOW">Cargando ejercicios...</td></tr>';
+            
+            try {
+                // Se usa la ruta plural /api/admin/exercises
+                const response = await fetch(API_BASE_URL.replace('/exercise', '/exercises'), { 
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Error HTTP: ${response.status} - ${errorText.substring(0, 100)}...`);
+                }
+
+                const data = await response.json();
+                
+                if (data.success && data.exercises) {
+                    allExercisesData = data.exercises; 
+                    renderExercisesTable(allExercisesData);
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-red-400">Error al cargar: ${data.error || 'Desconocido'}</td></tr>`;
+                    allExercisesData = [];
+                }
+
+            } catch (error) {
+                console.error("Error de red al obtener ejercicios:", error);
+                tableBody.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-red-400">Error de conexión.</td></tr>';
+                allExercisesData = [];
+            }
+        }
+
+        // Función para renderizar la tabla con una lista de ejercicios
+        function renderExercisesTable(exercisesToRender) {
+            const tableBody = document.getElementById('exercises-table-body');
+            tableBody.innerHTML = ''; 
+
+            if (exercisesToRender.length === 0) {
+                const searchTerm = document.getElementById('exercise-search-input').value;
+                const message = searchTerm.trim() !== '' 
+                    ? `No se encontraron ejercicios para "${searchTerm}".` 
+                    : 'No hay ejercicios registrados.';
+
+                tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-gray-400">${message}</td></tr>`;
+                return;
+            }
+
+            exercisesToRender.forEach(exercise => {
+                const row = tableBody.insertRow();
+                row.classList.add('hover:bg-gray-800/50'); 
+                
+                // Celdas de información
+                row.insertCell().textContent = exercise.name || 'N/A';
+                
+                const linkCell = row.insertCell();
+                if (exercise.link_tutorial) {
+                    const link = document.createElement('a');
+                    link.href = exercise.link_tutorial;
+                    link.target = "_blank";
+                    link.textContent = 'Ver Video';
+                    link.classList.add('text-blue-400', 'hover:text-blue-300', 'underline');
+                    linkCell.appendChild(link);
+                } else {
+                    linkCell.textContent = 'N/A';
+                }
+
+                // Descripción (limitada)
+                const descriptionText = exercise.description || 'N/A';
+                row.insertCell().textContent = descriptionText.length > 50 ? descriptionText.substring(0, 50) + '...' : descriptionText;
+
+
+                // Celda de Acciones
+                const actionsCell = row.insertCell();
+                actionsCell.classList.add('space-x-2');
+                
+                const editBtn = document.createElement('button');
+                editBtn.textContent = 'Editar';
+                editBtn.classList.add('GYM-YELLOW', 'hover:text-yellow-400', 'font-semibold');
+                editBtn.onclick = () => openModalForEdit(exercise);
+                actionsCell.appendChild(editBtn);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Eliminar';
+                deleteBtn.classList.add('text-red-500', 'hover:text-red-400', 'font-semibold', 'ml-2');
+                deleteBtn.onclick = () => deleteExercise(exercise.id, exercise.name);
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // =============================================================
+        // 🔍 LÓGICA DE BÚSQUEDA 🔍
+        // =============================================================
+
+        function filterExercisesTable(searchTerm) {
+            const normalizedSearch = searchTerm.toLowerCase().trim();
+
+            if (normalizedSearch === '') {
+                renderExercisesTable(allExercisesData);
+                return;
+            }
+
+            const filteredExercises = allExercisesData.filter(exercise => {
+                // Criterios de búsqueda
+                const name = (exercise.name || '').toLowerCase();
+                const description = (exercise.description || '').toLowerCase();
+                
+                return name.includes(normalizedSearch) || 
+                       description.includes(normalizedSearch);
+            });
+
+            renderExercisesTable(filteredExercises);
+        }
+
+        // =============================================================
+        // LÓGICA DEL MODAL (CREATE/UPDATE - Crear/Actualizar)
+        // =============================================================
+
+        function openModalForCreate() {
+            const form = document.getElementById('exercise-form');
+            form.reset(); 
+            document.getElementById('modal-title').textContent = 'Añadir Nuevo Ejercicio';
+            document.getElementById('exercise-id-field').value = '';
+            document.getElementById('is-edit-mode').value = 'false';
+            document.getElementById('submit-btn').textContent = 'Crear Ejercicio';
+
+            document.getElementById('exercise-modal').classList.remove('hidden');
+        }
+
+        function openModalForEdit(exercise) {
+            const form = document.getElementById('exercise-form');
+            form.reset(); 
+            
+            document.getElementById('modal-title').textContent = `Editar Ejercicio: ${exercise.name}`;
+            document.getElementById('exercise-id-field').value = exercise.id;
+            document.getElementById('is-edit-mode').value = 'true';
+            document.getElementById('submit-btn').textContent = 'Guardar Cambios';
+
+            // Llenar campos con datos del ejercicio
+            document.getElementById('name').value = exercise.name || '';
+            document.getElementById('link_tutorial').value = exercise.link_tutorial || '';
+            document.getElementById('description').value = exercise.description || '';
+
+            document.getElementById('exercise-modal').classList.remove('hidden');
+        }
+
+        // Manejador del Formulario (Crear y Editar)
+        async function handleExerciseFormSubmit(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const isEditMode = document.getElementById('is-edit-mode').value === 'true';
+            const exerciseId = document.getElementById('exercise-id-field').value;
+
+            // Recoger datos del formulario
+            const formData = {
+                id: exerciseId,
+                name: form.name.value.trim(),
+                link_tutorial: form.link_tutorial.value.trim(),
+                description: form.description.value.trim()
+            };
+            
+            // Validaciones básicas
+            if (!formData.name || !formData.description) {
+                alert("El Nombre y la Descripción del ejercicio son obligatorios.");
+                return;
+            }
+
+            const method = isEditMode ? 'PUT' : 'POST';
+            const url = isEditMode ? `${API_BASE_URL}/${exerciseId}` : API_BASE_URL;
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    const errorMessage = errorText.includes('error') ? JSON.parse(errorText).error : errorText.substring(0, 150) + '...';
+                    throw new Error(`Error HTTP: ${response.status} - ${errorMessage}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`${isEditMode ? 'Edición' : 'Creación'} de ejercicio exitosa: ${data.message}`);
+                    document.getElementById('exercise-modal').classList.add('hidden');
+                    fetchAllExercises(); // Recargar la tabla
+                } else {
+                    alert(`Error al ${isEditMode ? 'editar' : 'crear'} ejercicio: ${data.error}`);
+                }
+            } catch (error) {
+                alert(`Error de red al procesar el ejercicio: ${error.message}`);
+                console.error(error);
+            }
+        }
+        
+        // =============================================================
+        // LÓGICA DE ELIMINACIÓN (DELETE)
+        // =============================================================
+
+        async function deleteExercise(exerciseId, exerciseName) {
+            if (!confirm(`¿Está seguro de que desea ELIMINAR permanentemente el ejercicio: "${exerciseName}"? Esta acción es irreversible.`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/${exerciseId}`, { 
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Error HTTP: ${response.status} - ${errorText.substring(0, 100)}...`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`Ejercicio "${exerciseName}" eliminado con éxito!`);
+                    fetchAllExercises();
+                } else {
+                    alert(`Error al eliminar: ${data.error}`);
+                }
+            } catch (error) {
+                alert(`Error de red al eliminar el ejercicio.`);
+            }
+        }
+
+        // =============================================================
+        // 🚩 LÓGICA DE NAVEGACIÓN (REGRESAR) 🚩
+        // =============================================================
+
+        function handleNavigateBack() {
+            // Regresar a la página de selección de gestión de contenido físico
+            window.location.href = 'admin_routines.html'; 
+        }
+
+
+        // --- INICIALIZACIÓN ---
+        window.onload = function() {
+            const storedSession = localStorage.getItem('adminSession');
+            
+            if (!storedSession) {
+                // Si no hay sesión, redirigir al login
+                window.location.href = 'administration.html'; 
+                return;
+            }
+
+            fetchAllExercises();
+
+            // LISTENERS GLOBALES
+            document.getElementById('back-btn').addEventListener('click', handleNavigateBack);
+            document.getElementById('add-exercise-btn').addEventListener('click', openModalForCreate);
+            document.getElementById('close-modal-btn').addEventListener('click', () => {
+                document.getElementById('exercise-modal').classList.add('hidden');
+            });
+            document.getElementById('exercise-form').addEventListener('submit', handleExerciseFormSubmit);
+            
+            // 🔍 Listener para el campo de búsqueda de ejercicios 🔍
+            const exerciseSearchInput = document.getElementById('exercise-search-input');
+            if (exerciseSearchInput) {
+                exerciseSearchInput.addEventListener('input', (event) => {
+                    filterExercisesTable(event.target.value);
+                });
+            }
+
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMENEZ ADMIN - Panel de Control</title>
+    <link rel="icon" type="image/png" href="mini_logo.png">
+    <link rel="shortcut icon" type="image/png" href="mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* Tema de Fondo Monocromático y Minimalista */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7; /* Gris muy claro/Blanco roto */
+            color: #4a4a4a; /* Texto gris oscuro */
+            background-image: none !important; /* Elimina el fondo de imagen */
+            text-shadow: none; /* Elimina el borde de texto */
+        }
+        
+        /* Estilo de Tarjeta Limpia y Profesional (Reemplazo de glass-card) */
+        .professional-card {
+            background: #ffffff; /* Fondo blanco puro */
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Sombra suave */
+            transition: all 0.3s ease;
+            @apply p-8 rounded-lg flex flex-col items-start;
+        }
+
+        .professional-card:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            border-color: #4f46e5; /* Índigo en hover */
+        }
+
+        /* Estilo de los iconos dentro de los módulos */
+        .module-icon-pro {
+            @apply text-indigo-600; 
+        }
+        
+        /* Estilo para los títulos de las tarjetas */
+        .card-title {
+             @apply text-gray-900;
+        }
+        
+        /* Estilo de los textos de apoyo */
+        .card-description {
+            @apply text-gray-600;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div id="admin-panel" class="min-h-screen w-full p-6 md:p-12">
+        
+        <header class="flex justify-between items-center py-4 px-2 mb-10 border-b border-gray-200">
+            <h1 class="text-4xl font-extrabold uppercase tracking-widest text-gray-900">
+                <span class="text-indigo-600">GYMENEZ </span><span class="text-gray-900">ADMIN</span>
+            </h1>
+            
+            <button id="logout-admin-button"
+               class="px-8 py-2 text-sm font-bold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition duration-300 uppercase tracking-widest shadow-md">
+                CERRAR SESIÓN
+            </button>
+        </header>
+
+        <main class="w-full max-w-7xl mx-auto">
+            
+            <h2 class="text-3xl font-extrabold mb-10 uppercase tracking-wider text-gray-700">
+                PANEL DE GESTIÓN CENTRAL
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <a href="#notifications-management" class="col-span-1 block">
+                    <div class="professional-card">
+                        <svg class="w-10 h-10 mb-4 module-icon-pro" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-2 card-title">
+                            Notificaciones y Alertas
+                        </h3>
+                        <p class="text-sm card-description">
+                            Enviar comunicados masivos, recordatorios de pago y alertas de racha a los usuarios.
+                        </p>
+                    </div>
+                </a>
+
+                <a href="#support-queue" class="col-span-1 block">
+                    <div class="professional-card">
+                        <svg class="w-10 h-10 mb-4 module-icon-pro" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z"></path></svg>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-2 card-title">
+                            Soporte y Chat
+                        </h3>
+                        <p class="text-sm card-description">
+                            Responder tickets de soporte, gestionar la cola del Chatbot y chatear con usuarios.
+                        </p>
+                    </div>
+                </a>
+
+                <a href="#trainer-management" class="col-span-1 block">
+                    <div class="professional-card">
+                        <svg class="w-10 h-10 mb-4 module-icon-pro" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5m-5 0a2 2 0 100-4m0 4a2 2 0 110-4m-9-1h4m-4 0v4m-5-4h2a2 2 0 012 2v2a2 2 0 01-2 2H9l-3 3v-3H5a2 2 0 01-2-2V9a2 2 0 012-2h10a2 2 0 012 2v.5"></path></svg>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-2 card-title">
+                            Equipo y Canales
+                        </h3>
+                        <p class="text-sm card-description">
+                            Asignar entrenadores, crear y supervisar Canales de Grupo de difusión.
+                        </p>
+                    </div>
+                </a>
+
+                <a href="#user-management" class="col-span-1 block">
+                    <div class="professional-card">
+                        <svg class="w-10 h-10 mb-4 module-icon-pro" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-2 card-title">
+                            Gestión de Usuarios
+                        </h3>
+                        <p class="text-sm card-description">
+                            Administración de cuentas, suspensión de acceso y estado de membresías/pagos.
+                        </p>
+                    </div>
+                </a>
+
+                <a href="#content-management" class="col-span-1 block">
+                    <div class="professional-card">
+                        <svg class="w-10 h-10 mb-4 module-icon-pro" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-2 card-title">
+                            Media y Contenido
+                        </h3>
+                        <p class="text-sm card-description">
+                            Carga de contenido de video (GYMENEZ ON) y administración de planes nutricionales (EATS).
+                        </p>
+                    </div>
+                </a>
+
+                <a href="#analytics" class="col-span-1 block">
+                    <div class="professional-card">
+                        <svg class="w-10 h-10 mb-4 module-icon-pro" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-2 card-title">
+                            Analíticas y Reportes
+                        </h3>
+                        <p class="text-sm card-description">
+                            Monitoreo de engagement, tráfico, rendimiento de ventas y uso de módulos.
+                        </p>
+                    </div>
+                </a>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('logout-admin-button').addEventListener('click', () => {
+            alert('Admin ha cerrado sesión. Redireccionando a la página de login.');
+            window.location.href = 'index.html'; 
+        });
+    </script>
+</body>
+</html>

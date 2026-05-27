@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMENEZ - Acceso Entrenadores</title>
+    <link rel="icon" type="image/png" href="mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d1a;
+            background-image: url('FONDO.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #e5e7eb;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .input-field {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #fbbf24;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
+            outline: none;
+        }
+
+        .logo-glow {
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="w-full max-w-md p-4">
+        <div class="glass-card rounded-3xl p-8 text-center">
+            <div class="mb-8">
+                <h1 class="text-4xl font-black tracking-tighter logo-glow mb-2">
+                    <span class="text-yellow-400">GYM</span>ENEZ
+                </h1>
+                <p class="text-gray-400 text-sm font-medium uppercase tracking-widest">Panel de Entrenadores</p>
+            </div>
+
+            <div id="error-alert" class="hidden mb-6 p-3 bg-red-500/20 border border-red-500/50 rounded-xl text-red-200 text-sm"></div>
+
+            <form id="trainer-login-form" class="space-y-5 text-left">
+                <div>
+                    <label class="text-xs font-bold text-gray-400 ml-1 uppercase">Correo Corporativo</label>
+                    <input type="email" id="trainer-email" required 
+                           class="w-full input-field px-4 py-3 rounded-xl mt-1 text-white" 
+                           placeholder="nombre@gymenez.com">
+                </div>
+
+                <div>
+                    <label class="text-xs font-bold text-gray-400 ml-1 uppercase">Contraseña</label>
+                    <input type="password" id="trainer-password" required 
+                           class="w-full input-field px-4 py-3 rounded-xl mt-1 text-white" 
+                           placeholder="••••••••">
+                </div>
+
+                <div class="flex justify-between items-center px-1">
+                    <button type="button" id="forgot-password" class="text-xs text-yellow-500 hover:underline">¿Olvidaste tu clave?</button>
+                </div>
+
+                <button type="submit" 
+                        class="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-4 rounded-xl transition-all transform active:scale-95 shadow-lg shadow-yellow-500/20">
+                    INGRESAR AL SISTEMA
+                </button>
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-white/5">
+                <button onclick="window.location.href='index.html'" class="text-gray-500 hover:text-white text-xs transition">
+                    Volver al login de clientes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "https://sijj2003.pythonanywhere.com";
+
+        document.getElementById('trainer-login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('trainer-email').value;
+            const password = document.getElementById('trainer-password').value;
+            const errorDiv = document.getElementById('error-alert');
+
+            errorDiv.classList.add('hidden');
+
+            try {
+                const response = await fetch(`${API_URL}/api/trainer/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Guardar sesión específica para entrenadores
+                    localStorage.setItem('trainerSession', JSON.stringify(data.trainer));
+                    // Redirigir al dashboard (que deberemos crear)
+                    window.location.href = 'trainer_dashboard.html';
+                } else {
+                    errorDiv.textContent = data.error || "Acceso denegado";
+                    errorDiv.classList.remove('hidden');
+                }
+            } catch (err) {
+                errorDiv.textContent = "Error de conexión con el servidor.";
+                errorDiv.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('forgot-password').onclick = () => {
+            const msg = encodeURIComponent("Hola Soporte GYMENEZ, soy entrenador y necesito recuperar mi clave.");
+            window.open(`https://wa.me/584140000000?text=${msg}`, '_blank');
+        };
+    </script>
+</body>
+</html>

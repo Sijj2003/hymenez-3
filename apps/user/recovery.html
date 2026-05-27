@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMENEZ | Recovery Center</title>
+    
+    <link rel="icon" type="image/png" href="/static/img/logos/mini_logo.png">
+    <link rel="shortcut icon" type="image/png" href="/static/img/logos/mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/static/css/routines.css">
+</head>
+<body class="selection:bg-sky-500 selection:text-white overflow-x-hidden">
+
+    <div id="message-box" class="fixed top-6 left-1/2 transform -translate-x-1/2 px-4 md:px-6 py-2 md:py-3 rounded-full text-[10px] md:text-xs font-black tracking-widest uppercase shadow-2xl z-[9999] opacity-0 transition-all duration-500 pointer-events-none text-center w-11/12 max-w-[350px]"></div>
+
+    <div class="fixed inset-0 bg-[url('/static/img/backgrounds/PROFILE_FONDO.png')] bg-cover bg-center opacity-10 -z-10 mix-blend-screen grayscale"></div>
+    <div class="fixed inset-0 bg-gradient-to-b from-[#030308]/80 via-[#030308]/95 to-[#030305] -z-10"></div>
+    <div class="fixed inset-0 bg-sky-900/5 -z-10 pointer-events-none"></div>
+
+    <div id="dashboard-screen" class="min-h-screen w-full relative z-10 flex flex-col">
+        
+        <header class="w-full border-b border-white/5 bg-black/30 backdrop-blur-md sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
+                <div class="flex items-center gap-2 md:gap-3">
+                    <h1 class="text-lg md:text-xl font-black uppercase tracking-tighter block">
+                        <span class="text-sky-400">GYM</span><span class="text-white">ENEZ</span>
+                    </h1>
+                </div>
+                <a href="../start/inicio.html" class="px-4 py-2 md:px-6 md:py-2 rounded-full border border-white/10 text-white font-bold text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+                    Volver al Hub
+                </a>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto w-full px-4 md:px-6 py-6 md:py-10 flex-grow">
+            
+            <div class="mb-8 md:mb-10 fade-in-up" style="animation-delay: 0.1s;">
+                <p class="text-sky-400 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] mb-1 md:mb-2">Optimización Neuromuscular</p>
+                <h2 class="text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none break-words">
+                    Recovery <span class="text-white">Center</span>
+                </h2>
+                <p class="text-gray-400 text-xs md:text-sm mt-3 md:mt-4 max-w-xl">La verdadera evolución ocurre cuando descansas. Selecciona tu protocolo de recuperación para aliviar tensiones, mejorar tu movilidad y prevenir lesiones.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-auto">
+
+                <div class="md:col-span-3 lg:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+                    
+                    <a href="recovery_session.html?protocol=upper" class="glass-panel bento-card group relative overflow-hidden rounded-[24px] min-h-[140px] md:min-h-[160px] flex flex-col items-center justify-center text-center fade-in-up" style="animation-delay: 0.2s;">
+                        <div class="absolute inset-0 z-0">
+                            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-30 grayscale group-hover:grayscale-0 group-hover:opacity-40" alt="Estiramiento Torso">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#030305] via-[#030305]/60 to-transparent"></div>
+                        </div>
+                        <div class="relative z-10 transform transition-transform duration-300 group-hover:-translate-y-1">
+                            <span class="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] mb-1 block group-hover:text-sky-400 transition-colors drop-shadow-md">Protocolo 01</span>
+                            <h3 class="text-lg md:text-xl font-black uppercase tracking-wider text-white day-name-text drop-shadow-lg">Tren Superior</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="recovery_session.html?protocol=lower" class="glass-panel bento-card group relative overflow-hidden rounded-[24px] min-h-[140px] md:min-h-[160px] flex flex-col items-center justify-center text-center fade-in-up" style="animation-delay: 0.3s;">
+                        <div class="absolute inset-0 z-0">
+                            <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-30 grayscale group-hover:grayscale-0 group-hover:opacity-40" alt="Estiramiento Piernas">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#030305] via-[#030305]/60 to-transparent"></div>
+                        </div>
+                        <div class="relative z-10 transform transition-transform duration-300 group-hover:-translate-y-1">
+                            <span class="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] mb-1 block group-hover:text-sky-400 transition-colors drop-shadow-md">Protocolo 02</span>
+                            <h3 class="text-lg md:text-xl font-black uppercase tracking-wider text-white day-name-text drop-shadow-lg">Tren Inferior</h3>
+                        </div>
+                    </a>
+
+                    <a href="recovery_session.html?protocol=fullbody" class="glass-panel bento-card group relative overflow-hidden rounded-[24px] min-h-[140px] md:min-h-[160px] flex flex-col items-center justify-center text-center fade-in-up" style="animation-delay: 0.4s;">
+                        <div class="absolute inset-0 z-0">
+                            <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-30 grayscale group-hover:grayscale-0 group-hover:opacity-40" alt="Yoga Flow">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#030305] via-[#030305]/60 to-transparent"></div>
+                        </div>
+                        <div class="relative z-10 transform transition-transform duration-300 group-hover:-translate-y-1">
+                            <span class="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] mb-1 block group-hover:text-sky-400 transition-colors drop-shadow-md">Protocolo 03</span>
+                            <h3 class="text-lg md:text-xl font-black uppercase tracking-wider text-white day-name-text drop-shadow-lg">Full Body Flow</h3>
+                        </div>
+                    </a>
+
+                    <a href="recovery_session.html?protocol=lumbar" class="glass-panel bento-card group relative overflow-hidden rounded-[24px] min-h-[140px] md:min-h-[160px] flex flex-col items-center justify-center text-center fade-in-up" style="animation-delay: 0.5s;">
+                        <div class="absolute inset-0 z-0">
+                            <img src="https://images.unsplash.com/photo-1552196563-552592596440?q=80&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-30 grayscale group-hover:grayscale-0 group-hover:opacity-40" alt="Espalda Lumbar">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#030305] via-[#030305]/60 to-transparent"></div>
+                        </div>
+                        <div class="relative z-10 transform transition-transform duration-300 group-hover:-translate-y-1">
+                            <span class="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] mb-1 block group-hover:text-sky-400 transition-colors drop-shadow-md">Protocolo 04</span>
+                            <h3 class="text-lg md:text-xl font-black uppercase tracking-wider text-white day-name-text drop-shadow-lg">Alivio Lumbar</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="recovery_session.html?protocol=roller" class="glass-panel bento-card group relative overflow-hidden rounded-[24px] min-h-[140px] md:min-h-[160px] flex flex-col items-center justify-center text-center fade-in-up" style="animation-delay: 0.6s;">
+                        <div class="absolute inset-0 z-0">
+                            <img src="https://images.unsplash.com/photo-1593810450967-f9c42734e326?q=80&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-30 grayscale group-hover:grayscale-0 group-hover:opacity-40" alt="Foam Roller">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#030305] via-[#030305]/60 to-transparent"></div>
+                        </div>
+                        <div class="relative z-10 transform transition-transform duration-300 group-hover:-translate-y-1">
+                            <span class="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] mb-1 block group-hover:text-sky-400 transition-colors drop-shadow-md">Protocolo 05</span>
+                            <h3 class="text-lg md:text-xl font-black uppercase tracking-wider text-white day-name-text drop-shadow-lg">Foam Roller</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="recovery_session.html?protocol=sleep" class="glass-panel bento-card group relative overflow-hidden rounded-[24px] min-h-[140px] md:min-h-[160px] flex flex-col items-center justify-center text-center fade-in-up" style="animation-delay: 0.7s;">
+                        <div class="absolute inset-0 z-0">
+                            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-30 grayscale group-hover:grayscale-0 group-hover:opacity-40" alt="Relajación y Sueño">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#030305] via-[#030305]/60 to-transparent"></div>
+                        </div>
+                        <div class="relative z-10 transform transition-transform duration-300 group-hover:-translate-y-1">
+                            <span class="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] mb-1 block group-hover:text-sky-400 transition-colors drop-shadow-md">Protocolo 06</span>
+                            <h3 class="text-lg md:text-xl font-black uppercase tracking-wider text-white day-name-text drop-shadow-lg">Protocolo Sueño</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="md:col-span-3 lg:col-span-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 md:gap-6 fade-in-up" style="animation-delay: 0.8s;">
+                    <a href="eats.html" class="glass-panel bento-card hover-green rounded-[24px] p-5 md:p-6 bg-eats flex flex-col justify-end min-h-[160px] md:min-h-[180px] lg:min-h-[220px]">
+                        <div class="relative z-10">
+                            <span class="text-[8px] md:text-[9px] font-black text-emerald-400 uppercase tracking-widest mb-1 block drop-shadow-md">Sinergia Activa</span>
+                            <h3 class="text-lg md:text-xl font-black uppercase tracking-tighter text-white drop-shadow-lg">GYMENEZ EATS</h3>
+                            <p class="text-[10px] md:text-xs text-gray-200 mt-1 font-medium drop-shadow-md leading-relaxed">Alimentos antiinflamatorios para potenciar tu recuperación.</p>
+                        </div>
+                    </a>
+                    <a href="on.html" class="glass-panel bento-card hover-red rounded-[24px] p-5 md:p-6 bg-on flex flex-col justify-end min-h-[160px] md:min-h-[180px] lg:min-h-[220px]">
+                        <div class="relative z-10">
+                            <span class="text-[8px] md:text-[9px] font-black text-red-400 uppercase tracking-widest mb-1 block drop-shadow-md">Educación</span>
+                            <h3 class="text-lg md:text-xl font-black uppercase tracking-tighter text-white drop-shadow-lg">GYMENEZ ON</h3>
+                            <p class="text-[10px] md:text-xs text-gray-200 mt-1 font-medium drop-shadow-md leading-relaxed">Aprende la ciencia detrás del descanso y la movilidad.</p>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/js/auth.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const storedSession = localStorage.getItem('userSession');
+            if (!storedSession) {
+                window.location.href = '/apps/start/login.html';
+            }
+        });
+    </script>
+</body>
+</html>

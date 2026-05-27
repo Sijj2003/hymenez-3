@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMENEZ | Pasarela de Pago Segura</title>
+    <link rel="icon" type="image/png" href="/static/img/logos/mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/auth.css">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #050505; 
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        /* Glassmorphism Pro Coherente - Alto Contraste */
+        .premium-card {
+            background: linear-gradient(145deg, #111115 0%, #0a0a0c 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .glow-yellow {
+            border-color: rgba(255, 195, 0, 0.3);
+        }
+        .glow-yellow:hover { 
+            border-color: rgba(255, 195, 0, 0.8); 
+            box-shadow: 0 0 40px rgba(255, 195, 0, 0.2); 
+            transform: translateY(-2px);
+        }
+
+        /* Inputs Premium Oscuros de Alto Contraste */
+        .glass-input {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus {
+            border-color: #FFC300;
+            background: #000;
+            box-shadow: 0 0 20px rgba(255, 195, 0, 0.25);
+            outline: none;
+        }
+
+        select.glass-input option {
+            background-color: #0a0a0c;
+            color: white;
+        }
+
+        /* Animaciones */
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal { animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    </style>
+</head>
+<body class="selection:bg-[#FFC300] selection:text-black min-h-screen flex flex-col">
+
+    <div id="loading-overlay" class="fixed inset-0 z-50 bg-[#050505] flex flex-col items-center justify-center transition-all duration-700">
+        <div class="relative w-12 h-12">
+            <div class="absolute inset-0 border-2 border-white/10 rounded-full"></div>
+            <div class="absolute inset-0 border-2 border-[#FFC300] rounded-full border-t-transparent animate-spin"></div>
+        </div>
+        <p class="mt-4 text-[10px] font-bold uppercase tracking-[0.4em] text-[#FFC300]">Iniciando Pasarela Segura</p>
+    </div>
+
+    <div id="message-box" class="fixed top-6 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase shadow-2xl z-[9999] opacity-0 transition-all duration-500 pointer-events-none text-center border backdrop-blur-md"></div>
+
+    <header class="w-full border-b border-white/10 bg-[#050505]/90 backdrop-blur-xl sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 py-4 md:py-6 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-black uppercase tracking-tighter text-white">
+                <span class="text-[#FFC300]">GYM</span>ENEZ
+            </h1>
+            <a href="planes.html" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-white border border-white/20 px-5 py-2 rounded-full hover:border-[#FFC300] hover:text-[#FFC300] transition-all bg-[#111]">
+                Cancelar Pago
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center justify-center px-4 py-8 md:py-16 w-full max-w-6xl mx-auto reveal opacity-0">
+        
+        <div class="text-center mb-10 md:mb-14 w-full">
+            <span class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-[#FFC300] mb-3 block">Protocolo de Activación</span>
+            <h2 class="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-tight uppercase italic text-white drop-shadow-lg">
+                Confirmar <span class="text-[#FFC300]">Transacción</span>
+            </h2>
+            <p class="mt-3 text-white/80 text-xs md:text-sm font-medium uppercase tracking-widest">
+                Has seleccionado el <span id="display-plan-name" class="text-white font-black underline decoration-[#FFC300] underline-offset-4">...</span>
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 w-full items-stretch">
+            
+            <div class="premium-card glow-yellow p-6 md:p-10 flex flex-col relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
+                    <svg class="w-40 h-40 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.64-2.25 1.64-1.74 0-2.1-.96-2.17-1.92H8c.07 1.84 1.4 2.83 2.9 3.16V19h2.33v-1.67c1.55-.26 2.82-1.2 2.82-2.87 0-2.12-1.7-2.78-3.74-3.32z"/></svg>
+                </div>
+
+                <h3 class="text-lg md:text-xl font-black tracking-widest uppercase text-white mb-6 flex items-center gap-2">
+                    <span class="w-1.5 h-4 bg-[#FFC300] inline-block"></span> Credenciales de Depósito
+                </h3>
+                
+                <div class="space-y-4 flex-grow relative z-10">
+                    <div class="p-4 rounded-xl bg-[#0a0a0c] border border-white/10">
+                        <p class="text-[9px] font-black text-white/60 uppercase tracking-widest mb-1">Banco Receptor</p>
+                        <p class="text-base md:text-lg font-black text-white uppercase tracking-wide">Banesco (0134)</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-[#0a0a0c] border border-white/10 flex justify-between items-center group transition-all hover:border-[#FFC300]/50 hover:shadow-[0_0_15px_rgba(255,195,0,0.1)]">
+                        <div>
+                            <p class="text-[9px] font-black text-white/60 uppercase tracking-widest mb-1">Rif / Cédula de Identidad</p>
+                            <p class="text-base md:text-lg font-black text-white tracking-wider">V-21.050.291</p>
+                        </div>
+                        <button onclick="copyToClipboard('21050291')" class="w-10 h-10 rounded-lg border border-white/10 bg-[#111] flex items-center justify-center text-white hover:text-[#FFC300] hover:border-[#FFC300] hover:bg-[#FFC300]/10 transition-all active:scale-90">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </button>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-[#0a0a0c] border border-white/10 flex justify-between items-center group transition-all hover:border-[#FFC300]/50 hover:shadow-[0_0_15px_rgba(255,195,0,0.1)]">
+                        <div>
+                            <p class="text-[9px] font-black text-white/60 uppercase tracking-widest mb-1">Teléfono Afiliado (Pago Móvil)</p>
+                            <p class="text-base md:text-lg font-black text-white tracking-widest">0414-8780392</p>
+                        </div>
+                        <button onclick="copyToClipboard('04148780392')" class="w-10 h-10 rounded-lg border border-white/10 bg-[#111] flex items-center justify-center text-white hover:text-[#FFC300] hover:border-[#FFC300] hover:bg-[#FFC300]/10 transition-all active:scale-90">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="premium-card glow-yellow p-6 md:p-10 flex flex-col">
+                <h3 class="text-lg md:text-xl font-black tracking-widest uppercase text-white mb-2 flex items-center gap-2">
+                    <span class="w-1.5 h-4 bg-[#FFC300] inline-block"></span> Reportar Pago
+                </h3>
+                <p class="text-[10px] text-white/60 font-bold uppercase tracking-wider mb-6">El núcleo validará la referencia de forma automatizada.</p>
+                
+                <form id="payment-form" class="space-y-5 flex-grow flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-[9px] font-black text-white/80 uppercase tracking-widest mb-2 ml-1">Entidad de Origen</label>
+                            <select id="banco-emisor" class="w-full glass-input px-4 py-4 rounded-xl text-xs font-bold appearance-none cursor-pointer" required>
+                                <option value="" disabled selected>Seleccione el banco emisor...</option>
+                                <option value="0134">Banesco (0134)</option>
+                                <option value="0102">Banco de Venezuela (0102)</option>
+                                <option value="0105">Mercantil (0105)</option>
+                                <option value="0108">Provincial (0108)</option>
+                                <option value="0114">Bancaribe (0114)</option>
+                                <option value="0172">Bancamiga (0172)</option>
+                                <option value="0191">BNC (0191)</option>
+                                <option value="OTROS">Otro Banco...</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[9px] font-black text-white/80 uppercase tracking-widest mb-2 ml-1">Referencia Bancaria (Últimos 6 dígitos)</label>
+                            <input type="text" id="referencia" maxlength="6" inputmode="numeric" class="w-full glass-input px-4 py-4 rounded-xl text-xl font-black tracking-[0.4em] text-center text-[#FFC300]" placeholder="XXXXXX" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-[9px] font-black text-white/80 uppercase tracking-widest mb-2 ml-1">Monto Exacto Calculado (BS)</label>
+                            <input type="text" id="monto" class="w-full bg-[#111] border border-white/10 px-4 py-4 rounded-xl text-white text-xl font-black tracking-widest text-center cursor-not-allowed outline-none" readonly required>
+                            <p class="text-[8px] text-[#FFC300] mt-2 text-center uppercase tracking-widest font-black drop-shadow-md">Calculado automáticamente a tasa oficial BCV.</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-6">
+                        <button type="submit" id="btn-reportar" class="w-full py-4 rounded-xl bg-[#050505] text-[#FFC300] border border-[#FFC300]/50 font-black text-xs uppercase tracking-widest hover:bg-[#FFC300]/10 hover:border-[#FFC300] transition-all transform active:scale-95 shadow-[0_0_15px_rgba(255,195,0,0.1)] hover:shadow-[0_0_25px_rgba(255,195,0,0.3)] flex justify-center items-center gap-2">
+                            Verificar Transacción
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <p class="mt-12 text-white/40 text-[8px] md:text-[9px] uppercase tracking-[0.4em] font-black text-center">Protocolo de Verificación Encriptado</p>
+    </main>
+    
+    <script>
+        const API_BASE_URL = "https://sijj2003.pythonanywhere.com";
+
+        const planName = localStorage.getItem('pendingPaymentPlan');
+        const montoBs = localStorage.getItem('pendingPaymentBs');
+        const userSessionRaw = localStorage.getItem('userSession');
+
+        if(!planName || !montoBs) {
+            window.location.href = 'planes.html'; 
+        }
+
+        if(!userSessionRaw) {
+            alert("Su sesión ha expirado. Por favor, inicie sesión nuevamente.");
+            window.location.href = '/apps/start/login.html';
+        }
+
+        window.onload = () => {
+            document.getElementById('display-plan-name').textContent = `Plan ${planName}`;
+            
+            const montoFormateado = parseFloat(montoBs).toLocaleString('es-VE', {
+                minimumFractionDigits: 2, 
+                maximumFractionDigits: 2
+            });
+            document.getElementById('monto').value = montoFormateado;
+
+            setTimeout(() => {
+                document.getElementById('loading-overlay').classList.add('opacity-0', 'pointer-events-none');
+            }, 500);
+        };
+
+        function showMessage(message, type = 'error') {
+            const messagebox = document.getElementById('message-box');
+            if(!messagebox) return;
+            messagebox.textContent = message;
+            
+            if(type === 'success') {
+                messagebox.className = 'fixed top-6 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-[10px] md:text-xs font-black tracking-widest uppercase shadow-2xl z-[9999] transition-all duration-500 text-center border border-[#FFC300] bg-[#050505] text-[#FFC300] backdrop-blur-md';
+                messagebox.style.boxShadow = '0 0 30px rgba(255,195,0,0.3)';
+            } else {
+                messagebox.className = 'fixed top-6 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full text-[10px] md:text-xs font-black tracking-widest uppercase shadow-2xl z-[9999] transition-all duration-500 text-center border border-red-500 bg-[#050505] text-red-500 backdrop-blur-md';
+                messagebox.style.boxShadow = '0 0 30px rgba(239,68,68,0.3)';
+            }
+            
+            messagebox.style.opacity = '1';
+            messagebox.style.transform = 'translate(-50%, 0)';
+            
+            setTimeout(() => { 
+                messagebox.style.opacity = '0'; 
+                messagebox.style.transform = 'translate(-50%, -20px)'; 
+            }, 4000);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showMessage('Copiado al portapapeles con éxito', 'success');
+            });
+        }
+
+        document.getElementById('referencia').addEventListener('input', function (e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        document.getElementById('payment-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const referencia = document.getElementById('referencia').value;
+            const banco = document.getElementById('banco-emisor').value;
+
+            if(referencia.length !== 6) {
+                return showMessage('La referencia debe contener exactamente 6 dígitos numéricos.', 'error');
+            }
+
+            const btn = document.getElementById('btn-reportar');
+            btn.disabled = true;
+            btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-[#FFC300]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> PROCESANDO...`;
+
+            try {
+                const session = JSON.parse(userSessionRaw);
+                const userId = session.id || session._id;
+
+                const response = await fetch(`${API_BASE_URL}/api/payments/report`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: userId,
+                        plan: planName,
+                        banco: banco,
+                        referencia: referencia,
+                        monto: document.getElementById('monto').value
+                    })
+                });
+
+                const data = await response.json();
+
+                if(response.ok && data.success) {
+                    showMessage('Transacción reportada con éxito.', 'success');
+                    
+                    btn.innerHTML = 'VERIFICACIÓN PENDIENTE ✓';
+                    btn.className = 'w-full py-4 rounded-xl text-[#050505] font-black text-xs uppercase tracking-widest shadow-[0_0_30px_rgba(255,195,0,0.5)] bg-[#FFC300] cursor-default transition-all';
+                    
+                    localStorage.removeItem('pendingPaymentPlan');
+                    localStorage.removeItem('pendingPaymentBs');
+                    
+                    setTimeout(() => {
+                        window.location.href = '/apps/start/inicio.html';
+                    }, 3000);
+
+                } else {
+                    throw new Error(data.error || 'Fallo de comunicación con el núcleo.');
+                }
+            } catch (err) {
+                showMessage(err.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = 'REINTENTAR VERIFICACIÓN';
+            }
+        });
+    </script>
+</body>
+</html>

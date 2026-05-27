@@ -1,0 +1,71 @@
+/* static/css/admin_auth.css - Premium System Core */
+
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: #030305; 
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* Glassmorphism de Alta Gama */
+.glass-panel {
+    background: rgba(10, 10, 15, 0.65);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover effects para las tarjetas del Dashboard Admin */
+.admin-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: rgba(255, 195, 0, 0.3);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 195, 0, 0.1);
+    z-index: 10;
+}
+
+/* Inputs Premium */
+.glass-input {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+    border-color: #FFC300;
+    box-shadow: 0 0 0 1px rgba(255, 195, 0, 0.3);
+    background: rgba(0, 0, 0, 0.6);
+    outline: none;
+}
+
+/* Botón Dorado Premium */
+.btn-gold {
+    background: linear-gradient(135deg, #FFC300 0%, #eab308 100%);
+    color: #000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(255, 195, 0, 0.4);
+}
+
+.btn-gold:active { 
+    transform: translateY(0); 
+}
+
+/* Animaciones */
+.animate-premium-in { 
+    animation: premiumReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+}
+
+@keyframes premiumReveal {
+    0% { opacity: 0; filter: blur(10px); transform: translateY(20px); }
+    100% { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }

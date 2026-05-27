@@ -1,0 +1,64 @@
+/* static/css/workout.css */
+
+body {
+    background-color: #030305;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* Glassmorphism Alta Gama */
+.glass-panel {
+    background: rgba(15, 15, 20, 0.4);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+/* Tarjetas de Ejercicios Premium */
+.glass-item-card {
+    background: rgba(10, 10, 15, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Acento sutil izquierdo en lugar del borde grueso anterior */
+.glass-item-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #333;
+    transition: background 0.3s ease;
+}
+.glass-item-card.is-completed::before { background: #10b981; }
+.glass-item-card.is-skipped::before { background: #ef4444; }
+.glass-item-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 195, 0, 0.2);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.8);
+}
+
+/* Animaciones */
+.fade-in-up {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0; transform: translateY(20px);
+}
+@keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+.survey-visible { opacity: 1 !important; transform: scale(1) !important; }
+
+/* Scrollbar Minimalista */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+/* Estilos de Radio Buttons ocultos */
+input[type="radio"]:checked + label {
+    border-color: #ef4444 !important;
+    background-color: rgba(239, 68, 68, 0.1) !important;
+}

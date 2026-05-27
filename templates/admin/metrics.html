@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMENEZ - Gestión de Métricas</title>
+    <link rel="icon" type="image/png" href="mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d1a;
+            background-image: url('FONDO.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #e5e7eb;
+        }
+        .glass-effect {
+            background-color: rgba(13, 13, 26, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .custom-input {
+            background-color: #1a1a2e;
+            border: 1px solid #3d3d5c;
+            color: #facc15;
+            padding: 0.6rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            font-family: monospace;
+        }
+        .section-header { border-left: 4px solid #facc15; padding-left: 10px; margin-bottom: 15px; }
+        .label-style { font-size: 0.7rem; text-transform: uppercase; color: #9ca3af; margin-bottom: 4px; display: block; }
+    </style>
+</head>
+<body class="min-h-screen pb-10">
+
+    <header class="glass-effect fixed top-0 w-full z-50 px-6 py-3 flex justify-between items-center">
+        <h1 class="text-2xl font-extrabold tracking-tighter">
+            <span class="text-yellow-400">GYM</span>ENEZ <span class="text-sm font-light text-gray-400 ml-2">ADMIN</span>
+        </h1>
+        <button onclick="window.location.href='administration.html'" class="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg text-xs transition">Volver</button>
+    </header>
+
+    <main class="pt-24 px-4 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
+        
+        <div class="lg:col-span-1 glass-effect p-4 rounded-xl h-[80vh] flex flex-col">
+            <input type="text" id="user-search" class="custom-input mb-4 text-sm" placeholder="Buscar por nombre...">
+            <div id="users-list" class="space-y-1 overflow-y-auto pr-2 flex-grow"></div>
+        </div>
+
+        <div class="lg:col-span-3">
+            <div id="empty-state" class="glass-effect p-20 rounded-xl text-center">
+                <p class="text-gray-500 italic">Selecciona un usuario para actualizar su ficha física.</p>
+            </div>
+
+            <form id="metrics-form" class="glass-effect p-8 rounded-xl hidden space-y-10">
+                <div class="border-b border-gray-800 pb-4">
+                    <h2 id="display-name" class="text-3xl font-bold text-white">---</h2>
+                    <p id="display-id" class="text-yellow-500 text-xs font-mono"></p>
+                </div>
+
+                <div>
+                    <div class="section-header"><h3 class="text-sm font-bold text-white uppercase">Rasgos Generales</h3></div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div><label class="label-style">Estatura (cm)</label><input type="number" name="estatura" class="custom-input"></div>
+                        <div><label class="label-style">Peso (kg)</label><input type="number" step="0.1" name="peso" class="custom-input"></div>
+                        <div><label class="label-style">Edad (años)</label><input type="number" name="edad" class="custom-input"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-header"><h3 class="text-sm font-bold text-white uppercase">Medidas Superiores</h3></div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div><label class="label-style">Cuello</label><input type="text" name="cuello" class="custom-input"></div>
+                        <div><label class="label-style">Espalda</label><input type="text" name="espalda" class="custom-input"></div>
+                        <div><label class="label-style">Tórax</label><input type="text" name="torax" class="custom-input"></div>
+                        <div><label class="label-style">Abdomen</label><input type="text" name="abdomen" class="custom-input"></div>
+                        <div><label class="label-style">Brazo Der.</label><input type="text" name="brazo_derecho" class="custom-input"></div>
+                        <div><label class="label-style">Brazo Izq.</label><input type="text" name="brazo_izquierdo" class="custom-input"></div>
+                        <div><label class="label-style">Antebrazo Der.</label><input type="text" name="antebrazo_derecho" class="custom-input"></div>
+                        <div><label class="label-style">Antebrazo Izq.</label><input type="text" name="antebrazo_izquierdo" class="custom-input"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-header"><h3 class="text-sm font-bold text-white uppercase">Medidas Inferiores</h3></div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div><label class="label-style">Cintura</label><input type="text" name="cintura" class="custom-input"></div>
+                        <div><label class="label-style">Fémur Der.</label><input type="text" name="femur_derecho" class="custom-input"></div>
+                        <div><label class="label-style">Fémur Izq.</label><input type="text" name="femur_izquierdo" class="custom-input"></div>
+                        <div><label class="label-style">Tibia Der.</label><input type="text" name="tibia_derecha" class="custom-input"></div>
+                        <div><label class="label-style">Tibia Izq.</label><input type="text" name="tibia_izquierda" class="custom-input"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-header"><h3 class="text-sm font-bold text-white uppercase">Ficha Médica</h3></div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div><label class="label-style">Alergias</label><textarea name="alergias" rows="2" class="custom-input text-xs" placeholder="Ninguna"></textarea></div>
+                        <div><label class="label-style">Enfermedades Crónicas</label><textarea name="enfermedades_cronicas" rows="2" class="custom-input text-xs" placeholder="Ninguna"></textarea></div>
+                        <div><label class="label-style">Otros / Notas</label><textarea name="otros" rows="2" class="custom-input text-xs" placeholder="N/A"></textarea></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-4 rounded-xl shadow-lg transition-all active:scale-95 uppercase">
+                    Actualizar Ficha del Usuario
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        const API_BASE_URL = "https://sijj2003.pythonanywhere.com";
+        let allUsers = [];
+        let currentUserId = null;
+
+        async function init() {
+            const res = await fetch(`${API_BASE_URL}/api/admin/users`);
+            const data = await res.json();
+            if (data.success) {
+                allUsers = data.users;
+                renderUsers(allUsers);
+            }
+        }
+
+        function renderUsers(list) {
+            const container = document.getElementById('users-list');
+            container.innerHTML = list.map(u => `
+                <button onclick="selectUser('${u.id}', '${u.full_name || u.name}')" class="w-full text-left p-3 rounded-lg hover:bg-white/10 transition border border-transparent hover:border-white/10 group">
+                    <div class="text-sm font-bold text-gray-300 group-hover:text-yellow-400">${u.full_name || u.name}</div>
+                    <div class="text-[10px] text-gray-600 font-mono">${u.id}</div>
+                </button>
+            `).join('');
+        }
+
+        async function selectUser(id, name) {
+            currentUserId = id;
+            document.getElementById('empty-state').classList.add('hidden');
+            const form = document.getElementById('metrics-form');
+            form.classList.remove('hidden');
+            document.getElementById('display-name').textContent = name;
+            document.getElementById('display-id').textContent = `UID: ${id}`;
+            
+            form.reset();
+            
+            const res = await fetch(`${API_BASE_URL}/api/metrics/${id}`);
+            const data = await res.json();
+            if (data.success && data.metrics) {
+                // Relleno automático basado en los atributos 'name' que ahora coinciden con 'renderMetrics'
+                Object.keys(data.metrics).forEach(key => {
+                    const input = form.querySelector(`[name="${key}"]`);
+                    if (input) input.value = data.metrics[key];
+                });
+            }
+        }
+
+        document.getElementById('metrics-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = Object.fromEntries(new FormData(e.target));
+            
+            const res = await fetch(`${API_BASE_URL}/api/metrics/${currentUserId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            
+            const result = await res.json();
+            if(result.success) alert("✅ Datos sincronizados con el perfil del usuario.");
+        };
+
+        document.getElementById('user-search').oninput = (e) => {
+            const term = e.target.value.toLowerCase();
+            renderUsers(allUsers.filter(u => (u.full_name || u.name).toLowerCase().includes(term)));
+        };
+
+        window.onload = init;
+    </script>
+</body>
+</html>

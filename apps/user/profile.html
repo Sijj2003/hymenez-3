@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMENEZ | Mi Perfil Biométrico</title>
+    
+    <link rel="icon" type="image/png" href="/static/img/logos/mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/static/css/profile.css">
+    
+    <style>
+        /* Animación suave para la aparición de los candados */
+        .lock-overlay {
+            animation: fadeInLock 0.5s ease-out forwards;
+        }
+        @keyframes fadeInLock {
+            from { opacity: 0; backdrop-filter: blur(0px); }
+            to { opacity: 1; backdrop-filter: blur(8px); }
+        }
+    </style>
+</head>
+<body class="selection:bg-[#FFC300] selection:text-black overflow-x-hidden">
+
+    <div id="message-box" class="fixed top-6 left-1/2 transform -translate-x-1/2 px-4 md:px-6 py-2 md:py-3 rounded-full text-[10px] md:text-xs font-black tracking-widest uppercase shadow-2xl z-[9999] opacity-0 transition-all duration-500 pointer-events-none text-center w-11/12 max-w-[350px]"></div>
+
+    <div class="fixed inset-0 bg-[url('/static/img/backgrounds/PROFILE_FONDO.png')] bg-cover bg-center opacity-20 -z-10 mix-blend-screen grayscale"></div>
+    <div class="fixed inset-0 bg-gradient-to-b from-[#030305]/50 via-[#030305]/90 to-[#030305] -z-10"></div>
+
+    <div id="dashboard-screen" class="min-h-screen w-full relative z-10 flex flex-col">
+        
+        <header class="w-full border-b border-white/5 bg-black/30 backdrop-blur-md sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
+                <div class="flex items-center gap-2 md:gap-3">
+                    <h1 class="text-lg md:text-xl font-black uppercase tracking-tighter block">
+                        <span class="text-[#FFC300]">GYM</span><span class="text-white">ENEZ</span>
+                    </h1>
+                </div>
+                <a href="/apps/start/inicio.html" class="px-4 py-2 md:px-6 md:py-2 rounded-full border border-white/10 text-white font-bold text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition">
+                    Volver al Hub
+                </a>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto w-full px-4 md:px-6 py-6 md:py-10 flex-grow">
+            
+            <div class="mb-8 md:mb-10 fade-in-up" style="animation-delay: 0.1s;">
+                <p class="text-[#FFC300] text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] mb-1 md:mb-2">Expediente del Atleta</p>
+                <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none break-words">
+                    Perfil <span class="text-white">Biométrico</span>
+                </h2>
+            </div>
+
+            <div id="loading-spinner" class="flex flex-col items-center justify-center py-20 fade-in-up">
+                <div class="w-10 h-10 md:w-12 md:h-12 border-4 border-white/10 border-t-[#FFC300] rounded-full animate-spin mb-4"></div>
+                <p class="text-gray-500 text-[10px] md:text-xs font-bold uppercase tracking-widest">Sincronizando Data...</p>
+            </div>
+
+            <div id="profile-content" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-auto hidden">
+
+                <div class="md:col-span-2 lg:col-span-2 glass-panel bento-card rounded-[24px] md:rounded-[32px] p-6 md:p-8 flex flex-col justify-between relative overflow-hidden fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="absolute top-0 right-0 p-6 md:p-8 opacity-10 pointer-events-none">
+                        <svg class="w-32 h-32 md:w-40 md:h-40 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="relative z-10">
+                        <span id="p-subscription" class="px-2 md:px-3 py-1 bg-[#FFC300]/10 text-[#FFC300] text-[8px] md:text-[9px] font-black rounded border border-[#FFC300]/20 uppercase tracking-widest inline-block mb-3 md:mb-4">--</span>
+                        <h3 id="p-fullname" class="text-2xl md:text-3xl font-black uppercase tracking-tighter mb-1 text-white break-words">--</h3>
+                        <p id="p-email" class="text-gray-400 text-xs md:text-sm font-medium break-words">--</p>
+                    </div>
+                    
+                    <div class="mt-6 md:mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 border-t border-white/10 pt-5 md:pt-6 relative z-10">
+                        <div>
+                            <p class="text-[8px] md:text-[9px] text-gray-500 uppercase font-black tracking-widest">Nacimiento</p>
+                            <p id="p-dob" class="text-white font-bold text-xs md:text-sm mt-1">--</p>
+                        </div>
+                        <div>
+                            <p class="text-[8px] md:text-[9px] text-gray-500 uppercase font-black tracking-widest">Sexo Biológico</p>
+                            <p id="p-sex" class="text-white font-bold text-xs md:text-sm mt-1">--</p>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <p class="text-[8px] md:text-[9px] text-gray-500 uppercase font-black tracking-widest">Activo Desde</p>
+                            <p id="p-active-since" class="text-emerald-400 font-bold text-xs md:text-sm mt-1">--</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-1 lg:col-span-2 glass-panel bento-card rounded-[24px] md:rounded-[32px] p-6 md:p-8 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-white/5 to-transparent fade-in-up" style="animation-delay: 0.3s;">
+                    <h3 class="text-[9px] md:text-[10px] text-gray-500 font-black uppercase tracking-widest mb-4 md:mb-6 text-center sm:text-left">Métricas Base</h3>
+                    <div class="grid grid-cols-3 gap-2 md:gap-4 text-center">
+                        <div>
+                            <p id="m-peso" class="text-2xl sm:text-3xl lg:text-4xl font-black text-[#FFC300] tracking-tighter">--</p>
+                            <p class="text-[8px] md:text-[9px] text-gray-400 uppercase font-bold tracking-widest mt-1">Peso (KG)</p>
+                        </div>
+                        <div class="border-l border-r border-white/10">
+                            <p id="m-estatura" class="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tighter">--</p>
+                            <p class="text-[8px] md:text-[9px] text-gray-400 uppercase font-bold tracking-widest mt-1">Altura (CM)</p>
+                        </div>
+                        <div>
+                            <p id="m-edad" class="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tighter">--</p>
+                            <p class="text-[8px] md:text-[9px] text-gray-400 uppercase font-bold tracking-widest mt-1">Edad</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="card-upper-body" class="md:col-span-1 lg:col-span-2 glass-panel bento-card rounded-[24px] md:rounded-[32px] p-5 md:p-6 fade-in-up relative" style="animation-delay: 0.4s;">
+                    <h3 class="text-base md:text-lg font-black uppercase tracking-tighter text-white mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-sky-400"></span> Tren Superior
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 md:gap-y-4 gap-x-6">
+                        <div class="metric-row"><span class="label">Cuello</span><span id="m-cuello" class="value">--</span></div>
+                        <div class="metric-row"><span class="label">Espalda</span><span id="m-espalda" class="value">--</span></div>
+                        <div class="metric-row"><span class="label">Tórax</span><span id="m-torax" class="value">--</span></div>
+                        <div class="metric-row"><span class="label">Abdomen</span><span id="m-abdomen" class="value">--</span></div>
+                        <div class="metric-row"><span class="label">Brazo (D/I)</span><span class="value"><span id="m-brazo_der">--</span> / <span id="m-brazo_izq">--</span></span></div>
+                        <div class="metric-row"><span class="label">Antebrazo (D/I)</span><span class="value"><span id="m-antebrazo_der">--</span> / <span id="m-antebrazo_izq">--</span></span></div>
+                    </div>
+                </div>
+
+                <div id="card-lower-body" class="md:col-span-1 lg:col-span-2 glass-panel bento-card rounded-[24px] md:rounded-[32px] p-5 md:p-6 fade-in-up relative" style="animation-delay: 0.5s;">
+                    <h3 class="text-base md:text-lg font-black uppercase tracking-tighter text-white mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Tren Inferior
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 md:gap-y-4 gap-x-6">
+                        <div class="metric-row"><span class="label">Cintura</span><span id="m-cintura" class="value">--</span></div>
+                        <div class="hidden sm:block"></div> 
+                        <div class="metric-row"><span class="label">Fémur (D/I)</span><span class="value"><span id="m-femur_der">--</span> / <span id="m-femur_izq">--</span></span></div>
+                        <div class="metric-row"><span class="label">Tibia (D/I)</span><span class="value"><span id="m-tibia_der">--</span> / <span id="m-tibia_izq">--</span></span></div>
+                    </div>
+                </div>
+
+                <div id="card-medical" class="md:col-span-3 lg:col-span-4 glass-panel bento-card border-red-500/20 rounded-[24px] md:rounded-[32px] p-6 md:p-8 fade-in-up relative" style="animation-delay: 0.6s;">
+                    <h3 class="text-base md:text-lg font-black uppercase tracking-tighter text-red-400 mb-5 md:mb-6 flex items-center gap-2">
+                        <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        Ficha Médica & Observaciones
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                        <div class="bg-black/40 p-4 md:p-5 rounded-xl md:rounded-2xl border border-white/5">
+                            <p class="text-[9px] md:text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1 md:mb-2">Alergias</p>
+                            <p id="m-alergias" class="text-xs md:text-sm text-gray-300 leading-relaxed break-words">--</p>
+                        </div>
+                        <div class="bg-black/40 p-4 md:p-5 rounded-xl md:rounded-2xl border border-white/5">
+                            <p class="text-[9px] md:text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1 md:mb-2">Enfermedades Crónicas</p>
+                            <p id="m-enfermedades" class="text-xs md:text-sm text-gray-300 leading-relaxed break-words">--</p>
+                        </div>
+                        <div class="bg-black/40 p-4 md:p-5 rounded-xl md:rounded-2xl border border-white/5">
+                            <p class="text-[9px] md:text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1 md:mb-2">Otras Notas</p>
+                            <p id="m-otros" class="text-xs md:text-sm text-gray-300 leading-relaxed break-words">--</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+        
+        <footer class="text-center py-6 border-t border-white/5 mt-auto">
+            <p class="text-[8px] md:text-[9px] font-bold uppercase tracking-[0.3em] md:tracking-[0.5em] text-gray-600">© 2026 GYMENEZ BIOMETRICS</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/profile.js"></script>
+
+    <script>
+        // No declaramos API_BASE_URL porque profile.js probablemente la trae, o la extraemos del entorno si es necesario.
+        const URL_API = "https://sijj2003.pythonanywhere.com";
+
+        function showMessage(message, type = 'error') {
+            const messagebox = document.getElementById('message-box');
+            if(!messagebox) return;
+            messagebox.textContent = message;
+            messagebox.className = `fixed top-6 left-1/2 transform -translate-x-1/2 px-4 md:px-6 py-2 md:py-3 rounded-full text-[10px] md:text-xs font-black tracking-widest uppercase shadow-2xl z-[9999] transition-all duration-500 text-center w-11/12 max-w-[350px] border border-white/10 ${type === 'success' ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'}`;
+            
+            messagebox.style.opacity = '1';
+            messagebox.style.transform = 'translate(-50%, 0)';
+            
+            setTimeout(() => {
+                messagebox.style.opacity = '0';
+                messagebox.style.transform = 'translate(-50%, -20px)';
+            }, 3500);
+        }
+
+        // Función que oscurece y bloquea los paneles de datos
+        function lockDataCard(cardId, requiredLevel) {
+            const card = document.getElementById(cardId);
+            if (!card) return;
+            
+            // 1. Ofuscar los valores levemente en el DOM visual por seguridad de frontend
+            const values = card.querySelectorAll('.value, p.text-gray-300');
+            values.forEach(v => v.textContent = '***'); 
+
+            // 2. Crear el velo de cristal esmerilado encima de la tarjeta
+            const overlay = document.createElement('div');
+            overlay.className = 'lock-overlay absolute inset-0 z-20 bg-[#030305]/60 flex flex-col items-center justify-center cursor-not-allowed rounded-[24px] md:rounded-[32px]';
+            
+            overlay.innerHTML = `
+                <div class="bg-[#111] border border-white/10 px-4 md:px-5 py-2 md:py-2.5 rounded-xl uppercase tracking-widest text-[9px] md:text-[10px] font-black text-gray-300 shadow-2xl flex items-center gap-2 hover:border-[#FFC300]/50 transition-colors">
+                    <span>🔒</span> REQUIERE PLAN ${requiredLevel}
+                </div>
+            `;
+            
+            // 3. Lanzar notificación roja si intentan hacer click en la zona bloqueada
+            overlay.onclick = (e) => {
+                e.stopPropagation();
+                showMessage(`ACCESO RESTRINGIDO: El registro avanzado requiere Plan ${requiredLevel}. Mejora tu suscripción.`, 'error');
+            };
+            
+            card.appendChild(overlay);
+        }
+
+        function applyProfileLocks(level) {
+            const normalizedLevel = (level || 'No Suscrito').toUpperCase();
+            
+            const isUltra = normalizedLevel === 'ULTRA';
+            const isPlus = normalizedLevel === 'PLUS' || isUltra;
+
+            // Bloqueamos las métricas detalladas si no es Plus o Ultra
+            if (!isPlus) {
+                // Pequeño timeout para asegurar que profile.js haya llenado la data antes de ofuscarla y taparla
+                setTimeout(() => {
+                    lockDataCard('card-upper-body', 'PLUS');
+                    lockDataCard('card-lower-body', 'PLUS');
+                    lockDataCard('card-medical', 'PLUS');
+                }, 500); 
+            }
+        }
+
+        // Verificar Nivel de Suscripción
+        window.addEventListener('DOMContentLoaded', () => {
+            const storedSession = localStorage.getItem('userSession');
+            if (storedSession) {
+                const user = JSON.parse(storedSession);
+                const userId = user.id || user._id;
+
+                fetch(`${URL_API}/api/profile/${userId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success && data.profile) {
+                            const subLevel = data.profile.subscription_level || 'No Suscrito';
+                            applyProfileLocks(subLevel);
+                        } else {
+                            applyProfileLocks('No Suscrito');
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error obteniendo perfil para candados:", err);
+                        applyProfileLocks('No Suscrito');
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
