@@ -3,155 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GYMENEZ | High Performance Ecosystem</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>GYMENEZ | El Estándar de Excelencia</title>
+    
     <link rel="icon" type="image/png" href="static/img/logos/mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; }
-        .text-glow { text-shadow: 0 0 30px rgba(255, 195, 0, 0.5); }
-        .glass-header { background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .card-gradient { background: linear-gradient(145deg, rgba(20,20,20,1) 0%, rgba(10,10,10,1) 100%); }
-        /* Ajuste de clamp responsivo para evitar desbordamiento en móviles pequeños */
-        .hero-title { font-size: clamp(2.5rem, 12vw, 8.5rem); line-height: 0.8; }
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #030305; 
+            color: white; 
+            overflow-x: hidden;
+        }
+
+        /* 🚀 EFECTO PARALLAX NATIVO */
+        .parallax-section {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Overlays para oscurecer los fondos y que el texto brille */
+        .parallax-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(3,3,5,0.8) 0%, rgba(3,3,5,0.4) 50%, rgba(3,3,5,0.9) 100%);
+            z-index: 1;
+        }
+
+        /* Glassmorphism Premium */
+        .glass-panel {
+            background: rgba(10, 10, 15, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+
+        .glass-nav {
+            background: rgba(3, 3, 5, 0.7);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Tipografía y Brillos */
+        .text-glow-gold { text-shadow: 0 0 30px rgba(255, 195, 0, 0.5); }
+        .text-glow-emerald { text-shadow: 0 0 30px rgba(16, 185, 129, 0.5); }
+        .text-glow-red { text-shadow: 0 0 30px rgba(220, 38, 38, 0.5); }
+
+        .title-clamp { font-size: clamp(3rem, 8vw, 7rem); line-height: 0.85; }
+        
+        /* Animación de entrada al hacer scroll */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body class="selection:bg-[#FFC300] selection:text-black overflow-x-hidden">
+<body class="selection:bg-[#FFC300] selection:text-black">
 
-    <nav class="fixed w-full z-[100] glass-header py-4 md:py-5 px-4 md:px-16 flex justify-between items-center">
-        <div class="flex items-center cursor-pointer group">
+    <nav class="fixed w-full z-[100] glass-nav py-4 md:py-5 px-4 md:px-12 flex justify-between items-center transition-all duration-300">
+        <div class="flex items-center cursor-pointer group" onclick="window.location.href='index.html'">
             <span class="text-[#FFC300] font-[900] text-2xl md:text-3xl italic tracking-tighter transition-transform group-hover:scale-105">GYM</span>
             <span class="text-white font-[900] text-2xl md:text-3xl italic tracking-tighter">ENEZ</span>
         </div>
 
-        <div class="hidden lg:flex gap-12 items-center">
-            <a href="information/fitness.html" class="text-[11px] font-bold tracking-[0.3em] hover:text-[#FFC300] transition uppercase">Fitness</a>
-            <a href="information/eats.html" class="text-[11px] font-bold tracking-[0.3em] hover:text-[#FFC300] transition uppercase">Eats</a>
-            <a href="information/on.html" class="text-[11px] font-bold tracking-[0.3em] hover:text-[#FFC300] transition uppercase">Gymenez ON</a>
+        <div class="hidden md:flex gap-10 items-center">
+            <a href="information/fitness.html" class="text-[10px] font-black tracking-[0.3em] text-gray-300 hover:text-[#FFC300] transition uppercase">Fitness</a>
+            <a href="information/eats.html" class="text-[10px] font-black tracking-[0.3em] text-gray-300 hover:text-emerald-400 transition uppercase">Eats</a>
+            <a href="information/on.html" class="text-[10px] font-black tracking-[0.3em] text-gray-300 hover:text-red-500 transition uppercase">ON</a>
         </div>
 
-        <div class="flex items-center gap-8">
-            <a href="apps/start/login.html" class="bg-white text-black px-5 sm:px-8 py-2.5 sm:py-3 rounded-full font-[900] text-[9px] sm:text-[10px] uppercase tracking-widest hover:bg-[#FFC300] transition-all transform hover:scale-105 shadow-xl shadow-white/5">
-                Comencemos
+        <div class="flex items-center gap-4 md:gap-6">
+            <a href="apps/start/login.html" class="text-[9px] md:text-[10px] font-black tracking-[0.2em] text-gray-300 hover:text-white transition uppercase whitespace-nowrap">
+                Ingresar
+            </a>
+            <a href="apps/start/register.html" class="bg-white text-black px-4 md:px-6 py-2 md:py-2.5 rounded-full font-[900] text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-[#FFC300] hover:shadow-[0_0_20px_rgba(255,195,0,0.4)] transition-all transform hover:scale-105 whitespace-nowrap">
+                Registrarse
             </a>
         </div>
     </nav>
 
-    <section class="relative h-screen flex items-center px-6 md:px-16 overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070" class="w-full h-full object-cover opacity-20 grayscale" alt="Performance">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-transparent"></div>
-        </div>
-
-        <div class="relative z-10 max-w-6xl mt-16 md:mt-0">
-            <span class="inline-block text-[#FFC300] font-black tracking-[0.4em] md:tracking-[0.6em] text-[9px] md:text-[11px] uppercase mb-6 opacity-80">
-                The Standard of Excellence
+    <section class="parallax-section min-h-screen flex items-center justify-center text-center px-4" style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070');">
+        <div class="parallax-overlay"></div>
+        <div class="relative z-10 max-w-5xl mt-16 reveal">
+            <span class="inline-block px-4 py-1.5 rounded-full border border-[#FFC300]/30 bg-[#FFC300]/10 text-[#FFC300] font-black tracking-[0.4em] text-[9px] md:text-[10px] uppercase mb-6 backdrop-blur-sm">
+                Acompañamiento de Alto Nivel
             </span>
-            <h1 class="hero-title font-[900] italic tracking-tighter mb-8 md:mb-10 uppercase">
-    LA NUEVA <br> <span class="text-glow text-[#FFC300]">ERA FÍSICA.</span>
-</h1>
-<p class="text-base md:text-2xl text-gray-400 max-w-2xl font-light leading-relaxed mb-10 md:mb-12 italic">
-    El entrenamiento tradicional ha caducado. Bienvenido a un ecosistema donde la biometría exacta, la nutrición inteligente y la cultura de alto rendimiento garantizan tu transformación.
-</p>
-            <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
-                <a href="#ecosistema" class="px-6 sm:px-12 py-4 sm:py-5 bg-[#FFC300] text-black font-black text-xs uppercase tracking-[0.2em] rounded-full hover:bg-yellow-400 transition transform hover:-translate-y-1 text-center">
-                    Explorar Servicios
+            <h1 class="title-clamp font-[900] italic tracking-tighter mb-6 uppercase text-white drop-shadow-2xl">
+                EL ESTÁNDAR DE <br> <span class="text-[#FFC300] text-glow-gold">EXCELENCIA.</span>
+            </h1>
+            <p class="text-base md:text-xl text-gray-300 max-w-2xl mx-auto font-medium leading-relaxed italic mb-10 drop-shadow-lg">
+                Deja atrás las rutinas genéricas. Bienvenido a un entorno donde cada entrenamiento, cada plato y cada descanso se adapta a tu cuerpo y a tu esfuerzo diario. Estás a un paso de tu mejor versión.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#ecosistema" class="w-full sm:w-auto px-10 py-4 bg-[#FFC300] text-black font-black text-[10px] uppercase tracking-[0.2em] rounded-full hover:bg-yellow-400 transition shadow-[0_0_20px_rgba(255,195,0,0.3)] transform hover:-translate-y-1">
+                    Comenzar mi transformación
                 </a>
-                <a href="information/fitness.html" class="px-6 sm:px-12 py-4 sm:py-5 border border-white/20 text-white font-black text-xs uppercase tracking-[0.2em] rounded-full hover:bg-white hover:text-black transition transform hover:-translate-y-1 text-center">
-                    Módulo Fitness
-                </a>
+            </div>
+            
+            <div class="absolute -bottom-24 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce opacity-50">
+                <span class="text-[8px] font-black uppercase tracking-widest text-[#FFC300] mb-2">Descubrir</span>
+                <div class="w-[1px] h-12 bg-gradient-to-b from-[#FFC300] to-transparent"></div>
             </div>
         </div>
     </section>
 
-    <section id="ecosistema" class="py-24 md:py-32 px-6 md:px-16 bg-[#050505]">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-6 md:gap-8">
-                <div>
-                    <h2 class="text-4xl md:text-6xl font-[900] italic tracking-tight uppercase mb-4">NUESTRO <br> ECOSISTEMA</h2>
-                    <div class="w-24 md:w-32 h-1.5 bg-[#FFC300]"></div>
-                </div>
-                <p class="text-gray-500 max-w-sm text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] leading-loose">
-                    Optimización humana integral a través de tres pilares tecnológicos.
-                </p>
-            </div>
-
-            <div class="grid lg:grid-cols-3 gap-8 md:gap-10">
-    
-    <a href="information/fitness.html" class="group relative overflow-hidden rounded-[32px] md:rounded-[40px] border border-white/10 hover:border-[#FFC300]/50 transition-all duration-700 min-h-[420px] flex flex-col justify-end p-8 md:p-10 block shadow-2xl">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800" class="w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-110 transition-all duration-1000 grayscale group-hover:grayscale-0" alt="GYMENEZ Fitness">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent"></div>
-        </div>
-        <div class="relative z-10 transform transition-transform duration-500 group-hover:-translate-y-2">
-            <div class="mb-4 flex items-center gap-3 opacity-70 group-hover:opacity-100 transition-opacity">
-            </div>
-            <h3 class="text-3xl md:text-4xl font-[900] mb-3 italic tracking-tight uppercase text-white drop-shadow-lg">GYMENEZ <br> FITNESS</h3>
-            <p class="text-gray-300 text-sm mb-6 leading-relaxed font-light">Entrenamiento basado en analítica biológica y seguimiento profesional personalizado.</p>
-            <div class="flex items-center gap-3 text-[11px] font-black tracking-[0.2em] text-white uppercase italic opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                Explorar Rendimiento <span class="text-[#FFC300] text-xl">→</span>
-            </div>
-        </div>
-    </a>
-
-    <a href="information/eats.html" class="group relative overflow-hidden rounded-[32px] md:rounded-[40px] border border-white/10 hover:border-emerald-500/50 transition-all duration-700 min-h-[420px] flex flex-col justify-end p-8 md:p-10 block shadow-2xl">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800" class="w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-110 transition-all duration-1000 grayscale group-hover:grayscale-0" alt="GYMENEZ Eats">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent"></div>
-        </div>
-        <div class="relative z-10 transform transition-transform duration-500 group-hover:-translate-y-2">
-            <div class="mb-4 flex items-center gap-3 opacity-70 group-hover:opacity-100 transition-opacity">
-            </div>
-            <h3 class="text-3xl md:text-4xl font-[900] mb-3 italic tracking-tight uppercase text-white drop-shadow-lg">GYMENEZ <br> EATS</h3>
-            <p class="text-gray-300 text-sm mb-6 leading-relaxed font-light">Nutrición de precisión diseñada bioquímicamente para potenciar tu propósito deportivo.</p>
-            <div class="flex items-center gap-3 text-[11px] font-black tracking-[0.2em] text-white uppercase italic opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                Descubrir Nutrición <span class="text-emerald-500 text-xl">→</span>
-            </div>
-        </div>
-    </a>
-
-    <a href="information/on.html" class="group relative overflow-hidden rounded-[32px] md:rounded-[40px] border border-white/10 hover:border-red-600/50 transition-all duration-700 min-h-[420px] flex flex-col justify-end p-8 md:p-10 block shadow-2xl">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?q=80&w=800" class="w-full h-full object-cover opacity-30 group-hover:opacity-50 group-hover:scale-110 transition-all duration-1000 grayscale group-hover:grayscale-0" alt="GYMENEZ ON">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent"></div>
-        </div>
-        <div class="relative z-10 transform transition-transform duration-500 group-hover:-translate-y-2">
-            <div class="mb-4 flex items-center gap-3 opacity-70 group-hover:opacity-100 transition-opacity">
-            </div>
-            <h3 class="text-3xl md:text-4xl font-[900] mb-3 italic tracking-tight uppercase text-white drop-shadow-lg">GYMENEZ <br> ON</h3>
-            <p class="text-gray-300 text-sm mb-6 leading-relaxed font-light">Streaming exclusivo con cultura de hierro que redefine el ADN de un atleta moderno.</p>
-            <div class="flex items-center gap-3 text-[11px] font-black tracking-[0.2em] text-white uppercase italic opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                Iniciar Streaming <span class="text-red-600 text-xl">→</span>
-            </div>
-        </div>
-    </a>
-
-</div>
-    </section>
-
-    <footer class="py-16 md:py-24 text-center border-t border-white/5 bg-[#050505]">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-2xl md:text-3xl font-[900] italic tracking-tighter mb-10 md:mb-12"><span class="text-[#FFC300]">GYM</span>ENEZ</h2>
-            <div class="flex flex-col md:flex-row justify-center gap-6 md:gap-10 mb-12 md:mb-16">
-                <a href="information/fitness.html" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition">Fitness</a>
-                <a href="information/eats.html" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition">Eats</a>
-                <a href="information/on.html" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition">Gymenez ON</a>
-            </div>
-            <p class="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] md:tracking-[0.6em] text-gray-700 leading-relaxed">
-                © 2026 GYMENEZ PERFORMANCE <br class="block md:hidden"> THE STANDARD OF EXCELLENCE
+    <section class="py-24 bg-[#030305] relative z-20 border-b border-white/5" id="ecosistema">
+        <div class="max-w-4xl mx-auto text-center px-6 reveal">
+            <h2 class="text-3xl md:text-5xl font-[900] italic uppercase tracking-tighter mb-6">El entrenamiento sin guía <span class="text-gray-600 line-through">te estanca.</span></h2>
+            <p class="text-gray-400 font-medium md:text-lg leading-relaxed">
+                Seguir un PDF descargado de internet o intentar adivinar los pesos no te llevará al siguiente nivel. Necesitas una planificación que entienda cuándo exigirte más y cuándo dejarte descansar. Integramos entrenamiento, nutrición y educación en tres pilares que te acompañan a diario.
             </p>
         </div>
+    </section>
+
+    <section class="parallax-section min-h-screen flex items-center px-6 md:px-16 py-20" style="background-image: url('https://images.unsplash.com/photo-1593079831268-3381b0db4a77?q=80&w=2069');">
+        <div class="parallax-overlay bg-gradient-to-r from-[#030305] via-[#030305]/90 to-transparent"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto flex justify-start reveal">
+            <div class="glass-panel p-8 md:p-12 rounded-[32px] max-w-xl border-l-4 border-l-[#FFC300]">
+                <span class="text-[#FFC300] font-black text-[10px] tracking-[0.3em] uppercase mb-2 block">Pilar 01</span>
+                <h2 class="text-4xl md:text-6xl font-[900] italic uppercase tracking-tighter mb-4">GYMENEZ <br><span class="text-[#FFC300] text-glow-gold">FITNESS</span></h2>
+                <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-8 font-medium">
+                    Conoce exactamente cuánto peso levantar cada día. Diseñamos un sistema que se adapta a tu energía: si reportas que dormiste mal o sientes dolor, ajustamos tu rutina de inmediato para protegerte de lesiones. Tú solo pon el esfuerzo; nosotros nos encargamos de la planificación.
+                </p>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center text-xs font-bold text-gray-200 uppercase tracking-wider"><span class="text-[#FFC300] mr-3">⚡</span> Progreso constante y seguro</li>
+                    <li class="flex items-center text-xs font-bold text-gray-200 uppercase tracking-wider"><span class="text-[#FFC300] mr-3">⚡</span> Cuidado de tus articulaciones</li>
+                    <li class="flex items-center text-xs font-bold text-gray-200 uppercase tracking-wider"><span class="text-[#FFC300] mr-3">⚡</span> Registro visual de tus victorias</li>
+                </ul>
+                <a href="information/fitness.html" class="inline-flex items-center gap-2 text-[10px] font-black text-[#FFC300] uppercase tracking-widest hover:text-white transition group">
+                    Conocer el entrenamiento <span class="group-hover:translate-x-2 transition-transform">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="parallax-section min-h-screen flex items-center px-6 md:px-16 py-20" style="background-image: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053');">
+        <div class="parallax-overlay bg-gradient-to-l from-[#030305] via-[#030305]/90 to-transparent"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto flex justify-end reveal">
+            <div class="glass-panel p-8 md:p-12 rounded-[32px] max-w-xl border-r-4 border-r-emerald-500 text-right">
+                <span class="text-emerald-400 font-black text-[10px] tracking-[0.3em] uppercase mb-2 block">Pilar 02</span>
+                <h2 class="text-4xl md:text-6xl font-[900] italic uppercase tracking-tighter mb-4">GYMENEZ <br><span class="text-emerald-500 text-glow-emerald">EATS</span></h2>
+                <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-8 font-medium">
+                    Come para rendir, no para restringirte. Si hoy entrenaste más pesado, tu cuerpo necesita más energía. Ajustamos tus porciones diariamente según el esfuerzo que dejaste en el gimnasio, asegurando que te recuperes de verdad.
+                </p>
+                <ul class="space-y-3 mb-8 flex flex-col items-end">
+                    <li class="flex items-center flex-row-reverse text-xs font-bold text-gray-200 uppercase tracking-wider"><span class="text-emerald-500 ml-3">🌱</span> Nutrición adaptada a tu esfuerzo</li>
+                    <li class="flex items-center flex-row-reverse text-xs font-bold text-gray-200 uppercase tracking-wider"><span class="text-emerald-500 ml-3">🌱</span> Opciones reales y accesibles</li>
+                    <li class="flex items-center flex-row-reverse text-xs font-bold text-gray-200 uppercase tracking-wider"><span class="text-emerald-500 ml-3">🌱</span> Hidratación según tu entorno</li>
+                </ul>
+                <a href="information/eats.html" class="inline-flex flex-row-reverse items-center gap-2 text-[10px] font-black text-emerald-400 uppercase tracking-widest hover:text-white transition group">
+                    Ver enfoque nutricional <span class="group-hover:-translate-x-2 transition-transform">←</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="parallax-section min-h-screen flex items-center px-6 md:px-16 py-20" style="background-image: url('https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?q=80&w=2070');">
+        <div class="parallax-overlay bg-gradient-to-r from-[#030305] via-[#030305]/90 to-transparent"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto flex justify-start reveal">
+            <div class="glass-panel p-8 md:p-12 rounded-[32px] max-w-xl border-l-4 border-l-red-600">
+                <span class="text-red-500 font-black text-[10px] tracking-[0.3em] uppercase mb-2 block">Pilar 03</span>
+                <h2 class="text-4xl md:text-6xl font-[900] italic uppercase tracking-tighter mb-4">GYMENEZ <br><span class="text-red-600 text-glow-red">ON</span></h2>
+                <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-8 font-medium">
+                    El cuerpo no avanza si la mente se detiene. Accede a nuestra plataforma de contenido donde aprenderás sobre hábitos sostenibles, corregirás tu técnica con videos claros y forjarás la disciplina necesaria para no abandonar tu proceso.
+                </p>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center text-xs font-bold text-gray-200 uppercase tracking-wider"><span class="text-red-500 mr-3">🎥</span> Educación física y mental</li>
+                    <li class="flex items-center text-xs font-bold text-gray-200 uppercase tracking-wider"><span class="text-red-500 mr-3">🎥</span> Tutoriales de técnica en video</li>
+                    <li class="flex items-center text-xs font-bold text-gray-200 uppercase tracking-wider"><span class="text-red-500 mr-3">🎥</span> Cultura de constancia diaria</li>
+                </ul>
+                <a href="information/on.html" class="inline-flex items-center gap-2 text-[10px] font-black text-red-500 uppercase tracking-widest hover:text-white transition group">
+                    Descubrir educación <span class="group-hover:translate-x-2 transition-transform">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 bg-[#050505] relative z-20 text-center px-6 border-t border-white/5">
+        <div class="max-w-3xl mx-auto reveal">
+            <h2 class="text-4xl md:text-6xl font-[900] italic uppercase tracking-tighter mb-6">Elige tu <span class="text-[#FFC300]">Compromiso.</span></h2>
+            <p class="text-gray-400 font-medium mb-10 leading-relaxed max-w-xl mx-auto">
+                Accede al ecosistema hoy. Desde nuestra guía gratuita inicial hasta el soporte de élite para optimizar tu biología al máximo. Crea tu cuenta y da el primer paso.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="apps/start/login.html" class="px-10 py-4 bg-white text-black font-black text-[10px] uppercase tracking-[0.2em] rounded-xl hover:bg-[#FFC300] hover:shadow-[0_0_20px_rgba(255,195,0,0.4)] transition transform hover:scale-105">
+                    Crear mi cuenta
+                </a>
+                <a href="apps/start/login.html" class="px-10 py-4 border border-white/20 text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl hover:bg-white/5 transition">
+                    Ya soy atleta (Ingresar)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 bg-[#030305] text-center border-t border-white/5">
+        <div class="flex flex-col md:flex-row justify-center gap-6 mb-8">
+            <a href="information/fitness.html" class="text-[9px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition">Fitness</a>
+            <a href="information/eats.html" class="text-[9px] font-black uppercase tracking-widest text-gray-500 hover:text-emerald-400 transition">Eats</a>
+            <a href="information/on.html" class="text-[9px] font-black uppercase tracking-widest text-gray-500 hover:text-red-500 transition">ON</a>
+            <a href="apps/start/login.html" class="text-[9px] font-black uppercase tracking-widest text-white hover:text-[#FFC300] transition">Registrarse</a>
+            <a href="apps/start/login.html" class="text-[9px] font-black uppercase tracking-widest text-gray-500 hover:text-[#FFC300] transition">Ingresar</a>
+        </div>
+        <p class="text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] md:tracking-[0.6em] text-gray-600">
+            © 2026 GYMENEZ PERFORMANCE • TU MEJOR VERSIÓN
+        </p>
     </footer>
 
     <script>
-        // Animación simple de revelado al hacer scroll
-        const observerOptions = { threshold: 0.1 };
+        const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Solo animar una vez
+                }
             });
         }, observerOptions);
 
