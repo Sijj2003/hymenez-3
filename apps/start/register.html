@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMENEZ | Unirse al Ecosistema</title>
+    
+    <link rel="icon" type="image/png" href="static/img/logos/mini_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #030305; 
+            color: white; 
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* 🚀 COHERENCIA VISUAL TOTAL CON INDEX.HTML */
+        .parallax-bg {
+            background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .parallax-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(3,3,5,0.85) 0%, rgba(3,3,5,0.6) 50%, rgba(3,3,5,0.95) 100%);
+            z-index: 1;
+        }
+
+        /* Glassmorphism de Alta Gama */
+        .glass-panel {
+            background: rgba(10, 10, 15, 0.45);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8);
+        }
+
+        .glass-input {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: white;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-input:focus {
+            border-color: #FFC300;
+            box-shadow: 0 0 15px rgba(255, 195, 0, 0.2);
+            background: rgba(0, 0, 0, 0.8);
+            outline: none;
+        }
+
+        select.glass-input option {
+            background-color: #0a0a0f;
+            color: white;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #FFC300 0%, #eab308 100%);
+            color: #000;
+            font-weight: 900;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px rgba(255, 195, 0, 0.35);
+        }
+
+        .btn-gold:active { transform: translateY(0); }
+
+        /* 📱 KINETIC CORE ANIMATION (Estilo Boot de Lujo OS) */
+        .kinetic-orb {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,195,0,0.15) 0%, transparent 70%);
+        }
+        
+        .kinetic-ring {
+            position: absolute;
+            inset: 0;
+            border: 2px solid transparent;
+            border-top-color: #FFC300;
+            border-radius: 50%;
+            animation: spinRing 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            filter: drop-shadow(0 0 8px #FFC300);
+        }
+
+        .kinetic-ring-inner {
+            position: absolute;
+            inset: 8px;
+            border: 1.5px solid transparent;
+            border-bottom-color: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: spinRingInverse 1.5s linear infinite;
+        }
+
+        @keyframes spinRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes spinRingInverse {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Líneas de Progreso de Pasos */
+        .step-dot {
+            width: 33.33%;
+            height: 3px;
+            background: rgba(255,255,255,0.05);
+            transition: all 0.5s ease;
+        }
+        .step-dot.active {
+            background: #FFC300;
+            box-shadow: 0 0 10px rgba(255,195,0,0.5);
+        }
+
+        .step-section {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Message Box integrado */
+        #message-box {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="selection:bg-[#FFC300] selection:text-black min-h-screen relative flex flex-col justify-between">
+    
+    <div id="message-box"></div>
+
+    <div class="parallax-bg"></div>
+    <div class="parallax-overlay"></div>
+
+    <nav class="relative w-full z-40 py-5 px-6 md:px-12 flex justify-between items-center bg-transparent">
+        <div class="flex items-center cursor-pointer group" onclick="window.location.href='index.html'">
+            <span class="text-[#FFC300] font-[900] text-2xl md:text-3xl italic tracking-tighter transition-transform group-hover:scale-105">GYM</span>
+            <span class="text-white font-[900] text-2xl md:text-3xl italic tracking-tighter">ENEZ</span>
+        </div>
+        
+        <div class="flex items-center gap-5 md:gap-6">
+            <a href="index.html" class="text-[10px] font-black tracking-widest text-gray-400 hover:text-white transition uppercase whitespace-nowrap">
+                Regresar
+            </a>
+            <a href="login.html" class="border border-white/10 bg-white/5 text-white hover:bg-white hover:text-black px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest transition-all uppercase whitespace-nowrap">
+                Ingresar
+            </a>
+        </div>
+    </nav>
+
+    <main id="register-container" class="relative z-10 w-full flex-grow flex items-center justify-center p-4 md:p-8 transition-all duration-700">
+        <div class="glass-panel p-6 md:p-10 w-full max-w-xl rounded-[28px] md:rounded-[36px] flex flex-col justify-between relative overflow-hidden min-h-[460px]">
+            
+            <div class="absolute top-0 left-0 w-full flex">
+                <div id="dot-1" class="step-dot active"></div>
+                <div id="dot-2" class="step-dot"></div>
+                <div id="dot-3" class="step-dot"></div>
+            </div>
+
+            <div class="text-center mb-6 mt-2">
+                <h1 id="register-title" class="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter transition-all duration-300">Identidad Base</h1>
+                <p id="register-subtitle" class="text-gray-400 text-[9px] md:text-[10px] font-black uppercase tracking-[0.25em] mt-1">Paso 1 de 3 • Datos de Cuenta</p>
+            </div>
+
+            <form id="multi-step-form" class="flex-grow flex flex-col justify-between" onsubmit="return false;">
+                
+                <div id="step-section-1" class="step-section space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Nombre</label>
+                            <input type="text" id="reg-name" required class="w-full glass-input px-4 py-3.5 rounded-xl text-white text-xs uppercase font-bold" placeholder="Ej. Carlos">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Apellido</label>
+                            <input type="text" id="reg-lastname" required class="w-full glass-input px-4 py-3.5 rounded-xl text-white text-xs uppercase font-bold" placeholder="Ej. Mendoza">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Correo Electrónico</label>
+                        <input type="email" id="reg-email" required class="w-full glass-input px-4 py-3.5 rounded-xl text-white text-xs font-medium" placeholder="atleta@gymenez.com">
+                    </div>
+                    <div class="pt-4">
+                        <button type="button" onclick="goToStep(2)" class="w-full btn-gold py-4 rounded-xl text-[10px] uppercase tracking-[0.25em]">
+                            Continuar
+                        </button>
+                    </div>
+                </div>
+
+                <div id="step-section-2" class="step-section space-y-4 hidden opacity-0 transform scale-95">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Fecha de Nacimiento</label>
+                            <input type="text" id="reg-dob" required class="w-full glass-input px-4 py-3.5 rounded-xl text-white text-xs font-mono" placeholder="DD/MM/YYYY" maxlength="10" oninput="applyDateMask(event)">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Sexo Biológico</label>
+                            <select id="reg-sex" class="w-full glass-input px-4 py-3.5 rounded-xl text-white text-xs font-bold appearance-none cursor-pointer" required>
+                                <option value="" disabled selected>Selecciona tu sexo...</option>
+                                <option value="Hombre">Hombre</option>
+                                <option value="Mujer">Mujer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Teléfono Móvil (WhatsApp)</label>
+                        <div class="flex gap-2">
+                            <select id="reg-phone-prefix" class="w-20 px-2 py-3.5 rounded-xl glass-input text-white text-xs font-bold text-center appearance-none cursor-pointer">
+                                <option value="0414">0414</option>
+                                <option value="0424">0424</option>
+                                <option value="0412">0412</option>
+                                <option value="0416">0416</option>
+                                <option value="0426">0426</option>
+                            </select>
+                            <input type="text" id="reg-phone-num" required class="flex-1 glass-input px-4 py-3.5 rounded-xl text-white text-xs font-mono" placeholder="1234567" maxlength="7" oninput="this.value = this.value.replace(/\\D/g, '')">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 pt-4">
+                        <button type="button" onclick="goToStep(1)" class="col-span-1 bg-white/5 border border-white/10 text-white font-bold text-[10px] uppercase tracking-widest rounded-xl hover:bg-white/10 transition">
+                            Atrás
+                        </button>
+                        <button type="button" onclick="goToStep(3)" class="col-span-2 btn-gold py-4 rounded-xl text-[10px] uppercase tracking-[0.25em]">
+                            Continuar
+                        </button>
+                    </div>
+                </div>
+
+                <div id="step-section-3" class="step-section space-y-4 hidden opacity-0 transform scale-95">
+                    <div>
+                        <label class="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Establece tu Clave de Acceso</label>
+                        <input type="password" id="reg-password" minlength="6" maxlength="15" required class="w-full glass-input px-4 py-4 rounded-xl text-white text-center text-sm font-mono tracking-widest" placeholder="••••••••">
+                        <span class="block text-[8px] text-gray-500 text-center uppercase tracking-widest mt-2">Debe tener entre 6 y 15 caracteres de longitud</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 pt-4">
+                        <button type="button" onclick="goToStep(2)" class="col-span-1 bg-white/5 border border-white/10 text-white font-bold text-[10px] uppercase tracking-widest rounded-xl hover:bg-white/10 transition">
+                            Atrás
+                        </button>
+                        <button type="button" id="final-submit-btn" onclick="processSecureRegistration()" class="col-span-2 btn-gold py-4 rounded-xl text-[10px] uppercase tracking-[0.25em]">
+                            Aceptar y Registrarme
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <div id="setup-screen" class="fixed inset-0 bg-[#030305] z-[5000] hidden flex flex-col items-center justify-center p-6 text-center transition-all duration-1000 opacity-0">
+        
+        <div class="kinetic-orb mb-12 flex items-center justify-center">
+            <div class="kinetic-ring"></div>
+            <div class="kinetic-ring-inner"></div>
+            <div class="w-2 h-2 bg-[#FFC300] rounded-full shadow-[0_0_12px_#FFC300]"></div>
+        </div>
+        
+        <div class="h-20 flex flex-col justify-center items-center">
+            <h2 id="setup-message" class="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter max-w-lg transition-all duration-700 transform scale-95 opacity-0 filter blur-[4px]">
+                Iniciando
+            </h2>
+        </div>
+        
+        <p class="text-gray-600 text-[8px] md:text-[9px] font-black uppercase tracking-[0.5em] mt-6 transition-opacity duration-1000 delay-300">
+            Ecosistema de Optimización Humana
+        </p>
+    </div>
+
+    <footer class="relative z-10 py-6 text-center border-t border-white/5 opacity-40">
+        <p class="text-[8px] md:text-[9px] font-bold uppercase tracking-[0.5em] text-gray-600">
+            © 2026 GYMENEZ PERFORMANCE • EL ESTÁNDAR DE EXCELENCIA
+        </p>
+    </footer>
+
+    <script>
+        const API_BASE_URL = 'https://sijj2003.pythonanywhere.com';
+        let activeStep = 1;
+
+        function showUIFeedback(message, type = 'success') {
+            const box = document.getElementById('message-box');
+            if(!box) return;
+            box.textContent = message;
+            box.className = 'fixed top-6 left-1/2 transform -translate-x-1/2 px-5 py-3 rounded-full text-[10px] font-black tracking-widest uppercase shadow-2xl z-[9999] transition-all duration-400 text-center border backdrop-blur-md w-11/12 max-w-[360px]';
+            
+            if(type === 'success') {
+                box.classList.add('bg-emerald-950/80', 'text-emerald-400', 'border-emerald-500/30');
+            } else {
+                box.classList.add('bg-red-950/80', 'text-red-400', 'border-red-500/30');
+            }
+            
+            box.style.opacity = '1';
+            box.style.transform = 'translate(-50%, 0)';
+            
+            setTimeout(() => {
+                box.style.opacity = '0';
+                box.style.transform = 'translate(-50%, -20px)';
+            }, 4000);
+        }
+
+        function applyDateMask(e) {
+            if (e.inputType === 'deleteContentBackward') return;
+            const input = e.target;
+            let v = input.value.replace(/\\D/g, '');
+            if (v.length > 8) v = v.substring(0, 8);
+            
+            let formatted = v;
+            if (v.length >= 5) formatted = `${v.substring(0, 2)}/${v.substring(2, 4)}/${v.substring(4)}`;
+            else if (v.length >= 3) formatted = `${v.substring(0, 2)}/${v.substring(2)}`;
+            
+            input.value = formatted;
+        }
+
+        function validateFields(step) {
+            if (step === 1) {
+                const name = document.getElementById('reg-name').value.trim();
+                const lastname = document.getElementById('reg-lastname').value.trim();
+                const email = document.getElementById('reg-email').value.trim();
+                if (!name || !lastname || !email || !document.getElementById('reg-email').checkValidity()) {
+                    showUIFeedback("Completa tus datos con un correo electrónico válido.", "error");
+                    return false;
+                }
+            }
+            if (step === 2) {
+                const dob = document.getElementById('reg-dob').value.trim();
+                const sex = document.getElementById('reg-sex').value;
+                const phone = document.getElementById('reg-phone-num').value.trim();
+                if (dob.length !== 10 || !sex || phone.length < 7) {
+                    showUIFeedback("Ingresa una fecha de nacimiento válida y tu número móvil.", "error");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function goToStep(nextStep) {
+            if (nextStep > activeStep && !validateFields(activeStep)) return;
+
+            const currentSection = document.getElementById(`step-section-${activeStep}`);
+            currentSection.classList.add('opacity-0', 'scale-95');
+            
+            document.getElementById(`dot-${activeStep}`).classList.remove('active');
+
+            setTimeout(() => {
+                currentSection.classList.add('hidden');
+                
+                const nextSection = document.getElementById(`step-section-${nextStep}`);
+                nextSection.classList.remove('hidden');
+                nextSection.offsetHeight; // Reflow
+                
+                nextSection.classList.remove('opacity-0', 'scale-95');
+                nextSection.classList.add('opacity-100', 'scale-100');
+                
+                const titles = { 1: "Identidad Base", 2: "Biometría Básica", 3: "Seguridad" };
+                document.getElementById('register-title').textContent = titles[nextStep];
+                document.getElementById('register-subtitle').textContent = `Paso ${nextStep} de 3 • ${nextStep === 1 ? 'Datos de Cuenta' : nextStep === 2 ? 'Contacto' : 'Clave de Acceso'}`;
+                
+                document.getElementById(`dot-${nextStep}`).classList.add('active');
+                activeStep = nextStep;
+            }, 250);
+        }
+
+        async function processSecureRegistration() {
+            const password = document.getElementById('reg-password').value;
+            if(password.length < 6 || password.length > 15) {
+                showUIFeedback("La contraseña debe contener entre 6 y 15 caracteres.", "error");
+                return;
+            }
+
+            const btn = document.getElementById('final-submit-btn');
+            btn.disabled = true;
+            btn.textContent = "VALIDANDO CON EL NÚCLEO...";
+
+            const ciPlaceholder = `V-TEMP-${Date.now().toString().slice(-6)}`; 
+            const payload = {
+                email: document.getElementById('reg-email').value.trim().toLowerCase(),
+                password: password,
+                name: document.getElementById('reg-name').value.trim().toUpperCase(),
+                last_name: document.getElementById('reg-lastname').value.trim().toUpperCase(),
+                id_number: ciPlaceholder,
+                phone_number: `${document.getElementById('reg-phone-prefix').value}-${document.getElementById('reg-phone-num').value.trim()}`,
+                dob: document.getElementById('reg-dob').value.trim(),
+                sex: document.getElementById('reg-sex').value
+            };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    triggerCinematicSetup();
+                } else {
+                    showUIFeedback(data.error || "No se pudo procesar el alta en el sistema.", "error");
+                    btn.disabled = false;
+                    btn.textContent = "Aceptar y Registrarme";
+                }
+            } catch (err) {
+                showUIFeedback("Error de enlace perimetral con el servidor.", "error");
+                btn.disabled = false;
+                btn.textContent = "Aceptar y Registrarme";
+            }
+        }
+
+        function triggerCinematicSetup() {
+            const registerContainer = document.getElementById('register-container');
+            const setupScreen = document.getElementById('setup-screen');
+            const msgElement = document.getElementById('setup-message');
+            const athleteName = document.getElementById('reg-name').value.trim().toUpperCase();
+
+            registerContainer.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+            registerContainer.style.opacity = '0';
+            registerContainer.style.transform = 'scale(0.95) translateY(-10px)';
+
+            setTimeout(() => {
+                registerContainer.classList.add('hidden');
+                setupScreen.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    setupScreen.classList.remove('opacity-0');
+                    executeSequence();
+                }, 100);
+            }, 600);
+
+            const sequences = [
+                { text: `Hola, ${athleteName}`, time: 0 },
+                { text: "Creando tu perfil en el ecosistema...", time: 1700 },
+                { text: "Estructurando tus bloques de fuerza...", time: 3500 },
+                { text: "Calibrando tus zonas de recuperación...", time: 5300 },
+                { text: "Preparando tu acceso seguro...", time: 6900 }
+            ];
+
+            function changeSetupText(newText) {
+                msgElement.classList.add('opacity-0', 'scale-95', 'blur-[6px]');
+                setTimeout(() => {
+                    msgElement.textContent = newText;
+                    msgElement.classList.remove('opacity-0', 'scale-95', 'blur-[6px]');
+                    msgElement.classList.add('opacity-100', 'scale-100', 'blur-0');
+                }, 300);
+            }
+
+            function executeSequence() {
+                sequences.forEach((seq) => {
+                    setTimeout(() => {
+                        changeSetupText(seq.text);
+                    }, seq.time);
+                });
+
+                setTimeout(() => {
+                    setupScreen.style.transition = 'all 0.5s ease';
+                    setupScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 500);
+                }, 8400);
+            }
+        }
+    </script>
+</body>
+</html>
