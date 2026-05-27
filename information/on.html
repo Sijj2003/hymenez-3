@@ -3,200 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GYMENEZ ON | Cultura y Educación de Alto Rendimiento</title>
+    <title>GYMENEZ ON | Cultura y Enfoque Deportivo</title>
+    
+    <link rel="icon" type="image/png" href="../static/img/logos/mini_logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; }
-        .glass-nav { background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #030305; 
+            color: white; 
+            overflow-x: hidden;
+        }
+
+        .parallax-hero {
+            background-image: url('https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?q=80&w=2070');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        .parallax-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(3,3,5,0.85) 0%, rgba(3,3,5,0.5) 60%, rgba(3,3,5,1) 100%);
+            z-index: 1;
+        }
+
+        .glass-panel {
+            background: rgba(15, 15, 20, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-nav {
+            background: rgba(3, 3, 5, 0.7);
+            backdrop-blur: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
         .text-glow-red { text-shadow: 0 0 20px rgba(220, 38, 38, 0.4); }
-        .ultra-glow { box-shadow: 0 0 40px rgba(251, 191, 36, 0.15); border: 1px solid #FFC300 !important; }
-        .section-line { border-left: 2px solid #dc2626; padding-left: 1.5rem; }
-        @media (min-width: 768px) { .section-line { padding-left: 2rem; } }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body class="selection:bg-red-600 selection:text-white overflow-x-hidden">
+<body class="selection:bg-red-600 selection:text-white">
 
-    <nav class="fixed top-0 w-full z-[100] glass-nav py-4 px-6 md:px-16 flex justify-between items-center">
-        <div class="flex items-center group cursor-pointer">
-            <span class="text-[#FFC300] font-[900] text-xl md:text-2xl italic tracking-tighter transition-transform group-hover:scale-105">GYM</span>
+    <!-- 🧭 NAVEGACIÓN -->
+    <nav class="fixed w-full z-[100] glass-nav py-4 px-6 md:px-12 flex justify-between items-center">
+        <div class="flex items-center cursor-pointer" onclick="window.location.href='../index.html'">
+            <span class="text-[#FFC300] font-[900] text-xl md:text-2xl italic tracking-tighter">GYM</span>
             <span class="text-white font-[900] text-xl md:text-2xl italic tracking-tighter">ENEZ</span>
         </div>
-        
-        <a href="../index.html" class="text-white font-black text-[9px] md:text-[10px] uppercase tracking-widest px-5 py-2.5 rounded-full border border-white/10 hover:bg-white/5 transition-all duration-300 shadow-sm">
+        <a href="../index.html" class="text-xs font-bold uppercase tracking-widest text-white border border-white/10 px-5 py-2 rounded-full hover:bg-white/5 transition-all bg-[#111]">
             Volver
         </a>
     </nav>
 
-    <section class="relative pt-28 md:pt-40 pb-16 md:pb-20 px-6 md:px-16 overflow-hidden min-h-[70vh] flex items-center">
-        <div class="absolute top-0 right-0 w-full md:w-1/2 h-full opacity-10 md:opacity-20 pointer-events-none">
-            <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?q=80&w=2070" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-l from-transparent to-[#050505]"></div>
-        </div>
-        
-        <div class="relative z-10 w-full max-w-4xl">
-            <span class="bg-red-600 text-white text-[9px] md:text-[10px] font-[900] px-3 py-1 rounded-full uppercase tracking-widest mb-4 md:mb-6 inline-block">Plataforma Educativa y Cultural</span>
-            <h1 class="text-4xl sm:text-6xl md:text-[100px] font-[900] leading-tight md:leading-[0.85] italic tracking-tighter mb-6 md:mb-8 uppercase break-words">
-    CULTURA <br class="hidden sm:block"><span class="text-red-600 text-glow-red">DE ALTO NIVEL.</span>
-</h1>
-<p class="text-base md:text-xl text-gray-400 max-w-full md:max-w-2xl font-medium leading-relaxed italic break-words">
-    GYMENEZ ON es nuestra plataforma audiovisual dedicada a la formación y el desarrollo integral del atleta. Un espacio exclusivo diseñado para enriquecer tu criterio, aportar valor a tus hábitos y conectar con la disciplina a través del conocimiento especializado y el entretenimiento saludable.
-</p>
+    <!-- 🎬 HERO -->
+    <section class="parallax-hero min-h-[85vh] flex items-center px-6 md:px-16">
+        <div class="parallax-overlay"></div>
+        <div class="relative z-10 w-full max-w-4xl mt-16 reveal active">
+            <span class="bg-red-600 text-white text-[9px] md:text-[10px] font-[900] px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block shadow-lg">Módulo Educativo y Mentalidad</span>
+            <h1 class="text-4xl sm:text-6xl md:text-8xl font-[900] leading-[0.9] italic tracking-tighter mb-6 uppercase">
+                EL CUERPO NO AVANZA <br><span class="text-red-600 text-glow-red">SI LA MENTE SE DETIENE.</span>
+            </h1>
+            <p class="text-base md:text-xl text-gray-300 max-w-2xl font-medium leading-relaxed italic">
+                La mayor barrera entre tú y tus objetivos no es física, es mental. Construimos un espacio audiovisual enfocado en darte las herramientas y los conocimientos necesarios para que entiendas tu cuerpo y mantengas la disciplina intacta.
+            </p>
         </div>
     </section>
 
-    <section class="py-16 md:py-24 px-6 md:px-16 bg-white text-black">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 md:gap-20 items-center">
-           <div class="space-y-6 md:space-y-8">
-    <h2 class="text-4xl md:text-5xl font-[900] italic tracking-tighter uppercase leading-none text-red-600">Visión <br>Estratégica.</h2>
-    <div class="w-16 md:w-20 h-1.5 md:h-2 bg-red-600"></div>
-    <p class="text-base md:text-lg text-gray-600 font-medium italic break-words">
-        El contenido correcto moldea la mentalidad correcta. Sustituimos el entretenimiento convencional por formación de alto valor. Accede a documentales, clases maestras y análisis que estructuran tus conocimientos en salud y bienestar, elevando tu estándar diario mediante instrucción experta y una cultura deportiva sólida.
-    </p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-        <div class="p-4 md:p-6 border-l-4 border-black bg-gray-50">
-            <span class="block text-xl md:text-2xl font-black italic uppercase">Ciencia Aplicada</span>
-            <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase text-red-600">Aprende la teoría detrás del resultado</span>
-        </div>
-        <div class="p-4 md:p-6 border-l-4 border-red-600 bg-gray-50">
-            <span class="block text-xl md:text-2xl font-black italic uppercase">Enfoque Sostenible</span>
-            <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase">Desarrollo de una mentalidad analítica</span>
-        </div>
-    </div>
-</div>
-            <div class="rounded-[24px] md:rounded-[40px] overflow-hidden shadow-2xl h-64 md:h-auto">
-                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070" class="w-full h-full object-cover" alt="Culture">
-            </div>
-        </div>
-    </section>
-
-    <section class="py-16 md:py-24 border-t border-white/5">
-    <div class="mb-12 md:mb-16">
-        <h3 class="text-3xl md:text-5xl font-[900] italic tracking-tighter uppercase mb-4 text-white">Tu Entorno <br><span class="text-red-600">De Éxito.</span></h3>
-        <p class="text-gray-400 font-medium text-sm md:text-base max-w-2xl italic">Rodéate del conocimiento y la cultura que necesitas para mantener la disciplina intacta.</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 md:mb-24">
-        <div class="p-6 md:p-8 bg-[#0a0a0a] rounded-3xl border border-white/5 hover:border-red-600/30 transition-all duration-500">
-            <span class="text-red-600 font-black uppercase text-[10px] tracking-widest mb-3 block">Series y Documentales</span>
-            <h4 class="text-xl font-black text-white uppercase italic mb-3">Entretenimiento con Propósito</h4>
-            <p class="text-xs text-gray-500 leading-relaxed font-medium">Cambia tu tiempo de pantalla por contenido que suma. Documentales y series que te enseñan cómo funciona tu cuerpo de una manera visualmente increíble.</p>
-        </div>
-        <div class="p-6 md:p-8 bg-[#0a0a0a] rounded-3xl border border-white/5 hover:border-red-600/30 transition-all duration-500">
-            <span class="text-red-600 font-black uppercase text-[10px] tracking-widest mb-3 block">Podcasts y Entrevistas</span>
-            <h4 class="text-xl font-black text-white uppercase italic mb-3">Acompañamiento Diario</h4>
-            <p class="text-xs text-gray-500 leading-relaxed font-medium">Llévate el conocimiento contigo. Entrevistas y charlas que transforman tus trayectos o descansos en clases magistrales sobre hábitos y mentalidad inquebrantable.</p>
-        </div>
-        <div class="p-6 md:p-8 bg-[#0a0a0a] rounded-3xl border border-white/5 hover:border-red-600/30 transition-all duration-500">
-            <span class="text-red-600 font-black uppercase text-[10px] tracking-widest mb-3 block">Artículos y Guías</span>
-            <h4 class="text-xl font-black text-white uppercase italic mb-3">Biblioteca Práctica</h4>
-            <p class="text-xs text-gray-500 leading-relaxed font-medium">Información curada para tu día a día. Encuentra exactamente lo que necesitas saber sobre rutinas y alimentación, explicado para que lo apliques al instante.</p>
-        </div>
-    </div>
-
-    <div class="bg-[#0a0a0a] p-8 md:p-12 rounded-[32px] border border-white/5 relative flex flex-col md:flex-row gap-8 items-center hover:border-red-600/20 transition-all duration-700">
-        <div class="w-full md:w-2/3">
-            <h4 class="text-2xl md:text-3xl font-[900] italic uppercase text-white mb-4">La Constancia Nace <br><span class="text-red-600">En La Mente.</span></h4>
-            <p class="text-sm md:text-base text-gray-400 leading-relaxed font-medium">
-                La mayor barrera entre tú y tus objetivos no es física, es mental. GYMENEZ ON te mantiene inmerso en una cultura de bienestar constante. Cuando te educas y te rodeas de este nivel de información, abandonar tu proceso deja de ser una opción. Es la herramienta definitiva para proteger tu motivación y asegurar tus resultados a largo plazo.
-            </p>
-        </div>
-        <div class="w-full md:w-1/3 flex flex-col gap-3">
-            <div class="border-l-2 border-red-600 pl-4"><span class="block text-xs font-black uppercase tracking-widest text-white">Disciplina Educada</span></div>
-            <div class="border-l-2 border-red-600 pl-4"><span class="block text-xs font-black uppercase tracking-widest text-white">Cultura de Bienestar</span></div>
-            <div class="border-l-2 border-red-600 pl-4"><span class="block text-xs font-black uppercase tracking-widest text-white">Motivación Blindada</span></div>
-        </div>
-    </div>
-</section>
-
-    <section class="py-16 md:py-24 px-6 md:px-16 bg-[#0a0a0a]">
-        <div class="max-w-5xl mx-auto text-center">
-            <h2 class="text-4xl md:text-5xl font-[900] italic tracking-tighter uppercase mb-6 md:mb-8">¿Por qué elegir <span class="text-red-600 text-glow-red">GYMENEZ ON?</span></h2>
-            <p class="text-base md:text-lg text-gray-400 mb-8 md:mb-12 italic leading-relaxed text-left md:text-center break-words">
-                El entrenamiento físico es solo el 50% del éxito. El otro 50% reside en tu mentalidad y tu educación. Contratar GYMENEZ ON significa darte el acceso a una guía que te instruye en temas de salud, te enseña a alimentarte correctamente y te brinda la curiosidad necesaria para no rendirte nunca. Es entretenimiento que te hace mejor persona.
-            </p>
-            <div class="flex flex-wrap justify-center gap-3 md:gap-4">
-                <span class="px-4 md:px-6 py-2 rounded-full border border-white/10 bg-white/5 text-[9px] md:text-[10px] font-black uppercase tracking-widest">Educación Saludable</span>
-                <span class="px-4 md:px-6 py-2 rounded-full border border-white/10 bg-white/5 text-[9px] md:text-[10px] font-black uppercase tracking-widest">Inspiración Diaria</span>
-                <span class="px-4 md:px-6 py-2 rounded-full border border-white/10 bg-white/5 text-[9px] md:text-[10px] font-black uppercase tracking-widest">Cultura de Élite</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-20 md:py-32 px-6 md:px-16 bg-[#050505] border-t border-white/5 relative overflow-hidden">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/5 blur-[120px] rounded-full pointer-events-none"></div>
-
-        <div class="text-center mb-16 md:mb-24 relative z-10">
-            <h2 class="text-4xl md:text-7xl font-[900] italic tracking-tighter uppercase mb-4 text-white">Niveles de <span class="text-red-600">Acceso.</span></h2>
-            <p class="text-gray-400 font-medium text-sm md:text-base max-w-2xl mx-auto italic">
-                Diseñado para evolucionar con tu criterio. Elige la profundidad de tu contenido dentro de nuestro ecosistema.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto relative z-10 mb-16">
-            
-            <div class="plan-card bg-[#0d0d1a]/60 p-6 md:p-10 rounded-[32px] md:rounded-[40px] border border-white/5 flex flex-col justify-between transition-all duration-500 hover:border-white/20 shadow-xl">
-                <div>
-                    <span class="text-gray-500 text-[8px] md:text-[9px] font-black uppercase tracking-widest mb-2 block italic">Evolución Cultural</span>
-                    <h3 class="text-2xl font-black italic mb-4 uppercase text-white">PLAN PLUS</h3>
-                    <div class="text-gray-400 font-bold text-xs mb-6 pb-4 border-b border-white/5">Contenido Curado</div>
-                    
-                    <ul class="space-y-4 text-xs font-medium text-gray-300">
-                        <li class="flex items-start">
-                            <span class="text-red-500 mr-2">✓</span>
-                            Acceso activo a GYMENEZ ON con una selección exclusiva de series y guías del staff.
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-red-500 mr-2">✓</span>
-                            Desbloqueo completo de métricas corporales y analíticas avanzadas.
-                        </li>
-                        <li class="flex items-start text-gray-500">
-                            <span class="text-gray-600 mr-2">ℹ</span>
-                            Prioridad de atención técnica media en el Pulse Center.
-                        </li>
-                    </ul>
+    <!-- 🔍 CÓMO FUNCIONA -->
+    <section class="py-24 px-6 md:px-16 bg-white text-black relative z-20">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div class="space-y-6 md:space-y-8 reveal">
+                <h2 class="text-3xl md:text-5xl font-[900] italic tracking-tighter uppercase leading-none text-red-600">Educación práctica, <br>hábitos reales.</h2>
+                <div class="w-16 h-1.5 bg-red-600"></div>
+                <p class="text-base md:text-lg text-gray-600 font-medium italic leading-relaxed">
+                    Sustituimos el contenido vacío de las redes sociales por lecciones directas y útiles. Aquí aprenderás la ciencia detrás del descanso, cómo evitar dolores de espalda y cómo estructurar una mentalidad fuerte que no dependa de la motivación pasajera.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-5 border-l-4 border-black bg-gray-50 rounded-r-xl">
+                        <span class="block text-lg font-black italic uppercase">Técnica Segura</span>
+                        <span class="text-[10px] font-bold text-gray-400 uppercase">Videos cortos para dominar cada movimiento</span>
+                    </div>
+                    <div class="p-5 border-l-4 border-red-600 bg-gray-50 rounded-r-xl">
+                        <span class="block text-lg font-black italic uppercase">Cultura de Hierro</span>
+                        <span class="text-[10px] font-bold text-gray-400 uppercase">Aprende de expertos a blindar tu constancia</span>
+                    </div>
                 </div>
             </div>
+            <div class="rounded-[24px] md:rounded-[40px] overflow-hidden shadow-2xl aspect-video bg-gray-100 reveal">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070" class="w-full h-full object-cover" alt="Educación Deportiva">
+            </div>
+        </div>
+    </section>
 
-            <div class="plan-card bg-[#0d0d1a]/80 p-6 md:p-10 rounded-[32px] md:rounded-[40px] border border-red-600/20 flex flex-col justify-between relative shadow-2xl transition-all duration-500 hover:border-red-600/40">
-                <div class="absolute top-4 right-[-35px] bg-[#FFC300] text-black text-[7px] md:text-[8px] font-black py-0.5 w-28 text-center rotate-45 uppercase tracking-widest shadow-lg">Completo</div>
-                <div>
-                    <span class="text-red-600 text-[8px] md:text-[9px] font-black uppercase tracking-widest mb-2 block italic">El Ecosistema Total</span>
-                    <h3 class="text-2xl font-black italic mb-4 uppercase text-[#FFC300]">PLAN ULTRA</h3>
-                    <div class="text-red-600 font-bold text-xs mb-6 pb-4 border-b border-white/10">Acceso VIP Absoluto</div>
-                    
-                    <ul class="space-y-4 text-xs font-medium text-gray-200">
-                        <li class="flex items-start text-red-500 font-bold">
-                            <span class="text-red-600 mr-2">✓</span>
-                            Acceso 100% ilimitado e irrestricto a todo el catálogo de producciones originales de ON.
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-sky-400 mr-2">✓</span>
-                            Integración completa de GYMENEZ EATS (Ingeniería nutricional de precisión).
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-sky-400 mr-2">✓</span>
-                            Prioridad alta de respuesta y atención técnica VIP con tu staff de entrenadores.
-                        </li>
-                    </ul>
-                </div>
+    <!-- 🧬 PILARES HUMANOS -->
+    <section class="py-24 px-6 md:px-16 bg-[#050505] relative z-20 border-t border-white/5">
+        <div class="max-w-6xl mx-auto space-y-16">
+            <div class="text-center max-w-2xl mx-auto reveal">
+                <h3 class="text-2xl md:text-4xl font-black uppercase italic tracking-tight mb-4">Tu biblioteca de consulta diaria</h3>
+                <p class="text-gray-400 text-sm font-medium">Contenido diseñado para acompañar tus trayectos, tus comidas o tus momentos de descanso con valor real.</p>
             </div>
 
-        </div>
+            <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+                <!-- Videos de ejecución -->
+                <div class="glass-panel p-6 md:p-8 rounded-3xl border-t border-t-white/10 reveal">
+                    <div class="text-red-500 text-2xl mb-4">🎥</div>
+                    <h4 class="text-lg font-black uppercase italic text-white mb-2">Técnica paso a paso</h4>
+                    <p class="text-gray-400 text-xs leading-relaxed font-medium">Evita lesiones y sácale el máximo provecho a cada repetición. Accede a tutoriales rápidos y visualmente impecables donde te explicamos la postura exacta, los errores comunes y la cadencia ideal para cada ejercicio de tu rutina.</p>
+                </div>
 
-        <div class="text-center w-full max-w-lg mx-auto pt-4 relative z-10">
-            <a href="../apps/start/login.html" class="block w-full py-5 rounded-2xl bg-white text-black font-[900] text-xs md:text-sm uppercase tracking-[0.3em] text-center shadow-xl shadow-white/5 hover:bg-red-600 hover:text-white hover:shadow-[0_0_40px_rgba(220,38,38,0.4)] transition-all duration-500 transform hover:scale-[1.02] active:scale-[0.99]">
-                Acceder al Ecosistema
+                <!-- Charlas de mentalidad -->
+                <div class="glass-panel p-6 md:p-8 rounded-3xl border-t border-t-white/10 reveal">
+                    <div class="text-[#FFC300] text-2xl mb-4">🧠</div>
+                    <h4 class="text-lg font-black uppercase italic text-white mb-2">Forjando constancia</h4>
+                    <p class="text-gray-400 text-xs leading-relaxed font-medium">El entusiasmo dura una semana; la disciplina es para siempre. Te ofrecemos contenido enfocado en psicología deportiva y desarrollo de hábitos para que entiendas cómo ganarle a la flojera en los días difíciles.</p>
+                </div>
+
+                <!-- Biblioteca práctica -->
+                <div class="glass-panel p-6 md:p-8 rounded-3xl border-t border-t-white/10 reveal">
+                    <div class="text-emerald-400 text-2xl mb-4">📚</div>
+                    <h4 class="text-lg font-black uppercase italic text-white mb-2">Guías de bolsillo</h4>
+                    <p class="text-gray-400 text-xs leading-relaxed font-medium">Información resumida y al grano sobre nutrición, mitos del gimnasio y recuperación muscular. Respuestas rápidas creadas por nuestro staff de entrenadores para que las apliques en tu día a día de inmediato.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 💳 CALL TO ACTION -->
+    <section class="py-24 bg-[#030305] text-center px-4 relative z-20 border-t border-white/5">
+        <div class="max-w-2xl mx-auto reveal">
+            <h3 class="text-3xl md:text-5xl font-[900] italic uppercase tracking-tighter mb-4">Educa tu <span class="text-red-500">máximo potencial.</span></h3>
+            <p class="text-gray-400 text-xs md:text-sm font-medium mb-8 leading-relaxed">
+                Cuando entiendes el porqué de cada ejercicio y de cada comida, abandonar deja de ser una opción.
+            </p>
+            <a href="../billing/planes.html" class="inline-block px-10 py-4 bg-white text-black font-black text-[10px] uppercase tracking-[0.2em] rounded-xl hover:bg-red-600 hover:text-white hover:shadow-[0_0_20px_rgba(220,38,38,0.4)] transition transform hover:scale-105">
+                Acceder a GYMENEZ ON
             </a>
-            <p class="text-gray-600 text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] mt-4">
-                Consola Centralizada • Inicia sesión o regístrate para activar tu nivel de suscripción
-            </p>
         </div>
     </section>
 
-    <footer class="py-12 md:py-20 text-center border-t border-white/5 opacity-40 bg-[#050505]">
-        <p class="text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em]">© 2026 GYMENEZ PERFORMANCE • All Rights Reserved</p>
+    <!-- 🏁 FOOTER -->
+    <footer class="py-12 text-center border-t border-white/5 opacity-40 bg-[#030305]">
+        <p class="text-[8px] md:text-[9px] font-black uppercase tracking-[0.5em]">© 2026 GYMENEZ PERFORMANCE • TU MEJOR VERSIÓN</p>
     </footer>
 
+    <script>
+        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
