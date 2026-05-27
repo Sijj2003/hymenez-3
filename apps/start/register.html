@@ -387,10 +387,17 @@
                 setTimeout(() => {
                     nextSection.style.opacity = '1';
                     nextSection.style.transform = 'translateX(0)';
-                    document.getElementById(`dot-${nextStep}`).add('active');
+                    
+                    // ✅ FIXED GHOST BUG: Se corrigió .add() por .classList.add()
+                    document.getElementById(`dot-${nextStep}`).classList.add('active');
                     
                     const titles = { 1: "Identidad Base", 2: "Biometría Básica", 3: "Seguridad" };
                     document.getElementById('register-title').textContent = titles[nextStep];
+                    
+                    // Ajuste dinámico de los subtítulos según el paso actual
+                    const subtitles = { 1: "Datos de Cuenta", 2: "Contacto", 3: "Clave de Acceso" };
+                    document.getElementById('register-subtitle').textContent = `Paso ${nextStep} de 3 • ${subtitles[nextStep]}`;
+                    
                     activeStep = nextStep;
                 }, 50);
             }, 400);
